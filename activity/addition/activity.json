@@ -1,0 +1,24 @@
+{
+  "name": "hello",
+  "version": "0.0.1",
+  "type": "flogo:activity",
+  "description": "activity description",
+  "ref": "github.com/shaliniGovindaNayak/flogogen",
+  "author": "abc",
+  "inputs":[
+    {
+      "name": "num1",
+      "type": "int"
+    },
+    {
+      "name":"num2",
+      "type":"int"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "output",
+      "type": "int"
+    }
+  ]
+}
