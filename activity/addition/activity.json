@@ -1,9 +1,9 @@
 {
-  "name": "hello",
+  "name": "addition",
   "version": "0.0.1",
   "type": "flogo:activity",
   "description": "activity description",
-  "ref": "github.com/shaliniGovindaNayak/flogogen",
+  "ref": "/github.com/shaliniGovindaNayak/flogo-workspace/activity/addition",
   "author": "abc",
   "inputs":[
     {
