@@ -1,4 +1,4 @@
-package hello
+package addition
 
 import (
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
