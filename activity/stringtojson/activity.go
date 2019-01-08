@@ -25,7 +25,7 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	input := context.GetInput("Rawstring").(string)
-
+	println(input)
 	in := []byte(input)
 	var raw map[string]interface{}
 	json.Unmarshal(in, &raw)

@@ -48,7 +48,7 @@ func TestEval(t *testing.T) {
 	tc := test.NewTestActivityContext(getActivityMetadata())
 
 	//setup attrs
-
+		tc.SetInput("Rawstring","{temperature":"26.000000", "humidity": "38.000000"}")
 	act.Eval(tc)
 
 	//check result attr
