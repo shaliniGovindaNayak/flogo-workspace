@@ -3,7 +3,6 @@ package stringtojson
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"log"
 	"strings"
 
@@ -30,19 +29,35 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	input := context.GetInput("Rawstring").(string)
 	println(input)
-
 	type Message struct {
 		Temp, Humid string
 	}
 	dec := json.NewDecoder(strings.NewReader(input))
-	for {
+
+	// read open bracket
+	t, err := dec.Token()
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("%T: %v\n", t, t)
+
+	// while the array contains values
+	for dec.More() {
 		var m Message
-		if err := dec.Decode(&m); err == io.EOF {
-			break
-		} else if err != nil {
+		// decode an array value (Message)
+		err := dec.Decode(&m)
+		if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Printf("temp:%s, humid:%s\n", m.Temp, m.Humid)
+
+		fmt.Printf("temp:%v, humid:%v\n", m.Temp, m.Humid)
 	}
+
+	// read closing bracket
+	t, err = dec.Token()
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("%T: %v\n", t, t)
 	return true, nil
 }
