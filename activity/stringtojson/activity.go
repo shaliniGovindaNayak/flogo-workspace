@@ -32,12 +32,13 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		Temp  string
 		Humid string
 	}
-	var datas []Data
+	var datas Data
 	err = json.Unmarshal([]byte(input), &datas)
 	if err != nil {
 		fmt.Println("error:", err)
 	}
 	fmt.Printf("%+v", datas)
+	context.SetOutput("Json", datas)
 
 	return true, nil
 }
