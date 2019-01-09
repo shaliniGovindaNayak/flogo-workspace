@@ -32,7 +32,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	json.Unmarshal(in, &raw)
 	println(&raw)
 	raw["count"] = 1
-	out, _ := json.Marshal(raw)
+	out, _ := json.Marshal(&raw)
 	println(string(out))
 	context.SetOutput("Json", out)
 
