@@ -2,6 +2,10 @@ package stringtojson
 
 import (
 	"encoding/json"
+	"fmt"
+	"io"
+	"log"
+	"strings"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 )
@@ -26,15 +30,20 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	input := context.GetInput("Rawstring").(string)
 	println(input)
-	in := []byte(input)
-	println(in)
-	raw := make(map[string]interface{})
-	json.Unmarshal(in, &raw)
-	println(&raw)
-	raw["count"] = 1
-	out, _ := json.Marshal(&raw)
-	println(string(out))
-	context.SetOutput("Json", out)
 
+	type Message struct {
+		Name, Text string
+	}
+	dec := json.NewDecoder(strings.NewReader(input))
+	for {
+		var m Message
+		if err := dec.Decode(&m); err == io.EOF {
+			break
+		} else if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Printf("%s: %s\n", m.Name, m.Text)
+
+	}
 	return true, nil
 }
