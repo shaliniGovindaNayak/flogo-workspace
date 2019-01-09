@@ -32,7 +32,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	println(input)
 
 	type Message struct {
-		Name, Text string
+		Temp, Humid string
 	}
 	dec := json.NewDecoder(strings.NewReader(input))
 	for {
@@ -42,8 +42,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		} else if err != nil {
 			log.Fatal(err)
 		}
-		fmt.Printf("%s: %s\n", m.Name, m.Text)
-
+		fmt.Printf("temp:%s, humid:%s\n", m.Temp, m.Humid)
 	}
 	return true, nil
 }
