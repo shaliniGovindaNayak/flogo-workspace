@@ -4,7 +4,10 @@ import (
 	"encoding/json"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
+	"github.com/TIBCOSoftware/flogo-lib/logger"
 )
+
+var log = logger.GetLogger("activity-string2json")
 
 // MyActivity is a stub for your Activity implementation
 type MyActivity struct {
@@ -32,10 +35,10 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	raw := make(map[string]interface{})
 	json.Unmarshal(in, &raw)
 
-	println(&raw)
+	log.Debugf("the raw string")
 	raw["count"] = 1
 	out, _ := json.Marshal(&raw)
-	println(string(out))
+	log.Infof("the outut valie ... %s", out)
 	context.SetOutput("Json", out)
 	return true, nil
 }
