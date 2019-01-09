@@ -38,6 +38,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		fmt.Println("error:", err)
 	}
 	fmt.Printf("%+v", datas)
+	fmt.Println()
 	context.SetOutput("Json", datas)
 
 	return true, nil
