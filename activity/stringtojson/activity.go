@@ -36,6 +36,6 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	raw["count"] = 1
 	//out, _ := json.Marshal(&raw)
 
-	context.SetOutput("Json", &raw)
+	context.SetOutput("Json", raw)
 	return true, nil
 }
