@@ -3,8 +3,6 @@ package stringtojson
 import (
 	"encoding/json"
 	"fmt"
-	"log"
-	"strings"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 )
@@ -29,35 +27,17 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	input := context.GetInput("Rawstring").(string)
 	println(input)
-	type Message struct {
-		Temp, Humid string
-	}
-	dec := json.NewDecoder(strings.NewReader(input))
 
-	// read open bracket
-	t, err := dec.Token()
+	type Data struct {
+		Temp  string
+		Humid string
+	}
+	var datas []Data
+	err = json.Unmarshal([]byte(input), &datas)
 	if err != nil {
-		log.Fatal(err)
+		fmt.Println("error:", err)
 	}
-	fmt.Printf("%T: %v\n", t, t)
+	fmt.Printf("%+v", datas)
 
-	// while the array contains values
-	for dec.More() {
-		var m Message
-		// decode an array value (Message)
-		err := dec.Decode(&m)
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		fmt.Printf("temp:%v, humid:%v\n", m.Temp, m.Humid)
-	}
-
-	// read closing bracket
-	t, err = dec.Token()
-	if err != nil {
-		log.Fatal(err)
-	}
-	fmt.Printf("%T: %v\n", t, t)
 	return true, nil
 }
