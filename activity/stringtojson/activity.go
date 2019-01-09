@@ -24,12 +24,13 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
-	raw := make(map[string]interface{})
 	input := context.GetInput("Rawstring").(string)
 	println(input)
 	in := []byte(input)
-
+	println(in)
+	raw := make(map[string]interface{})
 	json.Unmarshal(in, &raw)
+	println(raw)
 	raw["count"] = 1
 	out, _ := json.Marshal(raw)
 	println(string(out))
