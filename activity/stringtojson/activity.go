@@ -29,8 +29,8 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	println(input)
 
 	type Data struct {
-		Temp  string
-		Humid string
+		temp  string
+		humid string
 	}
 	var datas Data
 	err = json.Unmarshal([]byte(input), &datas)
