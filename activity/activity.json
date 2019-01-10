@@ -1,0 +1,20 @@
+{
+  "name": "stringconversion",
+  "version": "0.0.1",
+  "type": "flogo:activity",
+  "description": "activity description",
+  "ref": "github.com/shaliniGovindaNayak/flogo-workspace/activity/stringconversion",
+  "author": "ShaliniGovindaNayak",
+  "inputs":[
+    {
+      "name": "String",
+      "type": "string"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Float32",
+      "type": "any"
+    }
+  ]
+}
