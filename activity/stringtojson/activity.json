@@ -1,0 +1,20 @@
+{
+  "name": "stringtojson",
+  "version": "0.0.1",
+  "type": "flogo:activity",
+  "description": "activity description",
+  "ref": "github.com/shaliniGovindaNayak/flogo-workspace/activity/stringtojson",
+  "author": "ShaliniGovindaNayak",
+  "inputs":[
+    {
+      "name": "Rawstring",
+      "type": "string"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "Json",
+      "type": "any"
+    }
+  ]
+}
