@@ -33,11 +33,11 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	println(in)
 	raw := make(map[string]interface{})
 	json.Unmarshal(in, &raw)
-	log.Debugf("the raw string")
+	log.Debugf("the raw string is %s", raw)
 	raw["count"] = 1
 	out, _ := json.Marshal(&raw)
 
-	log.Infof("the outut valie ... %s", string(out))
+	log.Infof("the output value ... %s", string(out))
 	context.SetOutput("Json", string(out))
 
 	return true, nil
