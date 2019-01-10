@@ -41,8 +41,8 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	if err := json.Unmarshal(in, &u1); err != nil {
 		//log.Fatal(err)
 	}
-	fmt.Println("temp:", u1.Temp)
-	fmt.Println("humid:", u1.Humid)
+	fmt.Println("Temperature:", u1.Temp)
+	fmt.Println("Humidity:", u1.Humid)
 	out := u1
 	context.SetOutput("Json", out)
 	return true, nil
