@@ -43,7 +43,8 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	}
 	fmt.Println("Temperature:", u1.Temp)
 	fmt.Println("Humidity:", u1.Humid)
-	out := u1
-	context.SetOutput("Json", out)
+	//out := u1
+	context.SetOutput("Json[0]", u1.Temp)
+	context.SetOutput("Json[1]", u1.Humid)
 	return true, nil
 }

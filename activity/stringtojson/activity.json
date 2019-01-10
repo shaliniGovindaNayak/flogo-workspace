@@ -14,7 +14,7 @@
   "outputs": [
     {
       "name": "Json",
-      "type": "any"
+      "type": "array"
     }
   ]
 }
