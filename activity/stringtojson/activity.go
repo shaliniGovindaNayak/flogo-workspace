@@ -45,7 +45,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	fmt.Println("Temperature:", u1.Temp)
 	fmt.Println("Humidity:", u1.Humid)
 	//out := u1
-	out := strings.Split(input, ",")
+	out := strings.Fields(input)
 	fmt.Println(out)
 	context.SetOutput("Json[0]", u1.Temp)
 	context.SetOutput("Json[1]", u1.Humid)
