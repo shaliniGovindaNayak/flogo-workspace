@@ -14,7 +14,7 @@
   "outputs": [
     {
       "name": "Float32",
-      "type": "any"
+      "type": "float32"
     }
   ]
 }
