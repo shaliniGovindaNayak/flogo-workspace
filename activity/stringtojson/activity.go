@@ -2,8 +2,6 @@ package stringtojson
 
 import (
 	"encoding/json"
-	"fmt"
-	"strings"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 	"github.com/TIBCOSoftware/flogo-lib/logger"
@@ -37,17 +35,14 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	input := context.GetInput("Rawstring").(string)
 	println(input)
 	in := []byte(input)
+	println(in)
+	raw := make(map[string]interface{})
+	json.Unmarshal(in, &raw)
+	log.Debugf("the raw string")
+	raw["count"] = 1
+	out, _ := json.Marshal(&raw)
 
-	u1 := Data{}
-	if err := json.Unmarshal(in, &u1); err != nil {
-		//log.Fatal(err)
-	}
-	fmt.Println("Temperature:", u1.Temp)
-	fmt.Println("Humidity:", u1.Humid)
-	//out := u1
-	out := strings.Fields(input)
-	fmt.Println(out)
-	context.SetOutput("Json[0]", u1.Temp)
-	context.SetOutput("Json[1]", u1.Humid)
+	log.Infof("the outut valie ... %s", string(out))
+	context.SetOutput("Json", out)
 	return true, nil
 }
