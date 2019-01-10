@@ -1,13 +1,11 @@
-package stringtojson
+package stringconversion
 
 import (
-	"encoding/json"
+	"fmt"
+	"strconv"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
-	"github.com/TIBCOSoftware/flogo-lib/logger"
 )
-
-var log = logger.GetLogger("activity-string2json")
 
 // MyActivity is a stub for your Activity implementation
 type MyActivity struct {
@@ -27,18 +25,12 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
-	input := context.GetInput("Rawstring").(string)
-	println(input)
-	in := []byte(input)
-	println(in)
-	raw := make(map[string]interface{})
-	json.Unmarshal(in, &raw)
-	log.Debugf("the raw string")
-	raw["count"] = 1
-	out, _ := json.Marshal(&raw)
-
-	log.Infof("the output value ... %s", string(out))
-	context.SetOutput("Json", string(out))
+	input := context.GetInput("String").(string)
+	var s float32
+	if s, err := strconv.ParseFloat(input, 32); err == nil {
+		fmt.Printf("%T, %v\n", s, s)
+	}
+	context.SetOutput("Float", s)
 
 	return true, nil
 }
