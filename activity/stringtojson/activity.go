@@ -27,11 +27,6 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
-	type Data struct {
-		Temp  string `json:"Temp"`
-		Humid string `json:"Humid"`
-	}
-
 	input := context.GetInput("Rawstring").(string)
 	println(input)
 	in := []byte(input)
@@ -44,5 +39,6 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	log.Infof("the outut valie ... %s", string(out))
 	context.SetOutput("Json", out)
+
 	return true, nil
 }
