@@ -38,7 +38,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	out, _ := json.Marshal(&raw)
 
 	log.Infof("the outut valie ... %s", string(out))
-	context.SetOutput("Json", out)
+	context.SetOutput("Json", string(out))
 
 	return true, nil
 }
