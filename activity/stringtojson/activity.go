@@ -33,8 +33,8 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	println(in)
 	raw := make(map[string]interface{})
 	json.Unmarshal(in, &raw)
-	log.Debugf("the raw string is %s", raw)
-	raw["count"] = 1
+	log.Debugf("the raw string")
+	//raw["count"] = 1
 	out, _ := json.Marshal(&raw)
 
 	log.Infof("the output value ... %s", string(out))
