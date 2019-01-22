@@ -1,0 +1,41 @@
+{
+  "name": "recieveiothub",
+  "version": "0.0.1",
+  "type": "flogo:trigger",
+  "ref": "github.com/shaliniGovindaNayak/flogo-workspace/activity/stringconversion",
+  "description": "trigger description",
+  "author": "ShaliniGovindaNayak",
+
+  "settings":[
+    {
+      "name": "ConnectionString",
+      "type": "string",
+      "value": "HostName=HomeAutoHub.azure-devices.net;DeviceId=RaspberryPi;SharedAccessKey=iQ9YVrPokpJh3QYpQlYa/lI2Gl5YokI6ltsCo9gRQ5Y="
+    } 
+  ],
+  "output": [
+    {
+      "name": "output",
+      "type": "string"
+    }
+  ],
+  "handler": {
+    "settings": [
+      {
+        "name":"hostname",
+        "type":"string",
+        "value":"HomeAutoHub.azure-devices.net"
+      },
+      {
+        "name":"deviceid",
+        "type": "string",
+        "value":"RaspberryPi"
+      },
+      {
+        "name":"apiversion",
+        "type": "string",
+        "value":"2018-06-30"
+      }
+    ]
+  }
+}
