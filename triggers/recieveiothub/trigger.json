@@ -2,7 +2,7 @@
   "name": "recieveiothub",
   "version": "0.0.1",
   "type": "flogo:trigger",
-  "ref": "github.com/shaliniGovindaNayak/flogo-workspace/trigger/recieveiothub",
+  "ref": "github.com/shaliniGovindaNayak/flogo-workspace/triggers/recieveiothub",
   "description": "trigger description",
   "author": "ShaliniGovindaNayak",
 
