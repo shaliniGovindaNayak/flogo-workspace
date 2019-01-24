@@ -11,7 +11,7 @@
   "outputs": [
     {
       "name": "output",
-      "type": "string"
+      "type": "object"
     }
   ]
 }
