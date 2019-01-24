@@ -98,7 +98,7 @@ func (t *MyTrigger) Start() error {
 		log.Error("Error creating http client from connection string", err)
 	}
 	out.resp, out.status = client.ReceiveMessage()
-
+	log.Debug(out.resp)
 	t.metadata.Settings["output"].SetValue(out)
 
 	return nil
@@ -107,6 +107,10 @@ func (t *MyTrigger) Start() error {
 // Stop implements trigger.Trigger.Start
 func (t *MyTrigger) Stop() error {
 	// stop the trigger
+	if connectionString == "" {
+		return nil
+	}
+	log.Debug("Stopped")
 	return nil
 }
 
