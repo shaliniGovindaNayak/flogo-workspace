@@ -1,0 +1,17 @@
+{
+  "name": "recieveiothub",
+  "version": "0.0.1",
+  "type": "flogo:activity",
+  "description": "activity description",
+  "ref": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/recieveiothub",
+  "author": "ShaliniGovindaNayak",
+  "inputs":[
+ 
+  ],
+  "outputs": [
+    {
+      "name": "output",
+      "type": "string"
+    }
+  ]
+}

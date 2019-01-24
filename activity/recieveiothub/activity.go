@@ -1,31 +1,24 @@
 package recieveiothub
 
 import (
-
-	//"github.com/TIBCOSoftware/flogo-lib/core/action"
 	"bytes"
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/base64"
 	"fmt"
+	"html/template"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
-	"text/template"
 	"time"
 
+	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 	"github.com/TIBCOSoftware/flogo-lib/core/trigger"
 	"github.com/TIBCOSoftware/flogo-lib/logger"
 )
-
-var log = logger.GetLogger("recieveiothub")
-var handlerMap = make(map[string]*trigger.Handler)
-var connestring string
-var t *MyTrigger
-var connectionString string
 
 const (
 	maxIdleConnections int    = 100
@@ -49,38 +42,25 @@ type iotHubHTTPClient struct {
 	client              *http.Client
 }
 
-// MyTriggerFactory My Trigger factory
-type MyTriggerFactory struct {
-	metadata *trigger.Metadata
+var log = logger.GetLogger("recieveiothub")
+var handlerMap = make(map[string]*trigger.Handler)
+var connestring string
+
+var connectionString string
+
+// MyActivity is a stub for your Activity implementation
+type MyActivity struct {
+	metadata *activity.Metadata
 }
 
-// NewFactory create a new Trigger factory
-func NewFactory(md *trigger.Metadata) trigger.Factory {
-	return &MyTriggerFactory{metadata: md}
+// NewActivity creates a new activity
+func NewActivity(metadata *activity.Metadata) activity.Activity {
+	return &MyActivity{metadata: metadata}
 }
 
-// New Creates a new trigger instance for a given id
-func (t *MyTriggerFactory) New(config *trigger.Config) trigger.Trigger {
-	return &MyTrigger{metadata: t.metadata, config: config}
-}
-
-// MyTrigger is a stub for your Trigger implementation
-type MyTrigger struct {
-	metadata *trigger.Metadata
-	config   *trigger.Config
-	handlers []*trigger.Handler
-}
-
-// Initialize implements trigger.Init.Initialize
-func (t *MyTrigger) Initialize(ctx trigger.InitContext) error {
-
-	t.handlers = ctx.GetHandlers()
-	return nil
-}
-
-// Metadata implements trigger.Trigger.Metadata
-func (t *MyTrigger) Metadata() *trigger.Metadata {
-	return t.metadata
+// Metadata implements activity.Activity.Metadata
+func (a *MyActivity) Metadata() *activity.Metadata {
+	return a.metadata
 }
 
 var out struct {
@@ -88,10 +68,8 @@ var out struct {
 	status string
 }
 
-// Start implements trigger.Trigger.Start
-func (t *MyTrigger) Start() error {
-
-	//connectionString := "HostName=HomeAutoHub.azure-devices.net;DeviceId=RaspberryPi;SharedAccessKey=iQ9YVrPokpJh3QYpQlYa/lI2Gl5YokI6ltsCo9gRQ5Y="
+// Eval implements activity.Activity.Eval
+func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	client, err := newIotHubHTTPClientFromConnectionString("HostName=HomeAutoHub.azure-devices.net;DeviceId=RaspberryPi;SharedAccessKey=iQ9YVrPokpJh3QYpQlYa/lI2Gl5YokI6ltsCo9gRQ5Y=")
 	if err != nil {
@@ -99,19 +77,9 @@ func (t *MyTrigger) Start() error {
 	}
 	out.resp, out.status = client.ReceiveMessage()
 	log.Debug(out.resp)
-	t.metadata.Settings["output"].SetValue(out)
+	context.SetOutput("output", out)
 
-	return nil
-}
-
-// Stop implements trigger.Trigger.Start
-func (t *MyTrigger) Stop() error {
-	// stop the trigger
-	if connectionString == "" {
-		return nil
-	}
-	log.Debug("Stopped")
-	return nil
+	return true, nil
 }
 
 func newIotHubHTTPClientFromConnectionString(connectionString string) (*iotHubHTTPClient, error) {
