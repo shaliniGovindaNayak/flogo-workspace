@@ -16,26 +16,12 @@
   "output": [
     {
       "name": "output",
-      "type": "string"
+      "type": "object"
     }
   ],
   "handler": {
     "settings": [
-      {
-        "name":"hostname",
-        "type":"string",
-        "value":"HomeAutoHub.azure-devices.net"
-      },
-      {
-        "name":"deviceid",
-        "type": "string",
-        "value":"RaspberryPi"
-      },
-      {
-        "name":"apiversion",
-        "type": "string",
-        "value":"2018-06-30"
-      }
+     
     ]
   }
 }
