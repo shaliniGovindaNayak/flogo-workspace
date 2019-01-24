@@ -17,6 +17,7 @@ import (
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 	"github.com/TIBCOSoftware/flogo-lib/core/trigger"
+
 	"github.com/TIBCOSoftware/flogo-lib/logger"
 )
 
