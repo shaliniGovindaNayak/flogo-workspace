@@ -36,7 +36,11 @@ const testConfig string = `{
 func TestCreate(t *testing.T) {
 
 	// New factory
+<<<<<<< HEAD
 	md := trigger.NewMetadata(getJSONMetadata())
+=======
+	md := trigger.NewMetadata(getJsonMetadata())
+>>>>>>> f7c5b9dd207fc52963987031e351190924041fce
 	f := NewFactory(md)
 
 	if f == nil {
