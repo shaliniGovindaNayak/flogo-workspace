@@ -157,7 +157,7 @@ func tryGetKeyByName(v url.Values, key string) string {
 
 func (c *iotHubHTTPClient) ReceiveMessage() (string, string) {
 	url := fmt.Sprintf("%s/devices/%s/messages/deviceBound?api-version=%s", c.hostName, c.deviceID, apiVersion)
-	return c.performRequest("GET", url, "hai")
+	return c.performRequest("GET", url, "")
 
 }
 
