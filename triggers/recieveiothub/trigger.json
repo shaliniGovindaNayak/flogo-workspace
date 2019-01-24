@@ -7,11 +7,7 @@
   "author": "ShaliniGovindaNayak",
 
   "settings":[
-    {
-      "name": "ConnectionString",
-      "type": "string",
-      "value": "HostName=HomeAutoHub.azure-devices.net;DeviceId=RaspberryPi;SharedAccessKey=iQ9YVrPokpJh3QYpQlYa/lI2Gl5YokI6ltsCo9gRQ5Y="
-    } 
+    
   ],
   "output": [
     {
