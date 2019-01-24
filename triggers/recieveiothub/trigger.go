@@ -91,9 +91,9 @@ var out struct {
 // Start implements trigger.Trigger.Start
 func (t *MyTrigger) Start() error {
 
-	connectionString := "HostName=HomeAutoHub.azure-devices.net;DeviceId=RaspberryPi;SharedAccessKey=iQ9YVrPokpJh3QYpQlYa/lI2Gl5YokI6ltsCo9gRQ5Y="
+	//connectionString := "HostName=HomeAutoHub.azure-devices.net;DeviceId=RaspberryPi;SharedAccessKey=iQ9YVrPokpJh3QYpQlYa/lI2Gl5YokI6ltsCo9gRQ5Y="
 
-	client, err := newIotHubHTTPClientFromConnectionString(connectionString)
+	client, err := newIotHubHTTPClientFromConnectionString("HostName=HomeAutoHub.azure-devices.net;DeviceId=RaspberryPi;SharedAccessKey=iQ9YVrPokpJh3QYpQlYa/lI2Gl5YokI6ltsCo9gRQ5Y=")
 	if err != nil {
 		log.Error("Error creating http client from connection string", err)
 	}
