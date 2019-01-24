@@ -16,7 +16,7 @@
   "output": [
     {
       "name": "output",
-      "type": "string"
+      "type": "object"
     }
   ],
   "handler": {

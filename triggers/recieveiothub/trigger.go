@@ -1,6 +1,7 @@
 package recieveiothub
 
 import (
+
 	//"github.com/TIBCOSoftware/flogo-lib/core/action"
 	"bytes"
 	"crypto/hmac"
@@ -82,6 +83,11 @@ func (t *MyTrigger) Metadata() *trigger.Metadata {
 	return t.metadata
 }
 
+var out struct {
+	resp   string
+	status string
+}
+
 // Start implements trigger.Trigger.Start
 func (t *MyTrigger) Start() error {
 
@@ -90,9 +96,10 @@ func (t *MyTrigger) Start() error {
 	if err != nil {
 		log.Error("Error creating http client from connection string", err)
 	}
-	client.ReceiveMessage()
+	out.resp, out.status = client.ReceiveMessage()
 
-	//t.metadata.Settings["output"] = resp
+	t.metadata.Settings["output"].SetValue(out)
+
 	return nil
 }
 
