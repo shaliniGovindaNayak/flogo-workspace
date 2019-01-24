@@ -22,8 +22,18 @@ import (
 
 var log = logger.GetLogger("recieveiothub")
 var handlerMap = make(map[string]*trigger.Handler)
+var connestring string
+var t *MyTrigger
+var connectionString string
 
-const apiversion string = "2016-11-14"
+const (
+	maxIdleConnections int    = 100
+	requestTimeout     int    = 10
+	tokenValidSecs     int    = 3600
+	apiVersion         string = "2016-11-14"
+)
+
+//const apiversion string = "2016-11-14"
 
 type sharedAccessKey string
 type sharedAccessKeyName string
@@ -57,11 +67,13 @@ func (t *MyTriggerFactory) New(config *trigger.Config) trigger.Trigger {
 type MyTrigger struct {
 	metadata *trigger.Metadata
 	config   *trigger.Config
+	handlers []*trigger.Handler
 }
 
 // Initialize implements trigger.Init.Initialize
 func (t *MyTrigger) Initialize(ctx trigger.InitContext) error {
 
+	t.handlers = ctx.GetHandlers()
 	return nil
 }
 
@@ -73,6 +85,14 @@ func (t *MyTrigger) Metadata() *trigger.Metadata {
 // Start implements trigger.Trigger.Start
 func (t *MyTrigger) Start() error {
 
+	connectionString := fmt.Sprintf("%s", t.metadata.Settings["connectionString"])
+	client, err := newIotHubHTTPClientFromConnectionString(connectionString)
+	if err != nil {
+		log.Error("Error creating http client from connection string", err)
+	}
+	client.ReceiveMessage()
+
+	//t.metadata.Settings["output"] = resp
 	return nil
 }
 
@@ -82,8 +102,16 @@ func (t *MyTrigger) Stop() error {
 	return nil
 }
 
-func parseConnectionString(connString string) (hostName, sharedAccessKey, sharedAccessKeyName, deviceID, error) {
-	url, err := url.ParseQuery(connString)
+func newIotHubHTTPClientFromConnectionString(connectionString string) (*iotHubHTTPClient, error) {
+	h, k, kn, d, err := parseConnectionString(connectionString)
+	if err != nil {
+		return nil, err
+	}
+
+	return newIotHubHTTPClient(h, kn, k, d), nil
+}
+func parseConnectionString(connestring string) (hostName, sharedAccessKey, sharedAccessKeyName, deviceID, error) {
+	url, err := url.ParseQuery(connestring)
 	if err != nil {
 		return "", "", "", "", err
 	}
@@ -96,6 +124,21 @@ func parseConnectionString(connString string) (hostName, sharedAccessKey, shared
 	return hostName(h), sharedAccessKey(k), sharedAccessKeyName(kn), deviceID(d), nil
 }
 
+func newIotHubHTTPClient(hostNameStr hostName, sharedAccessKeyNameStr sharedAccessKeyName, sharedAccessKeyStr sharedAccessKey, deviceIDStr deviceID) *iotHubHTTPClient {
+	return &iotHubHTTPClient{
+		sharedAccessKeyName: sharedAccessKeyName(sharedAccessKeyNameStr),
+		sharedAccessKey:     sharedAccessKey(sharedAccessKeyStr),
+		hostName:            hostName(hostNameStr),
+		deviceID:            deviceID(deviceIDStr),
+		client: &http.Client{
+			Transport: &http.Transport{
+				MaxIdleConnsPerHost: maxIdleConnections,
+			},
+			Timeout: time.Duration(requestTimeout) * time.Second,
+		},
+	}
+}
+
 func tryGetKeyByName(v url.Values, key string) string {
 	if len(v[key]) == 0 {
 		return ""
@@ -105,8 +148,9 @@ func tryGetKeyByName(v url.Values, key string) string {
 }
 
 func (c *iotHubHTTPClient) ReceiveMessage() (string, string) {
-	url := fmt.Sprintf("%s/devices/%s/messages/deviceBound?api-version=%s", c.hostName, c.deviceID, apiversion)
+	url := fmt.Sprintf("%s/devices/%s/messages/deviceBound?api-version=%s", c.hostName, c.deviceID, apiVersion)
 	return c.performRequest("GET", url, "")
+
 }
 
 func (c *iotHubHTTPClient) performRequest(method string, uri string, data string) (string, string) {
