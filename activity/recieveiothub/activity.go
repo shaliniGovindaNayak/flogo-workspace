@@ -83,17 +83,8 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	return true, nil
 }
 
-func newIotHubHTTPClientFromConnectionString(connectionString string) (*iotHubHTTPClient, error) {
-	h, k, kn, d, err := parseConnectionString(connectionString)
-	if err != nil {
-		return nil, err
-	}
-
-	return newIotHubHTTPClient(h, kn, k, d), nil
-}
-
-func parseConnectionString(connestring string) (hostName, sharedAccessKey, sharedAccessKeyName, deviceID, error) {
-	url, err := url.ParseQuery(connestring)
+func parseConnectionString(connString string) (hostName, sharedAccessKey, sharedAccessKeyName, deviceID, error) {
+	url, err := url.ParseQuery(connString)
 	if err != nil {
 		return "", "", "", "", err
 	}
@@ -106,12 +97,21 @@ func parseConnectionString(connestring string) (hostName, sharedAccessKey, share
 	return hostName(h), sharedAccessKey(k), sharedAccessKeyName(kn), deviceID(d), nil
 }
 
-func newIotHubHTTPClient(hostNameStr hostName, sharedAccessKeyNameStr sharedAccessKeyName, sharedAccessKeyStr sharedAccessKey, deviceIDStr deviceID) *iotHubHTTPClient {
+func tryGetKeyByName(v url.Values, key string) string {
+	if len(v[key]) == 0 {
+		return ""
+	}
+
+	return strings.Replace(v[key][0], " ", "+", -1)
+}
+
+// NewIotHubHTTPClient is a constructor of IutHubClient
+func newIotHubHTTPClient(hostName hostName, sharedAccessKeyName sharedAccessKeyName, sharedAccessKey sharedAccessKey, deviceID deviceID) *iotHubHTTPClient {
 	return &iotHubHTTPClient{
-		sharedAccessKeyName: sharedAccessKeyName(sharedAccessKeyNameStr),
-		sharedAccessKey:     sharedAccessKey(sharedAccessKeyStr),
-		hostName:            hostName(hostNameStr),
-		deviceID:            deviceID(deviceIDStr),
+		sharedAccessKeyName: sharedAccessKeyName,
+		sharedAccessKey:     sharedAccessKey,
+		hostName:            hostName,
+		deviceID:            deviceID,
 		client: &http.Client{
 			Transport: &http.Transport{
 				MaxIdleConnsPerHost: maxIdleConnections,
@@ -121,48 +121,28 @@ func newIotHubHTTPClient(hostNameStr hostName, sharedAccessKeyNameStr sharedAcce
 	}
 }
 
-func tryGetKeyByName(v url.Values, key string) string {
-	if len(v[key]) == 0 {
-		return ""
+// NewIotHubHTTPClientFromConnectionString creates new client from connection string
+func newIotHubHTTPClientFromConnectionString(connectionString string) (*iotHubHTTPClient, error) {
+	h, k, kn, d, err := parseConnectionString(connectionString)
+	if err != nil {
+		return nil, err
 	}
 
-	return strings.Replace(v[key][0], " ", "+", -1)
+	return newIotHubHTTPClient(h, kn, k, d), nil
 }
 
+// IsDevice tell either device id was specified when client created.
+// If device id was specified in connection string this will enabled device scoped requests.
+func (c *iotHubHTTPClient) IsDevice() bool {
+	return c.deviceID != ""
+}
+
+// Device API
+
+// SendMessage from a logged in device
 func (c *iotHubHTTPClient) ReceiveMessage() (string, string) {
 	url := fmt.Sprintf("%s/devices/%s/messages/deviceBound?api-version=%s", c.hostName, c.deviceID, apiVersion)
 	return c.performRequest("GET", url, "")
-
-}
-
-func (c *iotHubHTTPClient) performRequest(method string, uri string, data string) (string, string) {
-	token := c.buildSasToken(uri)
-	fmt.Printf("%s https://%s\n", method, uri)
-	req, _ := http.NewRequest(method, "https://"+uri, bytes.NewBufferString(data))
-	fmt.Println(data)
-
-	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("User-Agent", "golang-iot-client")
-	req.Header.Set("Authorization", token)
-
-	fmt.Println("Authorization:", token)
-
-	if method == "DELETE" {
-		req.Header.Set("If-Match", "*")
-	}
-
-	resp, err := c.client.Do(req)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	// read the entire reply to ensure connection re-use
-	text, _ := ioutil.ReadAll(resp.Body)
-
-	io.Copy(ioutil.Discard, resp.Body)
-	defer resp.Body.Close()
-
-	return string(text), resp.Status
 }
 
 func (c *iotHubHTTPClient) buildSasToken(uri string) string {
@@ -178,8 +158,38 @@ func (c *iotHubHTTPClient) buildSasToken(uri string) string {
 	encodedSignature := template.URLQueryEscaper(base64.StdEncoding.EncodeToString(mac.Sum(nil)))
 
 	if c.sharedAccessKeyName != "" {
-		return fmt.Sprintf("SharedAccessSignature sr=%s&sig=%s&se=%d&skn=%s", encodedURI, encodedSignature, timestamp, c.sharedAccessKeyName)
+		return fmt.Sprintf("SharedAccessSignature sig=%s&se=%d&skn=%s&sr=%s", encodedSignature, timestamp, c.sharedAccessKeyName, encodedURI)
 	}
 
-	return fmt.Sprintf("SharedAccessSignature sr=%s&sig=%s&se=%d", encodedURI, encodedSignature, timestamp)
+	return fmt.Sprintf("SharedAccessSignature sig=%s&se=%d&sr=%s", encodedSignature, timestamp, encodedURI)
+}
+
+func (c *iotHubHTTPClient) performRequest(method string, uri string, data string) (string, string) {
+	token := c.buildSasToken(uri)
+	//log.("%s https://%s\n", method, uri)
+	log.Debug(token)
+	req, _ := http.NewRequest(method, "https://"+uri, bytes.NewBufferString(data))
+
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("User-Agent", "golang-iot-client")
+	req.Header.Set("Authorization", token)
+
+	//log.Println("Authorization:", token)
+
+	if method == "DELETE" {
+		req.Header.Set("If-Match", "*")
+	}
+
+	resp, err := c.client.Do(req)
+	if err != nil {
+		log.Error(err)
+	}
+
+	// read the entire reply to ensure connection re-use
+	text, _ := ioutil.ReadAll(resp.Body)
+
+	io.Copy(ioutil.Discard, resp.Body)
+	defer resp.Body.Close()
+
+	return string(text), resp.Status
 }
