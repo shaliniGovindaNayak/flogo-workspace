@@ -78,7 +78,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	}
 	out.resp, out.status = client.ReceiveMessage()
 	log.Debug(out.resp)
-	context.SetOutput("output", out)
+	context.SetOutput("output", out.resp)
 
 	return true, nil
 }
