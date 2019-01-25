@@ -91,6 +91,7 @@ func newIotHubHTTPClientFromConnectionString(connectionString string) (*iotHubHT
 
 	return newIotHubHTTPClient(h, kn, k, d), nil
 }
+
 func parseConnectionString(connestring string) (hostName, sharedAccessKey, sharedAccessKeyName, deviceID, error) {
 	url, err := url.ParseQuery(connestring)
 	if err != nil {
