@@ -25,7 +25,7 @@ const (
 	maxIdleConnections int    = 100
 	requestTimeout     int    = 10
 	tokenValidSecs     int    = 3600
-	apiVersion         string = "2016-11-14"
+	apiVersion         string = "2018-06-30"
 )
 
 //const apiversion string = "2016-11-14"
