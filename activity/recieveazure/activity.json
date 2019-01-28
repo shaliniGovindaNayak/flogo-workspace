@@ -6,7 +6,10 @@
   "ref": "github.com/shaliniGovindanayak/flogo-workspace/activity/recieveazure",
   "author": "shaliniGovindaNayak",
   "inputs":[
- 
+     {
+       "name": "connectionstr",
+       "value": ""
+    }
   ],
   "outputs": [
     {

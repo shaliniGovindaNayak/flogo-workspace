@@ -22,8 +22,9 @@ import (
 var log = logger.GetLogger("activity-azureiot")
 
 const (
-	result = "result"
-	status = "status"
+	connectionstring = "connectionstr"
+	result           = "result"
+	status           = "status"
 
 	maxIdleConnections int    = 100
 	requestTimeout     int    = 10
@@ -63,7 +64,7 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
-	client, err := NewIotHubHTTPClientFromConnectionString("HostName=HomeAutoHub.azure-devices.net;DeviceId=raspi;SharedAccessKey=/Me+Jt/cNQ1ID4tDqW3/zg==")
+	client, err := NewIotHubHTTPClientFromConnectionString(connectionstring)
 	if err != nil {
 		log.Error("Error creating http client from connection string", err)
 	}
