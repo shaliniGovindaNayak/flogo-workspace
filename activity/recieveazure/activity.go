@@ -19,7 +19,7 @@ import (
 	"github.com/TIBCOSoftware/flogo-lib/logger"
 )
 
-var log = logger.GetLogger("activity-azureiot")
+var log = logger.GetLogger("activity-recieveazure")
 
 const (
 	connectionstring = "connectionstr"
