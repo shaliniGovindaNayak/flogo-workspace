@@ -59,7 +59,7 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
-	client, err := newIotHubHTTPClientFromConnectionString("HostName=HomeAutoHub.azure-devices.net;DeviceId=RaspberryPi;SharedAccessKey=6lBIDCVjS8jwoTnDMgznZ3Ykb3IHR3WddnAla+rWBpE=")
+	client, err := newIotHubHTTPClientFromConnectionString("HostName=HomeAutoHub.azure-devices.net;DeviceId=raspi;SharedAccessKey=/Me+Jt/cNQ1ID4tDqW3/zg==")
 	if err != nil {
 		log.Error("Error creating http client from connection string", err)
 	}
