@@ -10,8 +10,12 @@
   ],
   "outputs": [
     {
-      "name": "output",
+      "name": "response",
       "type": "string"
+    },
+    {
+      "name" : "status",
+      "type" : "string"
     }
   ]
 }
