@@ -22,13 +22,8 @@ import (
 var log = logger.GetLogger("activity-azureiot")
 
 const (
-	ivconnectionString = "connectionString"
-	ivMessage          = "message"
-	ivDeviceID         = "Device ID"
-	ivaction           = "Action"
-
-	ovResult = "result"
-	ovStatus = "status"
+	result = "result"
+	status = "status"
 
 	maxIdleConnections int    = 100
 	requestTimeout     int    = 10
@@ -73,8 +68,8 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		log.Error("Error creating http client from connection string", err)
 	}
 	resp, status := client.ReceiveMessage()
-	context.SetOutput(ovResult, resp)
-	context.SetOutput(ovStatus, status)
+	context.SetOutput(result, resp)
+	context.SetOutput(status, status)
 	return true, nil
 }
 func parseConnectionString(connString string) (hostName, sharedAccessKey, sharedAccessKeyName, deviceID, error) {
