@@ -64,7 +64,8 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
-	client, err := NewIotHubHTTPClientFromConnectionString(connectionstring)
+	cs := context.GetInput(connectionstring).(string)
+	client, err := NewIotHubHTTPClientFromConnectionString(cs)
 	if err != nil {
 		log.Error("Error creating http client from connection string", err)
 	}

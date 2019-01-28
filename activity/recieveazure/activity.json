@@ -8,17 +8,18 @@
   "inputs":[
      {
        "name": "connectionstr",
-       "value": ""
+       "type": "string",
+       "required": "true"
     }
   ],
   "outputs": [
     {
       "name": "resp",
-      "type": "string"
+      "type": "any"
     },
     {
       "name":"status",
-      "value":"string"
+      "value":"any"
     }
   ]
 }
