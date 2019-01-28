@@ -1,4 +1,4 @@
-package recieveiothub
+package recieveazure
 
 import (
 	"io/ioutil"

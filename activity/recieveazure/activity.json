@@ -1,21 +1,21 @@
 {
-  "name": "recieveiothub",
+  "name": "recieveazure",
   "version": "0.0.1",
   "type": "flogo:activity",
   "description": "activity description",
-  "ref": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/recieveiothub",
+  "ref": "github.com/shaliniGovindanayak/flogo-workspace/activity/recieveazure",
   "author": "shaliniGovindaNayak",
   "inputs":[
-  
+ 
   ],
   "outputs": [
     {
-      "name": "response",
+      "name": "resp",
       "type": "string"
     },
     {
-      "name" : "status",
-      "type" : "string"
+      "name":"status",
+      "value":"value"
     }
   ]
 }
