@@ -4,9 +4,9 @@
   "type": "flogo:activity",
   "description": "activity description",
   "ref": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/recieveiothub",
-  "author": "ShaliniGovindaNayak",
+  "author": "shaliniGovindaNayak",
   "inputs":[
- 
+  
   ],
   "outputs": [
     {
