@@ -70,12 +70,12 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	return true, nil
 }
 
-func newIotHubHTTPClient(hostName hostName, sharedAccessKeyName sharedAccessKeyName, sharedAccessKey sharedAccessKey, deviceID deviceID) *iotHubHTTPClient {
+func newIotHubHTTPClient(hostNameStr string, sharedAccessKeyNameStr string, sharedAccessKeyStr string, deviceIDStr string) *iotHubHTTPClient {
 	return &iotHubHTTPClient{
-		sharedAccessKeyName: sharedAccessKeyName,
-		sharedAccessKey:     sharedAccessKey,
-		hostName:            hostName,
-		deviceID:            deviceID,
+		sharedAccessKeyName: sharedAccessKeyName(sharedAccessKeyNameStr),
+		sharedAccessKey:     sharedAccessKey(sharedAccessKeyStr),
+		hostName:            hostName(hostNameStr),
+		deviceID:            deviceID(deviceIDStr),
 		client: &http.Client{
 			Transport: &http.Transport{
 				MaxIdleConnsPerHost: maxIdleConnections,
@@ -90,7 +90,7 @@ func newIotHubHTTPClientFromConnectionString(connectionString string) (*iotHubHT
 		return nil, err
 	}
 
-	return newIotHubHTTPClient(h, kn, k, d), nil
+	return newIotHubHTTPClient(string(h), string(kn), string(k), string(d)), nil
 }
 func (c *iotHubHTTPClient) ReceiveMessage() (string, string) {
 	url := fmt.Sprintf("%s/devices/%s/messages/deviceBound?api-version=%s", c.hostName, c.deviceID, apiVersion)
