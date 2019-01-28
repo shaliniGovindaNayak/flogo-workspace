@@ -75,8 +75,6 @@ func newIotHubHTTPClient(hostNameStr string, sharedAccessKeyNameStr string, shar
 		sharedAccessKeyName: sharedAccessKeyName(sharedAccessKeyNameStr),
 		sharedAccessKey:     sharedAccessKey(sharedAccessKeyStr),
 		hostName:            hostName(hostNameStr),
-		Testing 
-		Testing 
 		deviceID:            deviceID(deviceIDStr),
 		client: &http.Client{
 			Transport: &http.Transport{
