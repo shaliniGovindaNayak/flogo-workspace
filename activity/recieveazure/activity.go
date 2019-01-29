@@ -65,6 +65,9 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	cs := context.GetInput(connectionstring).(string)
+
+	log.Debug("The Connection String is %s", cs)
+
 	client, err := NewIotHubHTTPClientFromConnectionString(cs)
 	if err != nil {
 		log.Error("Error creating http client from connection string", err)
