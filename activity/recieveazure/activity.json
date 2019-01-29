@@ -2,24 +2,38 @@
   "name": "recieveazure",
   "version": "0.0.1",
   "type": "flogo:activity",
-  "description": "activity description",
-  "ref": "github.com/shaliniGovindanayak/flogo-workspace/activity/recieveazure",
-  "author": "shaliniGovindaNayak",
+  "ref":"github.com/shaliniGovindaNayak/flogo-workspace/activity/recieveazure",
+  "description": "Creates an activity to send a message to Azure IOT Hub",
+  "author": "ShaliniGovindaNayak <shalini.n@isteer.com>",
   "inputs":[
-     {
-       "name": "connectionstr",
-       "type": "string",
-       "required": "true"
+    {
+      "name": "connectionString",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "Device ID",
+      "type": "string"
+    },
+    {
+      "name": "Action",
+      "type": "string",
+      "required": true,
+      "allowed": ["Send"]
+    },
+    {
+      "name": "message",
+      "type": "string"
     }
   ],
   "outputs": [
     {
-      "name": "resp",
-      "type": "any"
+      "name": "result",
+      "type":"any"
     },
     {
-      "name":"status",
-      "value":"any"
+      "name": "status",
+      "type":"any"
     }
   ]
 }

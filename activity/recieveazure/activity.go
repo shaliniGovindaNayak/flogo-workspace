@@ -6,25 +6,29 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"fmt"
+	"html/template"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
-	"text/template"
 	"time"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 	"github.com/TIBCOSoftware/flogo-lib/logger"
 )
 
-var log = logger.GetLogger("activity-azureiot")
+var log = logger.GetLogger("activity-recieveiot")
 
 const (
-	connectionstring = "connectionstr"
-	result           = "result"
-	status           = "status"
+	ivconnectionString = "connectionString"
+	ivMessage          = "message"
+	ivDeviceID         = "Device ID"
+	ivaction           = "Action"
+
+	ovResult = "result"
+	ovStatus = "status"
 
 	maxIdleConnections int    = 100
 	requestTimeout     int    = 10
@@ -64,19 +68,28 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
-	cs := context.GetInput(connectionstring).(string)
+	// do eval
 
-	log.Debug("The Connection String is %s", cs)
+	connectionString := context.GetInput(ivconnectionString).(string)
+	message := context.GetInput(ivMessage).(string)
+	//action := context.GetInput(ivaction).(string)
+	deviceID := context.GetInput(ivDeviceID).(string)
 
-	client, err := NewIotHubHTTPClientFromConnectionString(cs)
+	log.Debug("The connection string to device is [%s]", connectionString)
+	log.Debug("The Method type selected is [%s]", message)
+	log.Debug("The Devic ID is [%s]", deviceID)
+
+	client, err := NewIotHubHTTPClientFromConnectionString(connectionString)
 	if err != nil {
 		log.Error("Error creating http client from connection string", err)
 	}
 	resp, status := client.ReceiveMessage()
-	context.SetOutput(result, resp)
-	context.SetOutput(status, status)
+	context.SetOutput(ovResult, resp)
+	context.SetOutput(ovStatus, status)
+
 	return true, nil
 }
+
 func parseConnectionString(connString string) (hostName, sharedAccessKey, sharedAccessKeyName, deviceID, error) {
 	url, err := url.ParseQuery(connString)
 	if err != nil {
@@ -133,7 +146,7 @@ func (c *IotHubHTTPClient) IsDevice() bool {
 
 // Device API
 
-// recievemsg from a logged in device
+// SendMessage from a logged in device
 func (c *IotHubHTTPClient) ReceiveMessage() (string, string) {
 	url := fmt.Sprintf("%s/devices/%s/messages/deviceBound?api-version=%s", c.hostName, c.deviceID, apiVersion)
 	return c.performRequest("GET", url, "")
