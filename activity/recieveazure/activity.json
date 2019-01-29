@@ -20,10 +20,6 @@
       "type": "string",
       "required": true,
       "allowed": ["recieve"]
-    },
-    {
-      "name": "message",
-      "type": "string"
     }
   ],
   "outputs": [
