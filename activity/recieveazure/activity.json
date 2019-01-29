@@ -19,7 +19,7 @@
       "name": "Action",
       "type": "string",
       "required": true,
-      "allowed": ["Send"]
+      "allowed": ["recieve"]
     },
     {
       "name": "message",
