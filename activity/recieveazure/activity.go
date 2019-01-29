@@ -85,7 +85,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	}
 	resp, status := client.ReceiveMessage()
 	log.Debug("The message is [%s]", resp)
-	log.Debug("The status is [%s]", status)
+	log.Debug("The status is [%s]", resp)
 	context.SetOutput(ovResult, resp)
 
 	context.SetOutput(ovStatus, status)
