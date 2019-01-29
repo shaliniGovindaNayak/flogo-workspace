@@ -34,7 +34,7 @@ Inputs and Outputs:
       "allowed": ["recieve"]
     }
   ]
-
+```
 ## Inputs
 | Input                          | Description    |
 |:-------------------------------|:---------------|
