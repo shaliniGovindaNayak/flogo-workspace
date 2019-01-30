@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "type": "flogo:activity",
   "description": "activity description",
-  "ref": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/neo4j",
+  "ref": "github.com/shaliniGovindaNayak/flogo-workspace/activity/neo4j",
   "author": "shaliniGovindaNayak<shalini.n@isteer.com>",
   "inputs":[
   
