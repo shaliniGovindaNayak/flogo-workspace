@@ -33,7 +33,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		"test2": "bar",
 	}
 
-	n, err := neo4j.NewNeo4j("http://localhost:7474/db/data", "", "")
+	n, err := neo4j.NewNeo4j("http://localhost:7474/user/neo4j", "neo4j", "password")
 
 	data, _ := n.CreateNode(node)
 	log.Printf("\nNode ID: %v\n", data.ID)
