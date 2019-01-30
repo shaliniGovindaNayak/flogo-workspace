@@ -1,11 +1,10 @@
 package neo4j
 
 import (
-	"log"
+	"fmt"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
-
-	neo4j "github.com/davemeehan/Neo4j-GO"
+	bolt "github.com/johnnadratowski/golang-neo4j-bolt-driver"
 )
 
 // MyActivity is a stub for your Activity implementation
@@ -26,27 +25,32 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
-	// do eval
+	driver := bolt.NewDriver()
+	conn, err := driver.OpenNeo("bolt://localhost:7687")
+	if err != nil {
+		panic(err)
+	}
+	defer conn.Close()
 
-	node := map[string]string{
-		"test1": "foo",
-		"test2": "aaa",
+	stmt, err := conn.PrepareNeo("CREATE (n:NODE {foo: {foo}, bar: {bar}})")
+	if err != nil {
+		panic(err)
 	}
 
-	url := context.GetInput("url").(string)
-	user := context.GetInput("username").(string)
-	pass := context.GetInput("password").(string)
+	// Executing a statement just returns summary information
+	result, err := stmt.ExecNeo(map[string]interface{}{"foo": 1, "bar": 2.2})
+	if err != nil {
+		panic(err)
+	}
+	numResult, err := result.RowsAffected()
+	if err != nil {
+		panic(err)
+	}
+	fmt.Printf("CREATED ROWS: %d\n", numResult) // CREATED ROWS: 1
 
-	n, err := neo4j.NewNeo4j(url, user, pass)
-
-	data, _ := n.CreateNode(node)
-	log.Printf("\nNode ID: %v\n", data.ID)
-	self := data.ID
-
-	data, _ = n.GetNode(self)
-	log.Printf("\nNode data: %v\n", data)
-
-	context.SetOutput("output", self)
+	context.SetOutput("output", numResult)
+	// Closing the statment will also close the rows
+	stmt.Close()
 
 	return true, nil
 }
