@@ -10,7 +10,7 @@
       "name": "method",
       "type": "string",
       "required":"true",
-      "allowed":["Post","Get","Delete","Put"]
+      "allowed":["GET", "POST", "PUT", "DELETE"]
     },
     {
       "name": "username",
