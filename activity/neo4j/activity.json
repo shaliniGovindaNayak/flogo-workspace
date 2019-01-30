@@ -1,0 +1,26 @@
+{
+  "name": "neo4j",
+  "version": "0.0.1",
+  "type": "flogo:activity",
+  "description": "activity description",
+  "ref": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/neo4j",
+  "author": "shaliniGovindaNayak<shalini.n@isteer.com>",
+  "inputs":[
+    {
+      "name": "username",
+      "type": "string",
+      "required": "true"
+    },
+    {
+      "name": "password",
+      "type": "string",
+      "required": "true"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "resp",
+      "type": "string"
+    }
+  ]
+}
