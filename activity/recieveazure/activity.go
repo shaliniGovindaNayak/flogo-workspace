@@ -71,12 +71,12 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	// do eval
 
 	connectionString := context.GetInput(ivconnectionString).(string)
-	message := context.GetInput(ivMessage).(string)
+	//message := context.GetInput(ivMessage).(string)
 	//action := context.GetInput(ivaction).(string)
 	deviceID := context.GetInput(ivDeviceID).(string)
 
 	log.Debug("The connection string to device is [%s]", connectionString)
-	log.Debug("The Method type selected is [%s]", message)
+	//log.Debug("The Method type selected is [%s]", message)
 	log.Debug("The Devic ID is [%s]", deviceID)
 
 	client, err := NewIotHubHTTPClientFromConnectionString(connectionString)
