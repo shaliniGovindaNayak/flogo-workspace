@@ -33,7 +33,11 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		"test2": "aaa",
 	}
 
-	n, err := neo4j.NewNeo4j("http://localhost:7474/user/neo4j", "neo4j", "password")
+	url := context.GetInput("url").(string)
+	user := context.GetInput("username").(string)
+	pass := context.GetInput("password").(string)
+
+	n, err := neo4j.NewNeo4j(url, user, pass)
 
 	data, _ := n.CreateNode(node)
 	log.Printf("\nNode ID: %v\n", data.ID)
