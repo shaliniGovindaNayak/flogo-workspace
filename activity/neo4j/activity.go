@@ -71,7 +71,7 @@ func (n *neo4j) send(url string, data string) (string, error) {
 	}
 
 	client := new(http.Client)
-	switch strings.ToLower("get") { // which http method
+	switch strings.ToLower(n.Method) { // which http method
 	case "delete":
 		req, e := http.NewRequest("DELETE", url, nil)
 		if e != nil {
