@@ -46,7 +46,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 func newNeo4j(u string, user string, passwd string, method string) (*neo4j, error) {
 	n := new(neo4j)
 	if len(u) < 1 {
-		u = "http://192.168.1.34:7474/db/data"
+		u = "http://192.168.1.34:7474/user/neo4j"
 	}
 	if len(user) > 0 {
 		n.Username = user
