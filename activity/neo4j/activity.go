@@ -35,15 +35,15 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
-	meth := context.GetInput("method").(string)
+	//meth := context.GetInput("method").(string)
 	user := context.GetInput("username").(string)
 	pass := context.GetInput("password").(string)
-	resp, err := newNeo4j("", user, pass, meth)
+	resp, err := newNeo4j("", user, pass)
 	context.SetOutput("resp", resp)
 	return true, nil
 }
 
-func newNeo4j(u string, user string, passwd string, method string) (*neo4j, error) {
+func newNeo4j(u string, user string, passwd string) (*neo4j, error) {
 	n := new(neo4j)
 	if len(u) < 1 {
 		u = "http://192.168.1.34:7474/user/neo4j"
@@ -56,11 +56,11 @@ func newNeo4j(u string, user string, passwd string, method string) (*neo4j, erro
 	}
 
 	n.URL = u
-	_, err := n.send(u, "", method) // just a test to see if the connection is valid
+	_, err := n.send(u, "") // just a test to see if the connection is valid
 	return n, err
 }
 
-func (n *neo4j) send(url string, data string, method string) (string, error) {
+func (n *neo4j) send(url string, data string) (string, error) {
 	var (
 		resp *http.Response // http response
 		buf  bytes.Buffer   // contains http response body
@@ -71,7 +71,7 @@ func (n *neo4j) send(url string, data string, method string) (string, error) {
 	}
 
 	client := new(http.Client)
-	switch strings.ToLower(method) { // which http method
+	switch strings.ToLower("get") { // which http method
 	case "delete":
 		req, e := http.NewRequest("DELETE", url, nil)
 		if e != nil {
@@ -101,8 +101,6 @@ func (n *neo4j) send(url string, data string, method string) (string, error) {
 		n.setAuth(*req)
 		resp, err = client.Do(req)
 	case "get":
-		fallthrough
-	default:
 		req, e := http.NewRequest("GET", url, nil)
 		if e != nil {
 			err = e
