@@ -9,7 +9,8 @@
     {
       "name": "method",
       "type": "string",
-      "required":["post","get","delete","put"]
+      "required":"true",
+      "allowed":["post","get","delete","put"]
     },
     {
       "name": "username",
