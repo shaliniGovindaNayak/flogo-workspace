@@ -9,7 +9,7 @@
     {
       "name": "method",
       "type": "string",
-      "required":"[post],[get],[delete],[put]"
+      "required":["post","get","delete","put"]
     },
     {
       "name": "username",
