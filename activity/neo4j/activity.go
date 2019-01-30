@@ -2,7 +2,7 @@ package neo4j
 
 import (
 	"fmt"
-	"log"
+
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 	bolt "github.com/johnnadratowski/golang-neo4j-bolt-driver"
 	"github.com/johnnadratowski/golang-neo4j-bolt-driver/structures/graph"
@@ -27,19 +27,20 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	driver := bolt.NewDriver()
-	log.
 	conn, _ := driver.OpenNeo("bolt://localhost:7687")
-	//defer conn.Close()
+	defer conn.Close()
 
+	// Start by creating a node
 	result, _ := conn.ExecNeo("CREATE (n:NODE {foo: {foo}, bar: {bar}})", map[string]interface{}{"foo": 1, "bar": 2.2})
 	numResult, _ := result.RowsAffected()
 	fmt.Printf("CREATED ROWS: %d\n", numResult) // CREATED ROWS: 1
 
 	// Lets get the node
 	data, rowsMetadata, _, _ := conn.QueryNeoAll("MATCH (n:NODE) RETURN n.foo, n.bar", nil)
-	fmt.Printf("COLUMNS: %#v\n", rowsMetadata["fields"].([]interface{})) // COLUMNS: n.foo,n.bar
-	fmt.Printf("FIELDS: %d %f\n", data[0][0].(int64), data[0][1].(float64))
+	fmt.Printf("COLUMNS: %#v\n", rowsMetadata["fields"].([]interface{}))    // COLUMNS: n.foo,n.bar
+	fmt.Printf("FIELDS: %d %f\n", data[0][0].(int64), data[0][1].(float64)) // FIELDS: 1 2.2
 
+	// oh cool, that worked. lets blast this baby and tell it to run a bunch of statements
 	// in neo concurrently with a pipeline
 	results, _ := conn.ExecPipeline([]string{
 		"MATCH (n:NODE) CREATE (n)-[:REL]->(f:FOO)",
