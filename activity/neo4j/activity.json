@@ -7,11 +7,6 @@
   "author": "shaliniGovindaNayak<shalini.n@isteer.com>",
   "inputs":[
     {
-      "name": "method",
-      "type": "string",
-      "required":"[post],[get],[delete],[put]"
-    },
-    {
       "name": "username",
       "type": "string",
       "required": "true"
