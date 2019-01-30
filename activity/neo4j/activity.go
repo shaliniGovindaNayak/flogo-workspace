@@ -42,5 +42,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	data, _ = n.GetNode(self)
 	log.Printf("\nNode data: %v\n", data)
 
+	context.SetOutput("output", data.ID)
+
 	return true, nil
 }
