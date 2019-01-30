@@ -3,23 +3,17 @@
   "version": "0.0.1",
   "type": "flogo:activity",
   "description": "activity description",
-  "ref": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/neo4j",
-  "author": "shaliniGovindaNayak<shalini.n@isteer.com>",
+  "ref": "github.com/yourusername/yourrepository",
+  "author": "Your Name <you.name@example.org>",
   "inputs":[
     {
-      "name": "username",
-      "type": "string",
-      "required": "true"
-    },
-    {
-      "name": "password",
-      "type": "string",
-      "required": "true"
+      "name": "input",
+      "type": "string"
     }
   ],
   "outputs": [
     {
-      "name": "resp",
+      "name": "output",
       "type": "string"
     }
   ]
