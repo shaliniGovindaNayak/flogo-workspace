@@ -27,7 +27,7 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	driver := bolt.NewDriver()
-	conn, _ := driver.OpenNeo("bolt://localhost:7687")
+	conn, _ := driver.OpenNeo("bolt://192.168.1.34:7687")
 	defer conn.Close()
 
 	result, _ := conn.ExecNeo("CREATE (n:NODE {foo: {foo}, bar: {bar}})", map[string]interface{}{"foo": 1, "bar": 2.2})
