@@ -30,7 +30,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	node := map[string]string{
 		"test1": "foo",
-		"test2": "bar",
+		"test2": "aaa",
 	}
 
 	n, err := neo4j.NewNeo4j("http://localhost:7474/user/neo4j", "neo4j", "password")
@@ -42,7 +42,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	data, _ = n.GetNode(self)
 	log.Printf("\nNode data: %v\n", data)
 
-	context.SetOutput("output", data.ID)
+	context.SetOutput("output", self)
 
 	return true, nil
 }
