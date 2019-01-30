@@ -1,10 +1,10 @@
 {
-  "name": "recieveazure",
+  "name": "recieveazureiot",
   "version": "0.0.1",
   "type": "flogo:activity",
-  "description": "activity description",
-  "ref": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/recieveazure",
-  "author": "shaliniGovindaNayak<shalini.n@isteer.com>",
+  "ref":"github.com/shaliniGovindaNayak/flogo-workspace/activity/recieveazure",
+  "description": "Creates an activity to recieve message from Azure IOT Hub",
+  "author": "ShaliniGovindaNayak <shalini.n@isteer.com>",
   "inputs":[
     {
       "name": "connectionString",

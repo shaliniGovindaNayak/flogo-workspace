@@ -6,20 +6,20 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"fmt"
+	"html/template"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
-	"text/template"
 	"time"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 	"github.com/TIBCOSoftware/flogo-lib/logger"
 )
 
-var log = logger.GetLogger("activity-recieveazure")
+var log = logger.GetLogger("activity-azureiot")
 
 const (
 	ivconnectionString = "connectionString"
@@ -68,15 +68,13 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
-	// do eval
-
 	connectionString := context.GetInput(ivconnectionString).(string)
-	//message := context.GetInput(ivMessage).(string)
+	message := context.GetInput(ivMessage).(string)
 	//action := context.GetInput(ivaction).(string)
 	deviceID := context.GetInput(ivDeviceID).(string)
 
 	log.Debug("The connection string to device is [%s]", connectionString)
-	//log.Debug("The Method type selected is [%s]", message)
+	log.Debug("The Method type selected is [%s]", message)
 	log.Debug("The Devic ID is [%s]", deviceID)
 
 	client, err := NewIotHubHTTPClientFromConnectionString(connectionString)
@@ -88,7 +86,6 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	context.SetOutput(ovStatus, status)
 
 	return true, nil
-
 }
 
 func parseConnectionString(connString string) (hostName, sharedAccessKey, sharedAccessKeyName, deviceID, error) {
