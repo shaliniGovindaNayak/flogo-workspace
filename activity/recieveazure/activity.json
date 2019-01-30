@@ -1,39 +1,17 @@
 {
-  "name": "recieveazure",
+  "name": "neo4j",
   "version": "0.0.1",
   "type": "flogo:activity",
-  "ref":"github.com/shaliniGovindaNayak/flogo-workspace/activity/recieveazure",
-  "description": "Creates an activity to send a message to Azure IOT Hub",
-  "author": "ShaliniGovindaNayak <shalini.n@isteer.com>",
+  "description": "activity description",
+  "ref": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/neo4j",
+  "author": "shaliniGovindaNayak<shalini.n@isteer.com>",
   "inputs":[
-    {
-      "name": "connectionString",
-      "type": "string",
-      "required": true
-    },
-    {
-      "name": "Device ID",
-      "type": "string"
-    },
-    {
-      "name": "Action",
-      "type": "string",
-      "required": true,
-      "allowed": ["recieve"]
-    },
-    {
-      "name": "message",
-      "type": "string"
-    }
+  
   ],
   "outputs": [
     {
-      "name": "result",
-      "type":"any"
-    },
-    {
-      "name": "status",
-      "type":"any"
+      "name": "output",
+      "type": "string"
     }
   ]
 }

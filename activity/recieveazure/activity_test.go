@@ -1,4 +1,4 @@
-package recieveazure
+package neo4j
 
 import (
 	"io/ioutil"
