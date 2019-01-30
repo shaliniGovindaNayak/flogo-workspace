@@ -1,17 +1,39 @@
 {
-  "name": "neo4j",
+  "name": "recieveazure",
   "version": "0.0.1",
   "type": "flogo:activity",
   "description": "activity description",
-  "ref": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/neo4j",
+  "ref": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/recieveazure",
   "author": "shaliniGovindaNayak<shalini.n@isteer.com>",
   "inputs":[
-  
+    {
+      "name": "connectionString",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "Device ID",
+      "type": "string"
+    },
+    {
+      "name": "Action",
+      "type": "string",
+      "required": true,
+      "allowed": ["Send"]
+    },
+    {
+      "name": "message",
+      "type": "string"
+    }
   ],
   "outputs": [
     {
-      "name": "output",
-      "type": "string"
+      "name": "result",
+      "type":"any"
+    },
+    {
+      "name": "status",
+      "type":"any"
     }
   ]
 }

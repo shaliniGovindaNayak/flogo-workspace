@@ -2,7 +2,7 @@ package neo4j
 
 import (
 	"fmt"
-
+	"log"
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 	bolt "github.com/johnnadratowski/golang-neo4j-bolt-driver"
 	"github.com/johnnadratowski/golang-neo4j-bolt-driver/structures/graph"
@@ -27,6 +27,7 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	driver := bolt.NewDriver()
+	log.
 	conn, _ := driver.OpenNeo("bolt://localhost:7687")
 	//defer conn.Close()
 
