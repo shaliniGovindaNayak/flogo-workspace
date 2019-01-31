@@ -6,12 +6,20 @@
   "ref": "github.com/shaliniGovindaNayak/flogo-workspace/activity/neo4j",
   "author": "shaliniGovindaNayak<shalini.n@isteer.com>",
   "inputs":[
-  
+        {
+            "name":"url",
+            "type":"string",
+            "required":"true"
+        }, 
+        {
+          "name":"query statement",
+          "type":"string"
+        }
   ],
   "outputs": [
     {
-      "name": "output",
-      "type": "string"
+      "name": "result",
+      "type": "intiger"
     }
   ]
 }
