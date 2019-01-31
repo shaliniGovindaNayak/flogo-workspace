@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
+	_ "gopkg.in/cq.v1"
 )
 
 // MyActivity is a stub for your Activity implementation
@@ -28,7 +29,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	url := context.GetInput("url").(string)
 	//query := context.GetInput("query statement").(string)
 
-	db, err := sql.Open("bolt", url)
+	db, err := sql.Open("neo4j-cypher", url)
 	if err != nil {
 		log.Fatal(err)
 	}
