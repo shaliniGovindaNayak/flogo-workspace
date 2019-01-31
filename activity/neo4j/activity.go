@@ -28,7 +28,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	url := context.GetInput("url").(string)
 	//query := context.GetInput("query statement").(string)
 
-	db, err := sql.Open("neo4j-cypher", url)
+	db, err := sql.Open("bolt", url)
 	if err != nil {
 		log.Fatal(err)
 	}
