@@ -26,9 +26,10 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
-	//url := context.GetInput("url").(string)
+	url := context.GetInput("url").(string)
 	//query := context.GetInput("query statement").(string)
 
+	fmt.Println(url)
 	driver := bolt.NewDriver()
 	conn, _ := driver.OpenNeo("bolt://localhost:7687")
 	defer conn.Close()
@@ -38,5 +39,6 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	numResult, _ := result.RowsAffected()
 	fmt.Printf("CREATED ROWS: %d\n", numResult) // CREATED ROWS: 1
 
+	context.SetOutput("result", result)
 	return true, nil
 }
