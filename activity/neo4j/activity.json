@@ -19,7 +19,7 @@
   "outputs": [
     {
       "name": "result",
-      "type": "intiger"
+      "type": "integer"
     }
   ]
 }
