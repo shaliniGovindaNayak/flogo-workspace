@@ -27,8 +27,9 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
+	url := context.GetInput("url").(string)
 	driver := bolt.NewDriver()
-	conn, _ := driver.OpenNeo("bolt://neo4j:password@192.168.1.34:7687")
+	conn, _ := driver.OpenNeo(url)
 	defer conn.Close()
 
 	// Start by creating a node
