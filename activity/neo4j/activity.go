@@ -1,11 +1,11 @@
 package neo4j
 
 import (
-	"database/sql"
-	"log"
+	"fmt"
+
+	bolt "github.com/johnnadratowski/golang-neo4j-bolt-driver"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
-	_ "gopkg.in/cq.v1"
 )
 
 // MyActivity is a stub for your Activity implementation
@@ -29,37 +29,14 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	url := context.GetInput("url").(string)
 	//query := context.GetInput("query statement").(string)
 
-	db, err := sql.Open("neo4j-cypher", url)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
+	driver := bolt.NewDriver()
+	conn, _ := driver.OpenNeo(url)
+	defer conn.Close()
 
-	stmt, err := db.Prepare(`
-		match (n:User)-[:FOLLOWS]->(m:User) 
-		where n.screenName = {0} 
-		return m.screenName as friend
-		limit 10
-	`)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer stmt.Close()
-
-	rows, err := stmt.Query("wefreema")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer rows.Close()
-
-	var friend string
-	for rows.Next() {
-		err := rows.Scan(&friend)
-		if err != nil {
-			log.Fatal(err)
-		}
-		log.Println(friend)
-	}
+	// Start by creating a node
+	result, _ := conn.ExecNeo("CREATE (n:NODE {foo: {foo}, bar: {bar}})", map[string]interface{}{"foo": 1, "bar": 2.2})
+	numResult, _ := result.RowsAffected()
+	fmt.Printf("CREATED ROWS: %d\n", numResult) // CREATED ROWS: 1
 
 	return true, nil
 }
