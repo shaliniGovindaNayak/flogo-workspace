@@ -10,11 +10,8 @@
             "name":"url",
             "type":"string",
             "required":"true"
-        }, 
-        {
-          "name":"query statement",
-          "type":"string"
         }
+      
   ],
   "outputs": [
     {
