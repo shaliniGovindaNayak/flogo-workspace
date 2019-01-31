@@ -31,7 +31,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	fmt.Println(url)
 	driver := bolt.NewDriver()
-	conn, _ := driver.OpenNeo("bolt://neo4j:password@192.168.1.34:7687")
+	conn, _ := driver.OpenNeo(url)
 	defer conn.Close()
 
 	// Start by creating a node
