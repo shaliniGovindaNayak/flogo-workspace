@@ -31,37 +31,32 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	url := context.GetInput("url").(string)
-
 	db, err := sql.Open("neo4j-cypher", url)
-	logg.Debug("connection established")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
 
-	stmt, err := db.Prepare(`
-		match (n:employee) return n
-	`)
-	logg.Debug("executing the query")
+	tx, err := db.Begin()
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer stmt.Close()
 
-	rows, err := stmt.Query("wefreema")
+	stmt, err := tx.Prepare("create (:User {screenName:{0}})")
 	if err != nil {
 		log.Fatal(err)
 	}
-	defer rows.Close()
-	context.SetOutput("output", rows)
-	var friend string
-	for rows.Next() {
-		err := rows.Scan(&friend)
-		if err != nil {
-			log.Fatal(err)
-		}
-		log.Println(friend)
+	logg.Debug(stmt)
+
+	stmt.Exec("wefreema")
+	stmt.Exec("JnBrymn")
+	stmt.Exec("technige")
+
+	err = tx.Commit()
+	if err != nil {
+		log.Fatal(err)
 	}
+	logg.Debug(err)
 
 	return true, nil
 }
