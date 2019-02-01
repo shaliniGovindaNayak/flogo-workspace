@@ -34,6 +34,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	url := context.GetInput("url").(string)
 	db, err := sql.Open("neo4j-cypher", url)
+	logg.Debug(db)
 	if err != nil {
 		log.Fatal(err)
 	}
