@@ -4,19 +4,17 @@
   "type": "flogo:activity",
   "description": "activity description",
   "ref": "github.com/shaliniGovindaNayak/flogo-workspace/activity/neo4j",
-  "author": "shaliniGovindaNayak<shalini.n@isteer.com>",
+  "author": "shaliniGovindaNayak<shalini.@isteer.com>",
   "inputs":[
     {
-      "name":"url",
-      "type":"string",
-      "required":"true"
+      "name": "url",
+      "type": "string"
     }
-      
   ],
   "outputs": [
     {
-      "name": "result",
-      "type": "integer"
+      "name": "output",
+      "type": "string"
     }
   ]
 }
