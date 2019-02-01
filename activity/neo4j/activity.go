@@ -3,10 +3,13 @@ package neo4j
 import (
 	"fmt"
 
+	"github.com/TIBCOSoftware/flogo-lib/logger"
 	bolt "github.com/johnnadratowski/golang-neo4j-bolt-driver"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 )
+
+var log = logger.GetLogger("activity-neo4j")
 
 // MyActivity is a stub for your Activity implementation
 type MyActivity struct {
@@ -34,6 +37,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	// Start by creating a node
 	result, _ := conn.ExecNeo("CREATE (n:NODE {foo: {foo}, bar: {bar}})", map[string]interface{}{"foo": 1, "bar": 2.2})
 	numResult, _ := result.RowsAffected()
+	log.Debug("the num of rows updated", numResult)
 	fmt.Printf("CREATED ROWS: %d\n", numResult) // CREATED ROWS: 1
 
 	context.SetOutput("output", numResult)
