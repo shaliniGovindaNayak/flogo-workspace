@@ -33,17 +33,16 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	url := context.GetInput("url").(string)
 
 	db, err := sql.Open("neo4j-cypher", url)
+	logg.Debug("connection established")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer db.Close()
 
 	stmt, err := db.Prepare(`
-		match (n:User)-[:FOLLOWS]->(m:User) 
-		where n.screenName = {0} 
-		return m.screenName as friend
-		limit 10
+		match (n:employee) return n
 	`)
+	logg.Debug("executing the query")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -54,7 +53,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		log.Fatal(err)
 	}
 	defer rows.Close()
-
+	context.SetOutput("output", rows)
 	var friend string
 	for rows.Next() {
 		err := rows.Scan(&friend)
