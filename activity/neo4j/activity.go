@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	URI          = "bolt://username:password@localhost:7687"
+	URI          = "bolt://neo4j:password@192.168.1.34:7687"
 	CreateNode   = "CREATE (n:NODE {foo: {foo}, bar: {bar}})"
 	GetNode      = "MATCH (n:NODE) RETURN n.foo, n.bar"
 	RelationNode = "MATCH path=(n:NODE)-[:REL]->(m) RETURN path"
