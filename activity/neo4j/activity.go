@@ -5,6 +5,8 @@ import (
 
 	"log"
 
+	_ "gopkg.in/cq.v1"
+
 	"github.com/TIBCOSoftware/flogo-lib/logger"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
