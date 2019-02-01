@@ -4,12 +4,15 @@ import (
 	"fmt"
 	"io"
 
+	"github.com/TIBCOSoftware/flogo-lib/logger"
 	bolt "github.com/johnnadratowski/golang-neo4j-bolt-driver"
 	_ "gopkg.in/cq.v1"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 	"github.com/johnnadratowski/golang-neo4j-bolt-driver/structures/graph"
 )
+
+var log = logger.GetLogger("activity-azureiot")
 
 const (
 	URI          = "bolt://neo4j:password@192.168.1.34:7687"
@@ -38,9 +41,11 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	con := createConnection()
+	log.Debug(con)
 	defer con.Close()
 
 	st := prepareSatement(CreateNode, con)
+	log.Debug(st)
 	executeStatement(st)
 
 	st = prepareSatement(GetNode, con)
