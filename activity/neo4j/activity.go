@@ -1,11 +1,10 @@
 package neo4j
 
 import (
+	"database/sql"
 	"log"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
-
-	bolt "github.com/johnnadratowski/golang-neo4j-bolt-driver"
 )
 
 // MyActivity is a stub for your Activity implementation
@@ -28,20 +27,22 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	log.Println("activity starts")
 	url := context.GetInput("url").(string)
-	log.Println("fetching url")
-	driver := bolt.NewDriver()
-	log.Println("created new driver")
-	conn, err := driver.Open(url)
+
+	log.Fatal("fetching input")
+
+	db, err := sql.Open("neo4j - cyper", url)
 	if err != nil {
-		log.Println("error while trying to connect to bolt")
-	}
-	result, err := conn.Prepare("create (n:node) return n")
-	if err != nil {
-		log.Println("error while executing the query")
+		log.Fatal(err)
 	}
 
-	log.Println("output:", result)
-	context.SetOutput("output", result)
+	stmt, err := db.Prepare(`create (n:employee)`)
+	rows, err := stmt.Query()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println("output:", rows)
+	context.SetOutput("output", rows)
 
 	return true, nil
 }
