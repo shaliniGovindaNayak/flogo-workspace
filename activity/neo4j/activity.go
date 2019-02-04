@@ -1,11 +1,13 @@
 package neo4j
 
 import (
-	"github.com/TIBCOSoftware/flogo-lib/logger"
+	"fmt"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
-	bolt "github.com/johnnadratowski/golang-neo4j-bolt-driver"
+	gonorm "github.com/marpaia/GonormCypher"
 )
+
+var g *gonorm.Gonorm
 
 // MyActivity is a stub for your Activity implementation
 type MyActivity struct {
@@ -25,21 +27,19 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
-	url := context.GetInput("url").(string)
-	logger.Debug("fetching url")
+	result, err := g.Cypher(`
+    CREATE (n:employee)
+ `).Execute().AsString()
 
-	driver := bolt.NewDriver()
-	logger.Debug("new driver created")
+	if err != nil {
+		panic(err)
+	}
 
-	conn, _ := driver.OpenNeo(url)
-	logger.Debug("connection established")
-	defer conn.Close()
-
-	// Start by creating a node
-	result, _ := conn.ExecNeo("CREATE (n:NODE {foo: {foo}, bar: {bar}})", map[string]interface{}{"foo": 1, "bar": 2.2})
-	numResult, _ := result.RowsAffected()
-	logger.Debug("CREATED ROWS: %d\n", numResult) // CREATED ROWS: 1
-	context.SetOutput("output", numResult)
-
+	fmt.Println("The result is:", result)
+	context.SetOutput("output", result)
 	return true, nil
+}
+
+func init() {
+	g = gonorm.New("http://localhost", 7474)
 }
