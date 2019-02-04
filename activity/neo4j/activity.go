@@ -3,9 +3,9 @@ package neo4j
 import (
 	"fmt"
 	"io"
-	"log"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
+	logger "github.com/TIBCOSoftware/flogo-lib/logger"
 	bolt "github.com/johnnadratowski/golang-neo4j-bolt-driver"
 	"github.com/johnnadratowski/golang-neo4j-bolt-driver/structures/graph"
 )
@@ -36,16 +36,18 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
-	log.Println("activity starts")
+	logger.Debug("activity starts")
 	url := context.GetInput("url").(string)
 
 	fmt.Println(url)
 
 	con := createConnection()
 	defer con.Close()
+	logger.Debug("connection established")
 
 	st := prepareSatement(createNode, con)
 	executeStatement(st)
+	logger.Debug("preparing statement")
 
 	st = prepareSatement(getNode, con)
 	rows := queryStatement(st)
