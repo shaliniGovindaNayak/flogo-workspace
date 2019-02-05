@@ -29,7 +29,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	//operation := context.GetInput("operation").(string)
 	query := context.GetInput("query").(string)
 
-	result, err := g.Cypher(query).Execute().AsString()
+	result, err := g.Cypher("`" + query + "`").Execute().AsString()
 	if err != nil {
 		panic(err)
 	}
