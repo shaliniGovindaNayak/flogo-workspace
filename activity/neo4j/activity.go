@@ -1,11 +1,12 @@
 package neo4j
 
 import (
+	"fmt"
+
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 	gonorm "github.com/marpaia/GonormCypher"
 )
 
-//var url string
 var g *gonorm.Gonorm
 
 // MyActivity is a stub for your Activity implementation
@@ -26,19 +27,25 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
-	//operation := context.GetInput("operation").(string)
-	query := context.GetInput("query").(string)
+	result, err := g.Cypher(`
+    MERGE (p1:Person{name:{name1}})
+    MERGE (p2:Person{name:{name2}})
+    CREATE UNIQUE p1-[:KNOWS]->p2
+    RETURN p1.name
+    `).On(map[string]interface{}{
+		"name1": "Alice",
+		"name2": "Bob",
+	}).Execute().AsString()
 
-	result, err := g.Cypher("`" + query + "`").Execute().AsString()
 	if err != nil {
 		panic(err)
 	}
-	context.SetOutput("output", result)
+
+	fmt.Println("The result is:", result)
 
 	return true, nil
 }
 
 func init() {
-
-	g = gonorm.New("http://neo4j:password@192.168.1.34", 7474)
+	g = gonorm.New("http://192.168.1.34", 7474)
 }
