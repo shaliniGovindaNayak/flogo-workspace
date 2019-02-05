@@ -7,7 +7,7 @@
   "author": "shaliniGovindaNayak <shalini.n@isteer.com>",
   "inputs":[
     {
-      "name": "url",
+      "name": "query",
       "type":"string"
     }
   ],

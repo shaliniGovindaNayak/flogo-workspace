@@ -7,7 +7,7 @@ import (
 	gonorm "github.com/marpaia/GonormCypher"
 )
 
-var url string
+//var url string
 var g *gonorm.Gonorm
 
 // MyActivity is a stub for your Activity implementation
@@ -28,14 +28,13 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
-	url = context.GetInput("url").(string)
-	result, err := g.Cypher(`
-    CREATE (n:employee {name:'shalini', age:'22'})
- `).Execute().AsString()
-
+	//url = context.GetInput("url").(string)
+	query := context.GetInput("query").(string)
 	if err != nil {
 		panic(err)
 	}
+
+	result, err := g.Cypher(query).Execute().AsString()
 
 	fmt.Println("The result is:", result)
 	context.SetOutput("output", result)
@@ -44,9 +43,5 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 func init() {
 
-	g = gonorm.New(url, 7474)
-}
-
-func create(query string) {
-
+	g = gonorm.New("http://neo4j:password@192.168.1.34", 7474)
 }
