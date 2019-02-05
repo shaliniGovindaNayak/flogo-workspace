@@ -34,7 +34,11 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		panic(err)
 	}
 
-	result, err := g.Cypher(`create (n:employee{name : 'shalini', age : '21'})`).Execute().AsString()
+	result, err := g.Cypher(`{
+		"statements" : [ {
+		  "statement" : "CREATE (n) RETURN n"
+		} ]
+	  }`).Execute().AsString()
 
 	fmt.Println("The result is:", result)
 	context.SetOutput("output", result)
