@@ -29,12 +29,12 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	//url = context.GetInput("url").(string)
-	query := context.GetInput("query").(string)
+	//query := context.GetInput("query").(string)
 	if err != nil {
 		panic(err)
 	}
 
-	result, err := g.Cypher(query).Execute().AsString()
+	result, err := g.Cypher(`create (n:employee{name : 'shalini', age : '21'})`).Execute().AsString()
 
 	fmt.Println("The result is:", result)
 	context.SetOutput("output", result)
