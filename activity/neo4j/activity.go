@@ -28,7 +28,7 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	result, err := g.Cypher(`
-    create (n:employee)
+    match (n:employee) delete n
     `).Execute().AsString()
 
 	if err != nil {
