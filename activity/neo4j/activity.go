@@ -41,5 +41,5 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 }
 
 func init() {
-	g = gonorm.New("http://neo4j:password@192.168.1.34", 7474)
+	g = gonorm.New("http://192.168.1.34", 7474)
 }
