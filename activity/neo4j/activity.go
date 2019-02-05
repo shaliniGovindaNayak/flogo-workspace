@@ -1,9 +1,8 @@
 package neo4j
 
 import (
-	"fmt"
-
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
+	"github.com/TIBCOSoftware/flogo-lib/logger"
 	gonorm "github.com/marpaia/GonormCypher"
 )
 
@@ -28,16 +27,37 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
-	//url = context.GetInput("url").(string)
+	operation := context.GetInput("operation").(string)
 	query := context.GetInput("query").(string)
-	if err != nil {
-		panic(err)
+
+	switch operation {
+
+	case "create":
+		result, err := g.Cypher("`" + query + "`").Execute().AsString()
+		if err != nil {
+			panic(err)
+		}
+		context.SetOutput("output", result)
+
+	case "read":
+		result, err := g.Cypher("`" + query + "`").Execute().AsString()
+		if err != nil {
+			panic(err)
+		}
+		context.SetOutput("output", result)
+
+	case "delete":
+		result, err := g.Cypher("`" + query + "`").Execute().AsString()
+		if err != nil {
+			panic(err)
+		}
+		context.SetOutput("output", result)
+
+	default:
+		logger.Debug("invalid operation")
+
 	}
 
-	result, err := g.Cypher(query).Execute().AsString()
-
-	fmt.Println("The result is:", result)
-	context.SetOutput("output", result)
 	return true, nil
 }
 

@@ -7,8 +7,13 @@
   "author": "shaliniGovindaNayak <shalini.n@isteer.com>",
   "inputs":[
     {
+      "name":"operation",
+      "type":"string",
+      "allowed" : ["create", "read", "delete"]
+    },
+    {
       "name":"query",
-      "type":"string"
+      "type":"param"
     }
   ],
   "outputs": [
