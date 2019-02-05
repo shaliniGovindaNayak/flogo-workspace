@@ -27,9 +27,8 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
-	result, err := g.Cypher(`
-    match (n:employee) delete n
-    `).Execute().AsString()
+	query := context.GetInput("query").(string)
+	result, err := g.Cypher(query).Execute().AsString()
 
 	if err != nil {
 		panic(err)
