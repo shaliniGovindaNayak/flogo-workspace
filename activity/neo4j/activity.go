@@ -27,6 +27,7 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
+	g = gonorm.New("http://192.168.1.34", 7474)
 	result, err := g.Cypher(`
     CREATE (n:employee)
  `).Execute().AsString()
@@ -38,8 +39,4 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	fmt.Println("The result is:", result)
 	context.SetOutput("output", result)
 	return true, nil
-}
-
-func init() {
-	g = gonorm.New("http://192.168.1.34", 7474)
 }
