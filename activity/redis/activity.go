@@ -30,7 +30,8 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	val, _ := client.Get(key)
 	println(key, string(val))
 
-	context.SetOutput("output", (string)(val))
+	finalval := string(val)
+	context.SetOutput("output", finalval)
 
 	return true, nil
 }
