@@ -12,13 +12,13 @@
     },
     {
       "name": "value",
-      "type": "string"
+      "type": "array"
     }
   ],
   "outputs": [
     {
       "name": "output",
-      "type": "string"
+      "type": "array"
     }
   ]
 }

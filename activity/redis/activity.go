@@ -25,12 +25,16 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	var client redis.Client
 	key := context.GetInput("key").(string)
-	value := context.GetInput("value").(string)
+	vals := context.GetInput("value").([]string)
 
-	client.Set(key, []byte(value))
-	val, _ := client.Get(key)
-	println(key, string(val))
-	context.SetOutput("output", string(val))
+	for _, v := range vals {
+		client.Rpush(key, []byte(v))
+	}
+	dbvals, _ := client.Lrange(key, 0, 100)
+	for i, v := range dbvals {
+		println(i, ":", string(v))
+		context.SetOutput("output[i]", string(v[i]))
+	}
 
 	return true, nil
 }
