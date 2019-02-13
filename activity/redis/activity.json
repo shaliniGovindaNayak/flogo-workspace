@@ -1,0 +1,24 @@
+{
+  "name": "redis",
+  "version": "0.0.1",
+  "type": "flogo:activity",
+  "description": "activity description",
+  "ref": "github.com/shaliniGovindaNayak/flogo-workspace/activity/redis",
+  "author": "shalini Govinda Nayak<shalini.n@isteer.com>",
+  "inputs":[
+    {
+      "name": "keyval",
+      "type": "string"
+    },
+    {
+      "name":"value",
+      "type":"string"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "output",
+      "type": "string"
+    }
+  ]
+}
