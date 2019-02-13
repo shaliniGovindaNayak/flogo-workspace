@@ -4,15 +4,15 @@
   "type": "flogo:activity",
   "description": "activity description",
   "ref": "github.com/shaliniGovindaNayak/flogo-workspace/activity/redis",
-  "author": "shalini Govinda Nayak<shalini.n@isteer.com>",
+  "author": "Shalini Govinda Nayak <shalini.n@isteer.com>",
   "inputs":[
     {
-      "name": "keyval",
+      "name": "key",
       "type": "string"
     },
     {
-      "name":"value",
-      "type":"string"
+      "name": "value",
+      "type": "string"
     }
   ],
   "outputs": [

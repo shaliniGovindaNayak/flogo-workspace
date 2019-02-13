@@ -24,14 +24,13 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	var client redis.Client
-	var key = context.GetInput("keyval").(string)
-	var value = context.GetInput("value").(string)
+	key := context.GetInput("key").(string)
+	value := context.GetInput("value").(string)
+
 	client.Set(key, []byte(value))
 	val, _ := client.Get(key)
 	println(key, string(val))
-
-	finalval := string(val)
-	context.SetOutput("output", finalval)
+	context.SetOutput("output", string(val))
 
 	return true, nil
 }
