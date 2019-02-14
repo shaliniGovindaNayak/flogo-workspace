@@ -32,8 +32,8 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	dbvals, _ := client.Lrange(key, 0, 4)
 	for i, v := range dbvals {
 		println(i, ":", string(v))
+		context.SetOutput("output", string(v[i]))
 	}
-	context.SetOutput("output", dbvals)
 
 	return true, nil
 }
