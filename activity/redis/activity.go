@@ -29,14 +29,14 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	for _, v := range vals {
 		client.Rpush(key, []byte(v))
 	}
-	//var out []string
+	var out []string
 	dbvals, _ := client.Lrange(key, 0, 4)
 	for i, v := range dbvals {
 		println(i, ":", string(v))
-		//out[i] = string(v[i])
+		out[i] = string(v)
 	}
 
-	//context.SetOutput("output", out)
+	context.SetOutput("output", out)
 
 	return true, nil
 }
