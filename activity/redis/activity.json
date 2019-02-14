@@ -17,6 +17,10 @@
     {
       "name": "value",
       "type": "string"
+    },
+    {
+      "name": "operation",
+      "allowed": ["strings","hash"]
     }
   ],
   "outputs": [
