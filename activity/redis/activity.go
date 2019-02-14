@@ -31,9 +31,10 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	key := context.GetInput("key").(string)
 	value := context.GetInput("value").(string)
+	field := context.GetInput("field").(string)
 
-	redis.Set(key, value)
-	result, _ := redis.Get(key)
+	redis.HSet(key, field, value)
+	result := redis.HGet(key, field)
 
 	context.SetOutput("output", result)
 
