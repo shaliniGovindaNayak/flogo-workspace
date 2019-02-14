@@ -20,7 +20,6 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 	return a.metadata
 }
 
-//var redis *miniredis
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
