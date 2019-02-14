@@ -11,6 +11,10 @@
       "type": "string"
     },
     {
+      "name": "field",
+      "type": "string"
+    },
+    {
       "name": "value",
       "type": "string"
     }
