@@ -36,9 +36,8 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	for i, v := range dbvals {
 		println(i, ":", string(v))
 		out.data = string(v)
+		context.SetOutput("output", out)
 	}
-
-	context.SetOutput("output", out)
 
 	return true, nil
 }
