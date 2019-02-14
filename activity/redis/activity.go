@@ -24,20 +24,20 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	key := context.GetInput("key").(string)
+	values := context.GetInput("values").([]string)
 	var client redis.Client
-	vals := []string{"a", "b", "c", "d", "e"}
+	vals := []string(values)
 	for _, v := range vals {
 		client.Rpush(key, []byte(v))
 	}
-	var out struct {
-		data string
-	}
+
+	//raw := make(map[string]interface{})
+
 	dbvals, _ := client.Lrange(key, 0, 4)
 	for i, v := range dbvals {
 		println(i, ":", string(v))
-		out.data = string(v)
-		context.SetOutput("output", out)
 	}
 
+	//json.Unmarshal(dbvals, &raw)
 	return true, nil
 }
