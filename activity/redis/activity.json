@@ -9,6 +9,10 @@
     {
       "name": "key",
       "type": "string"
+    },
+    {
+      "name": "values",
+      "value":"array"
     }
   ],
   "outputs": [
