@@ -23,18 +23,17 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
-	var client redis.Client
 	key := context.GetInput("key").(string)
-	vals := context.GetInput("value").([]string)
-
+	var client redis.Client
+	vals := []string{"a", "b", "c", "d", "e"}
 	for _, v := range vals {
 		client.Rpush(key, []byte(v))
 	}
-	dbvals, _ := client.Lrange(key, 0, 100)
+	dbvals, _ := client.Lrange(key, 0, 4)
 	for i, v := range dbvals {
 		println(i, ":", string(v))
-		context.SetOutput("output[i]", string(v[i]))
 	}
+	context.SetOutput("output", dbvals)
 
 	return true, nil
 }

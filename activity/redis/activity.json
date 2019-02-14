@@ -9,10 +9,6 @@
     {
       "name": "key",
       "type": "string"
-    },
-    {
-      "name": "value",
-      "type": "object"
     }
   ],
   "outputs": [
