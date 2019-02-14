@@ -3,8 +3,6 @@ package redis
 import (
 	"encoding/json"
 
-	"github.com/TIBCOSoftware/flogo-lib/logger"
-
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 	"github.com/alicebob/miniredis"
 )
@@ -25,8 +23,9 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 }
 
 var raw struct {
-	field []string
-	value []string
+	name   string
+	age    string
+	salary string
 }
 
 // Eval implements activity.Activity.Eval
@@ -36,25 +35,29 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	data := context.GetInput("data")
 	operation := context.GetInput("operation").(string)
 	var result string
+	var value []string
 
 	input, err := json.Marshal(data)
 
 	json.Unmarshal(input, &raw)
-	logger.Debug(input)
+	value[0] = raw.name
+	value[1] = raw.age
+	value[2] = raw.salary
 
-	raw.field[0] = "name"
-	raw.field[1] = "age"
-	raw.field[2] = "salary"
+	var field []string
+	field[0] = "name"
+	field[1] = "age"
+	field[2] = "salary"
 
 	switch operation {
 
 	case "strings":
-		result = set(key, raw.value[0])
+		result = set(key, value[0])
 		break
 
 	case "hash":
-		for i := 0; i < len(raw.field); i++ {
-			result = hash(key, raw.field[i], raw.value[i])
+		for i := 0; i < len(field); i++ {
+			result = hash(key, field[i], value[i])
 			i++
 		}
 	}
