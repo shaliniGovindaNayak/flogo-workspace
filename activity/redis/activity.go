@@ -2,7 +2,7 @@ package redis
 
 import (
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
-	"github.com/hoisie/redis"
+	"github.com/alicebob/miniredis"
 )
 
 // MyActivity is a stub for your Activity implementation
@@ -23,21 +23,19 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
+	redis, err := miniredis.Run()
+	if err != nil {
+		panic(err)
+	}
+	defer redis.Close()
+
 	key := context.GetInput("key").(string)
-	values := context.GetInput("values").([]string)
-	var client redis.Client
-	vals := []string(values)
-	for _, v := range vals {
-		client.Rpush(key, []byte(v))
-	}
+	value := context.GetInput("value").(string)
 
-	//raw := make(map[string]interface{})
+	redis.Set(key, value)
+	result, _ := redis.Get(key)
 
-	dbvals, _ := client.Lrange(key, 0, 4)
-	for i, v := range dbvals {
-		println(i, ":", string(v))
-	}
+	context.SetOutput("output", result)
 
-	//json.Unmarshal(dbvals, &raw)
 	return true, nil
 }

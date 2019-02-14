@@ -11,14 +11,14 @@
       "type": "string"
     },
     {
-      "name": "values",
-      "type":"array"
+      "name": "value",
+      "type": "string"
     }
   ],
   "outputs": [
     {
       "name": "output",
-      "type":"object"
+      "type": "string"
     }
   ]
 }
