@@ -28,6 +28,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	operation := context.GetInput("operation").(string)
 	field := context.GetInput("field").(string)
 	var result string
+	var res int
 
 	switch operation {
 
@@ -40,11 +41,15 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		break
 
 	case "list":
-		result = string(list(key, value))
+		res = list(key, value)
 		break
 
 	}
-	context.SetOutput("output", result)
+	if operation == "list" {
+		context.SetOutput("output", res)
+	} else {
+		context.SetOutput("output", result)
+	}
 
 	return true, nil
 }
