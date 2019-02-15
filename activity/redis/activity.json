@@ -27,7 +27,7 @@
   "outputs": [
     {
       "name": "output",
-      "type": "string"
+      "type": "any"
     }
   ]
 }
