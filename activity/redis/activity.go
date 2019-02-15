@@ -32,20 +32,18 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	case "strings":
 		result := set(key, value)
-		context.SetOutput("output", result)
 		break
 
 	case "hash":
 		result := hash(key, field, value)
-		context.SetOutput("output", result)
 		break
 
 	case "list":
 		result := list(key, value)
-		context.SetOutput("output", result)
 		break
 
 	}
+	context.SetOutput("output", result)
 
 	return true, nil
 }
