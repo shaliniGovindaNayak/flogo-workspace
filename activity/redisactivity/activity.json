@@ -12,7 +12,7 @@
     },
     {
       "name": "data",
-      "type": "object"
+      "type": "any"
     },
     {
       "name": "operation",
@@ -23,7 +23,7 @@
   "outputs": [
     {
       "name": "output",
-      "type": "object"
+      "type": "any"
     }
   ]
 }
