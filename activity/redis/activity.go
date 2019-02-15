@@ -26,30 +26,28 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	key := context.GetInput("key").(string)
 	value := context.GetInput("value").(string)
 	operation := context.GetInput("operation").(string)
-	field := context.GetInput("field").(string)
-	var result string
-	var res int
+	//field := context.GetInput("field").(string)
+	//var result string
+	var res []string
 
 	switch operation {
 
-	case "strings":
-		result = set(key, value)
-		break
+	//	case "strings":
+	//		result = set(key, value)
+	//		break
 
-	case "hash":
-		result = hash(key, field, value)
-		break
+	//	case "hash":
+	//		result = hash(key, field, value)
+	//		break
 
 	case "list":
 		res = list(key, value)
+
 		break
 
 	}
-	if operation == "list" {
-		context.SetOutput("output", res)
-	} else {
-		context.SetOutput("output", result)
-	}
+
+	context.SetOutput("output", res)
 
 	return true, nil
 }
@@ -82,7 +80,7 @@ func hash(key string, field string, value string) string {
 
 }
 
-func list(key string, value string) int {
+func list(key string, value string) []string {
 
 	redis, err := miniredis.Run()
 	if err != nil {
@@ -90,6 +88,8 @@ func list(key string, value string) int {
 	}
 	defer redis.Close()
 
-	res, _ := redis.Lpush(key, value)
+	var res []string
+	redis.Lpush(key, value)
+	res, _ = redis.List(key)
 	return res
 }
