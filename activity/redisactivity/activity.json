@@ -1,0 +1,29 @@
+{
+  "name": "redisactivity",
+  "version": "0.0.1",
+  "type": "flogo:activity",
+  "description": "activity description",
+  "ref": "github.com/shaliniGovindaNayak/flogo-workspace/activity/redisactivity",
+  "author": "shaliniGovindaNayak <shalini.n@isteer.com>",
+  "inputs":[
+    {
+      "name": "key",
+      "type": "string"
+    },
+    {
+      "name": "data",
+      "type": "object"
+    },
+    {
+      "name": "operation",
+      "type": "string",
+      "required": ["strings","hash"]
+    }
+  ],
+  "outputs": [
+    {
+      "name": "output",
+      "type": "string"
+    }
+  ]
+}
