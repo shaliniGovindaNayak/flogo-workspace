@@ -27,7 +27,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	value := context.GetInput("value").(string)
 	operation := context.GetInput("operation").(string)
 	field := context.GetInput("field").(string)
-	var result strings
+	var result string
 	switch operation {
 
 	case "strings":
