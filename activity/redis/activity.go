@@ -26,19 +26,21 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	key := context.GetInput("key").(string)
 	value := context.GetInput("value").(string)
 	operation := context.GetInput("operation").(string)
-	//field := context.GetInput("field").(string)
-	//var result string
+	field := context.GetInput("field").(string)
+	var result string
 	var res []string
 
 	switch operation {
 
-	//	case "strings":
-	//		result = set(key, value)
-	//		break
+	case "strings":
+		result = set(key, value)
+		context.SetOutput("output", result)
+		break
 
-	//	case "hash":
-	//		result = hash(key, field, value)
-	//		break
+	case "hash":
+		result = hash(key, field, value)
+		context.SetOutput("output", result)
+		break
 
 	case "list":
 		res = list(key, value)

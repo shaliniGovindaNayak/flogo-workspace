@@ -16,7 +16,7 @@
     },
     {
       "name": "value",
-      "type": "string"
+      "type": "any"
     },
     {
       "name": "operation",
