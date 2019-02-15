@@ -11,8 +11,12 @@
       "type": "string"
     },
     {
-      "name": "data",
-      "type": "object"
+      "name": "field",
+      "type": "string"
+    },
+    {
+      "name": "value",
+      "type": "string"
     },
     {
       "name": "operation",
