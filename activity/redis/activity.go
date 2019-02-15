@@ -41,7 +41,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		break
 
 	case "list":
-		result := string(list(key, value))
+		result := list(key, value)
 		context.SetOutput("output", result)
 		break
 
