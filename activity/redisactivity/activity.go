@@ -50,19 +50,22 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	value[2] = input.salary
 
 	var result string
+	var hresult []string
 	switch operation {
 
 	case "strings":
 		result = set(key, value[0])
+		context.SetOutput("output", result)
+
 		break
 
 	case "hash":
 		for i := 0; i < len(field); i++ {
-			result = hash(key, field[i], value[i])
+			hresult[i] = hash(key, field[i], value[i])
 
 		}
+		context.SetOutput("output", hresult)
 	}
-	context.SetOutput("output", result)
 
 	return true, nil
 }
