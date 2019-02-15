@@ -1,8 +1,6 @@
 package redis
 
 import (
-	"encoding/json"
-
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 	"github.com/alicebob/miniredis"
 )
@@ -22,44 +20,24 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 	return a.metadata
 }
 
-var raw struct {
-	name   string
-	age    string
-	salary string
-}
-
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	key := context.GetInput("key").(string)
-	data := context.GetInput("data")
+	value := context.GetInput("value").(string)
 	operation := context.GetInput("operation").(string)
+	field := context.GetInput("field").(string)
 	var result string
-	var value []string
-
-	input, err := json.Marshal(data)
-
-	json.Unmarshal(input, &raw)
-	value[0] = raw.name
-	value[1] = raw.age
-	value[2] = raw.salary
-
-	var field []string
-	field[0] = "name"
-	field[1] = "age"
-	field[2] = "salary"
-
 	switch operation {
 
 	case "strings":
-		result = set(key, value[0])
+		result = set(key, value)
 		break
 
 	case "hash":
-		for i := 0; i < len(field); i++ {
-			result = hash(key, field[i], value[i])
-			i++
-		}
+
+		result = hash(key, field, value)
+
 	}
 	context.SetOutput("output", result)
 
