@@ -22,7 +22,7 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 	return a.metadata
 }
 
-var input struct {
+type input struct {
 	name   string
 	age    string
 	salary string
@@ -33,7 +33,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	key := context.GetInput("key").(string)
 	operation := context.GetInput("operation").(string)
-	data := context.GetInput("data").(string)
+	data := context.GetInput("data")
 
 	var field []string
 	field[0] = "name"
@@ -41,13 +41,14 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	field[2] = "salary"
 
 	var value []string
+	var inputs input
 
 	in, _ := json.Marshal(data)
-	json.Unmarshal(in, &input)
+	json.Unmarshal(in, &inputs)
 
-	value[0] = input.name
-	value[1] = input.age
-	value[2] = input.salary
+	value[0] = inputs.name
+	value[1] = inputs.age
+	value[2] = inputs.salary
 
 	var result string
 	var hresult []string
