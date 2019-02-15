@@ -35,8 +35,12 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		break
 
 	case "hash":
-
 		result = hash(key, field, value)
+		break
+
+	case "list":
+		result = list(key, value)
+		break
 
 	}
 	context.SetOutput("output", result)
@@ -69,5 +73,19 @@ func hash(key string, field string, value string) string {
 
 	redis.HSet(key, field, value)
 	return redis.HGet(key, field)
+
+}
+
+func list(key string, value string) string {
+
+	redis, err := miniredis.Run()
+	if err != nil {
+		panic(err)
+	}
+	defer redis.Close()
+
+	redis.Push(key, value)
+	res, _ := redis.Get(key)
+	return res
 
 }

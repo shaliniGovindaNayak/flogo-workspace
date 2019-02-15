@@ -65,7 +65,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 			hresult[i] = hash(key, field[i], value[i])
 
 		}
-		context.SetOutput("output", hresult)
+		//context.SetOutput("output", hresult)
 	}
 
 	return true, nil
