@@ -42,12 +42,10 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	case "list":
 		res = list(key, value)
-
+		context.SetOutput("output", res)
 		break
 
 	}
-
-	context.SetOutput("output", res)
 
 	return true, nil
 }
