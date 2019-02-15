@@ -86,6 +86,6 @@ func list(key string, value string) int {
 	}
 	defer redis.Close()
 
-	res, _ := redis.Push(key, value)
+	res, _ := redis.Lpush(key, value)
 	return res
 }
