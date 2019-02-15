@@ -17,7 +17,7 @@
     {
       "name": "operation",
       "type": "string",
-      "required": ["strings","hash"]
+      "allowed": ["strings","hash"]
     }
   ],
   "outputs": [
