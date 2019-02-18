@@ -2,6 +2,7 @@ package redis
 
 import (
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
+	"github.com/TIBCOSoftware/flogo-lib/logger"
 	"github.com/alicebob/miniredis"
 )
 
@@ -47,6 +48,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	case "Type":
 		res := redis.Type(key)
+		logger.Debug(res)
 		context.SetOutput("output", res)
 		break
 
