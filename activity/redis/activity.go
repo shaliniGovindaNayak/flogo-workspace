@@ -77,6 +77,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	case "Set":
 		redis.Set(key, value)
+		context.SetOutput("output", "done")
 		break
 
 	case "Get":
