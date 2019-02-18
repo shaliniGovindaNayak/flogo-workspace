@@ -82,6 +82,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	case "Set":
 		redis.Set(key, value)
+		fmt.Println(key, value)
 		context.SetOutput("output", "done")
 		break
 
