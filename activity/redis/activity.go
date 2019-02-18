@@ -30,7 +30,6 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	incr := context.GetInput("Incr").(int)
 	//decr := context.GetInput("Decr").(int)
 	field := context.GetInput("field").(string)
-	var res string
 
 	redis, err := miniredis.Run()
 	if err != nil {
@@ -39,18 +38,21 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	switch Commands {
 
 	case "TTL":
-		res = string(redis.TTL(key))
+		res := string(redis.TTL(key))
+		context.SetOutput("output", res)
 		break
 
 	//case "SetTTL":
 	//res = setTTl(key)
 
 	case "Type":
-		res = redis.Type(key)
+		res := redis.Type(key)
+		context.SetOutput("output", res)
 		break
 
 	case "Dump":
-		res = redis.Dump()
+		res := redis.Dump()
+		context.SetOutput("output", res)
 		break
 
 	case "Del":
@@ -81,14 +83,16 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		break
 
 	case "Get":
-		res, err = redis.Get(key)
+		res, _ := redis.Get(key)
+		context.SetOutput("output", res)
 
 	case "Increment":
 		res, _ := redis.Incr(key, incr)
 		context.SetOutput("output", res)
 
 	case "Hget":
-		res = redis.HGet(key, field)
+		res := redis.HGet(key, field)
+		context.SetOutput("output", res)
 		break
 
 	case "Hset":
@@ -114,21 +118,27 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	case "Lpush":
 		res, _ := redis.Lpush(key, value)
 		context.SetOutput("output", res)
+		break
 
 	case "Lpop":
-		res, _ = redis.Lpop(key)
+		res, _ := redis.Lpop(key)
+		context.SetOutput("output", res)
 		break
 
 	case "Rpush":
 		res, _ := redis.Push(key, value)
 		context.SetOutput("output", res)
+		break
 
 	case "Rpop":
-		res, _ = redis.Pop(key)
+		res, _ := redis.Pop(key)
+		context.SetOutput("output", res)
+		break
 
 	case "Add":
 		res, _ := redis.SetAdd(key, value)
 		context.SetOutput("output", res)
+		break
 
 		//	case "Members":
 		//		res = redis.Members(key)
@@ -149,6 +159,5 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		context.SetOutput("output", res)
 	}
 
-	context.SetOutput("output", res)
 	return true, nil
 }
