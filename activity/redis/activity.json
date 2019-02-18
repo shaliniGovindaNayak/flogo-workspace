@@ -19,29 +19,17 @@
       "type": "string"
     },
     {
-      "name":"Key",
+      "name":"Commands",
       "type":"string",
-      "allowed":["TTL","Type","SetTTL","Dump","Del","DB","Exists","Flushall","FlushDB"]
+      "allowed":["TTL","Type","SetTTL","Dump","Del","DB","Exists","Flushall","FlushDB","Set","Get","Increment","get","Hset","Hkeys","Hdel","Hincrement","List","Lpush","Lpop","Rpush","Rpop","Add","Members","Zadd","Zrem","Zscore","IsMember"]
     },
     {
-      "name":"Strings",
-      "type":"string",
-      "allowed":["Set","Get","Increment","Decrement"]
+      "name":"Incr",
+      "type":"integer"
     },
     {
-      "name":"Hashing",
-      "type":"string",
-      "allowed":["hget","hset","hgetall","hkeys","hdel","hincrement"]
-    },
-    {
-      "name":"Lists",
-      "type":"string",
-      "allowed":["List","Lpush","Lpop","Rpush","Rpop",""]
-    },
-    {
-      "name":"Sets",
-      "type":"string",
-      "allowed":["Add","Members","Zadd","Zrem","Zscore","IsMember"]
+      "name":"Decr",
+      "type":"integer"
     }
   ],
   "outputs": [
