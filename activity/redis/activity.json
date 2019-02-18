@@ -21,11 +21,12 @@
     {
       "name": "select",
       "type":"string",
-      "allowed": [{
-        "name":"hash",
-        "type":"string",
-        "allowed":["hget","hmset","hgetall","hdel","hkeys"]
-      }]
+      "allowed": ["hash","list","strings"]
+    },
+    {
+      "name":"hashing",
+      "type":"string",
+      "allowed":["hget","hset","hgetall","hkeys","hdel"]
     }
   ],
   "outputs": [
