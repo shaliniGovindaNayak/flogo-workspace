@@ -93,7 +93,6 @@ func list(key string, value []string) []string {
 	for i := 0; i <= len(value); i++ {
 		redis.Lpush(key, value[i])
 	}
-
 	res, _ = redis.List(key)
 	return res
 }
