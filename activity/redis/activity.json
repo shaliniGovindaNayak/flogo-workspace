@@ -34,8 +34,16 @@
   ],
   "outputs": [
     {
-      "name": "output",
+      "name": "output1",
       "type": "any"
+    },
+    {
+      "name":"output2",
+      "type":"any"
+    },
+    {
+      "name":"output3",
+      "type":"any"
     }
   ]
 }

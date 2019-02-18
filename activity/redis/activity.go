@@ -1,8 +1,6 @@
 package redis
 
 import (
-	"fmt"
-
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 	"github.com/alicebob/miniredis"
 )
@@ -33,6 +31,10 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	//decr := context.GetInput("Decr").(int)
 	field := context.GetInput("field").(string)
 
+	var result1 string
+	var result2 int
+	var result3 bool
+
 	redis, err := miniredis.Run()
 	if err != nil {
 		panic(err)
@@ -40,27 +42,22 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	switch Commands {
 
 	case "TTL":
-		res := string(redis.TTL(key))
-		context.SetOutput("output", res)
+		result1 = string(redis.TTL(key))
 		break
 
 	//case "SetTTL":
 	//res = setTTl(key)
 
 	case "Type":
-		res := redis.Type(key)
-		fmt.Println(res)
-		context.SetOutput("output", res)
+		result1 = redis.Type(key)
 		break
 
 	case "Dump":
-		res := redis.Dump()
-		context.SetOutput("output", res)
+		result1 = redis.Dump()
 		break
 
 	case "Del":
-		res := redis.Del(key)
-		context.SetOutput("output", res)
+		result3 = redis.Del(key)
 		break
 
 	//case "DB":
@@ -68,80 +65,75 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	//	break
 
 	case "Exists":
-		res := redis.Exists(key)
-		context.SetOutput("output", res)
+		result3 = redis.Exists(key)
 		break
 
 	case "Flushall":
 		redis.FlushAll()
+		result1 = "done"
 		break
 
 	case "FlushDB":
 		redis.FlushDB()
+		result1 = "done"
 		break
 
 	case "Set":
 		redis.Set(key, value)
-		fmt.Println(key, value)
-		context.SetOutput("output", "done")
+		result1 = "done"
 		break
 
 	case "Get":
-		res, _ := redis.Get(key)
-		context.SetOutput("output", res)
+		result1, _ = redis.Get(key)
+		break
 
 	case "Increment":
-		res, _ := redis.Incr(key, incr)
-		context.SetOutput("output", res)
+		result2, _ = redis.Incr(key, incr)
+		break
 
 	case "Hget":
-		res := redis.HGet(key, field)
-		context.SetOutput("output", res)
+		result1 = redis.HGet(key, field)
 		break
 
 	case "Hset":
 		redis.HSet(key, field, value)
+		result1 = "done"
 		break
 
 	case "Hdel":
 		redis.HDel(key, field)
+		result1 = "done"
 		break
 
 		//	case "Hkeys":
 	//	res := redis.HKeys(key)
 	//		break
 
-	case "Hincrement":
-		res, _ := redis.HIncr(key, field, incr)
-		context.SetOutput("output", res)
+	//case "Hincrement":
+	//result3, _ = redis.HIncr(key, field, incr)
 
-		//	case "List":
-		//		res = redis.List(key)
-		//		break
+	//	case "List":
+	//		res = redis.List(key)
+	//		break
 
 	case "Lpush":
-		res, _ := redis.Lpush(key, value)
-		context.SetOutput("output", res)
+		result2, _ = redis.Lpush(key, value)
 		break
 
 	case "Lpop":
-		res, _ := redis.Lpop(key)
-		context.SetOutput("output", res)
+		result1, _ = redis.Lpop(key)
 		break
 
 	case "Rpush":
-		res, _ := redis.Push(key, value)
-		context.SetOutput("output", res)
+		result2, _ = redis.Push(key, value)
 		break
 
 	case "Rpop":
-		res, _ := redis.Pop(key)
-		context.SetOutput("output", res)
+		result1, _ = redis.Pop(key)
 		break
 
 	case "Add":
-		res, _ := redis.SetAdd(key, value)
-		context.SetOutput("output", res)
+		result2, _ = redis.SetAdd(key, value)
 		break
 
 		//	case "Members":
@@ -151,17 +143,20 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		//		res = redis.ZAdd(key)
 
 	case "Zrem":
-		res, _ := redis.ZRem(key, value)
-		context.SetOutput("output", res)
+		result3, _ = redis.ZRem(key, value)
+		break
 
-	case "Zscore":
-		res, _ := redis.ZScore(key, value)
-		context.SetOutput("output", res)
+	//case "Zscore":
+	//	res, _ := redis.ZScore(key, value)
+	//	break
 
 	case "Ismember":
-		res, _ := redis.IsMember(key, value)
-		context.SetOutput("output", res)
+		result3, _ = redis.IsMember(key, value)
 	}
+
+	context.SetOutput("output1", result1)
+	context.SetOutput("output2", result2)
+	context.SetOutput("output", result3)
 
 	return true, nil
 }
