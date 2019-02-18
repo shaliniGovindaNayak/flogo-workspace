@@ -19,9 +19,13 @@
       "type": "string"
     },
     {
-      "name": "operation",
+      "name": "select",
       "type":"string",
-      "allowed": ["strings","hash","list"]
+      "allowed": [{
+        "name":"hash",
+        "type":"string",
+        "allowed":["hget","hmset","hgetall","hdel","hkeys"]
+      }]
     }
   ],
   "outputs": [
