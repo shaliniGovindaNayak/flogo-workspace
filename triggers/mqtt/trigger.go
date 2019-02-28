@@ -110,40 +110,39 @@ func (t *MqttTrigger) Start() error {
 			log.Debugf("Subscribed to topic: %s, will trigger handler: %s", topic, handler)
 			t.topicToHandler[topic] = handler
 		}
+
+		fmt.Println("** rulesapp: Example usage of the Rules module/API **")
+
+		//Load the tuple descriptor file (relative to GOPATH)
+		tupleDescAbsFileNm := common.GetAbsPathForResource("https://github.com/shaliniGovindaNayak/flogo-workspace/tree/master/triggers/mqtt/example.json")
+		tupleDescriptor := common.FileToString(tupleDescAbsFileNm)
+		fmt.Printf("Loaded tuple descriptor: \n%s\n", tupleDescriptor)
+		//First register the tuple descriptors
+		err = model.RegisterTupleDescriptors(tupleDescriptor)
+		if err != nil {
+			fmt.Printf("Error [%s]\n", err)
+
+		}
+
+		rs, _ := ruleapi.GetOrCreateRuleSession("asession")
+		//s, _ := ruleapi.GetOrCreateRuleSession("asession")
+
+		rule := ruleapi.NewRule("MqttSubscribe.data==null")
+
+		rule.AddCondition("c1", []string{"MqttSubscribe"}, checkForMqttSubscribeData, nil)
+		rule.SetAction(checkForMqttSubscribeDataAction)
+		rule.SetContext("This is a test of context")
+		rs.AddRule(rule)
+		fmt.Printf("Rule added: [%s]\n", rule.GetName())
+
+		rs.Start(nil)
+		fmt.Println("Asserting MqttSubscribe tuple with value=null")
+		t1, _ := model.NewTupleWithKeyValues("MqttSubscribe", topic)
+		t1.SetString(nil, "data", topic)
+		rs.Assert(nil, t1)
+
+		rs.Retract(nil, t1)
 	}
-
-	fmt.Println("** rulesapp: Example usage of the Rules module/API **")
-
-	//Load the tuple descriptor file (relative to GOPATH)
-	tupleDescAbsFileNm := common.GetAbsPathForResource("/home/isteer/example.json")
-	tupleDescriptor := common.FileToString(tupleDescAbsFileNm)
-	fmt.Printf("Loaded tuple descriptor: \n%s\n", tupleDescriptor)
-	//First register the tuple descriptors
-	err = model.RegisterTupleDescriptors(tupleDescriptor)
-	if err != nil {
-		fmt.Printf("Error [%s]\n", err)
-
-	}
-
-	rs, _ := ruleapi.GetOrCreateRuleSession("asession")
-	//s, _ := ruleapi.GetOrCreateRuleSession("asession")
-
-	rule := ruleapi.NewRule("MqttSubscribe.data==null")
-
-	rule.AddCondition("c1", []string{"MqttSubscribe"}, checkForMqttSubscribeData, nil)
-	rule.SetAction(checkForMqttSubscribeDataAction)
-	rule.SetContext("This is a test of context")
-	rs.AddRule(rule)
-	fmt.Printf("Rule added: [%s]\n", rule.GetName())
-
-	rs.Start(nil)
-	fmt.Println("Asserting MqttSubscribe tuple with value=null")
-	t1, _ := model.NewTupleWithKeyValues("MqttSubscribe", "")
-	t1.SetString(nil, "data", "")
-	rs.Assert(nil, t1)
-
-	rs.Retract(nil, t1)
-
 	return nil
 }
 
