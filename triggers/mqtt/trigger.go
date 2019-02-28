@@ -114,7 +114,7 @@ func (t *MqttTrigger) Start() error {
 		fmt.Println("** rulesapp: Example usage of the Rules module/API **")
 
 		//Load the tuple descriptor file (relative to GOPATH)
-		tupleDescAbsFileNm := common.GetAbsPathForResource("https://github.com/shaliniGovindaNayak/flogo-workspace/tree/master/triggers/mqtt/example.json")
+		tupleDescAbsFileNm := common.GetAbsPathForResource("github.com/shaliniGovindaNayak/flogo-workspace/tree/master/triggers/mqtt/example.json")
 		tupleDescriptor := common.FileToString(tupleDescAbsFileNm)
 		fmt.Printf("Loaded tuple descriptor: \n%s\n", tupleDescriptor)
 		//First register the tuple descriptors
