@@ -1,0 +1,17 @@
+{
+  "name": "flogorules",
+  "version": "0.0.1",
+  "type": "flogo:activity",
+  "description": "activity description",
+  "ref": "github.com/shaliniGovindaNayak/flogo-workspace/activity/flogorules",
+  "author": "shalini Govinda Nayak<shalini.n@isteer.com",
+  "inputs":[
+  
+  ],
+  "outputs": [
+    {
+      "name": "output",
+      "type": "string"
+    }
+  ]
+}

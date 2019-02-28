@@ -1,0 +1,12 @@
+[
+  {
+    "name":"MqttSubscribe",
+    "properties":[
+      {
+        "name":"data",
+        "type":"string",
+        "pk-index": 0
+      }
+    ]
+  }
+]
