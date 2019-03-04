@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "type": "flogo:activity",
   "description": "activity description",
-  "ref": "github.com/yourusername/yourrepository",
+  "ref": "github.com/shalinigovindanayak/flogo-workspace/activity/publishmqtt",
   "author": "Your Name <you.name@example.org>",
   "inputs":[
     {
