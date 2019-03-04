@@ -81,7 +81,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	}
 
 	//lg.Infof("Published message %s", payload)
-	client.Publish(c1.topic, byte(c1.qos), false, payload)s
+	client.Publish(c1.topic, byte(c1.qos), false, payload)
 	context.SetOutput("output", "Done...")
 
 	return true, nil
