@@ -4,14 +4,7 @@ import (
 	"fmt"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
-	dht "github.com/d2r2/go-dht"
-	logger "github.com/d2r2/go-logger"
 	MQTT "github.com/eclipse/paho.mqtt.golang"
-)
-
-var lg = logger.NewPackageLogger("main",
-	logger.DebugLevel,
-	// logger.InfoLevel,
 )
 
 type params struct {
@@ -50,7 +43,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	host := context.GetInput("host").(string)
 	password := context.GetInput("password").(string)
 	username := context.GetInput("username").(string)
-	//payload := context.GetInput("payload").(string)
+	payload := context.GetInput("payload").(string)
 
 	credentails := params{topic, host, password, username, "host", false, 0, 1, "pub", ":memory"}
 	c1 := &credentails
@@ -87,40 +80,9 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		panic(token.Error())
 	}
 
-loop:
-	for {
-		fmt.Println("*************************************Sample Publisher Started************************************************")
+	//lg.Infof("Published message %s", payload)
+	client.Publish(c1.topic, byte(c1.qos), false, payload)s
+	context.SetOutput("output", "Done...")
 
-		fmt.Println("************************************doing publish*******************************************************")
-
-		for payload := range generate() {
-
-			client.Publish(c1.topic, byte(c1.qos), false, payload)
-			//token.Wait()
-			lg.Infof("Published message %s", payload)
-			lg.Infof("done...")
-			context.SetOutput("output", "Done...")
-			continue loop
-		}
-	}
-
-	//return true, nil
-}
-
-func generate() <-chan string {
-	c := make(chan string)
-	go func() {
-		temperature, humidity, retried, err :=
-			dht.ReadDHTxxWithRetry(dht.DHT11, 17, false, 10)
-		if err != nil {
-			lg.Fatal(err)
-		}
-		lg.Infof("Sensor = %v: Temperature = %v*C, Humidity = %v%% (retried %d times)",
-			dht.DHT11, temperature, humidity, retried)
-
-		c <- fmt.Sprintf(`{"temperature": "%v", "humidity": "%v"}`, temperature, humidity)
-
-	}()
-
-	return c
+	return true, nil
 }
