@@ -3,13 +3,10 @@
   "version": "0.0.1",
   "type": "flogo:activity",
   "description": "activity description",
-  "ref": "github.com/yourusername/yourrepository",
+  "ref": "github.com/shainigovindanayak/flogo-workspace/activity/data_cal",
   "author": "Your Name <you.name@example.org>",
   "inputs":[
-    {
-      "name": "input",
-      "type": "string"
-    }
+    
   ],
   "outputs": [
     {

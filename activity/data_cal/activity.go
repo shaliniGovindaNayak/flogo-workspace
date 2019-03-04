@@ -102,6 +102,7 @@ loop:
 			client.Publish(c1.topic, byte(c1.qos), false, payload)
 			//token.Wait()
 			lg.Infof("Published message %s", payload)
+			context.SetOutput("output", "published")
 			lg.Infof("done...")
 			continue loop
 		}
