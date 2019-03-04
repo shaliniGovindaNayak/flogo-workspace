@@ -105,14 +105,15 @@ loop:
 			//token.Wait()
 			lg.Infof("Published message %s", payload)
 			lg.Infof("done...")
+			context.SetOutput("output", "done")
 			continue loop
 		}
 	}
 
-	client.Disconnect(250)
-	fmt.Println("Sample Publisher Disconnected")
-	context.SetOutput("output", "done")
-	return
+	//client.Disconnect(250)
+	//fmt.Println("Sample Publisher Disconnected")
+
+	//return
 }
 
 func generate() <-chan string {

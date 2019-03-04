@@ -4,7 +4,7 @@
   "type": "flogo:activity",
   "description": "activity description",
   "ref": "github.com/shalinigovindanayak/flogo-workspace/activity/publishmqtt",
-  "author": "Your Name <you.name@example.org>",
+  "author": "shalini.n@isteer.com",
   "inputs":[
     {
       "name": "topic",
