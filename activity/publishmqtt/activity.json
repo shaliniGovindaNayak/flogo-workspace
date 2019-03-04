@@ -1,0 +1,32 @@
+{
+  "name": "publishmqtt",
+  "version": "0.0.1",
+  "type": "flogo:activity",
+  "description": "activity description",
+  "ref": "github.com/yourusername/yourrepository",
+  "author": "Your Name <you.name@example.org>",
+  "inputs":[
+    {
+      "name": "topic",
+      "type": "string"
+    },
+    {
+      "name":"host",
+      "type":"string"
+    },
+    {
+      "name":"password",
+      "type":"string"
+    },
+    {
+      "name":"username",
+      "type":"string"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "output",
+      "type": "string"
+    }
+  ]
+}

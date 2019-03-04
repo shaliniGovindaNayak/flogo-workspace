@@ -1,4 +1,4 @@
-package data_cal
+package publishmqtt
 
 import (
 	"fmt"
@@ -6,6 +6,7 @@ import (
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 	dht "github.com/d2r2/go-dht"
 	logger "github.com/d2r2/go-logger"
+
 	MQTT "github.com/eclipse/paho.mqtt.golang"
 )
 
@@ -52,11 +53,13 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	defer logger.FinalizeLogger()
 
-	lg.Notify("***************************************************************************************************")
-	lg.Notify("*** You can change verbosity of output, to modify logging level of module \"dht\"")
-	lg.Notify("*** Uncomment/comment corresponding lines with call to ChangePackageLogLevel(...)")
-	//dat := &d1
-	credentails := params{"topic", "tcp://192.168.0.73:1883", "password", "username", "host", false, 0, 1, "pub", ":memory"}
+	topic := context.GetInput("topic").(string)
+	host := context.GetInput("host").(string)
+	password := context.GetInput("password").(string)
+	username := context.GetInput("username").(string)
+	//payload := context.GetInput("payload").(string)
+
+	credentails := params{topic, host, password, username, "host", false, 0, 1, "pub", ":memory"}
 	c1 := &credentails
 
 	if c1.topic == "" {
@@ -84,7 +87,6 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	opts.SetCleanSession(c1.cleansess)
 	if c1.store != ":memory:" {
 		opts.SetStore(MQTT.NewFileStore(c1.store))
-
 	}
 
 	client := MQTT.NewClient(opts)
@@ -102,7 +104,6 @@ loop:
 			client.Publish(c1.topic, byte(c1.qos), false, payload)
 			//token.Wait()
 			lg.Infof("Published message %s", payload)
-			context.SetOutput("output", "published")
 			lg.Infof("done...")
 			continue loop
 		}
@@ -110,8 +111,8 @@ loop:
 
 	client.Disconnect(250)
 	fmt.Println("Sample Publisher Disconnected")
-
-	return true, nil
+	context.SetOutput("output", "done")
+	return
 }
 
 func generate() <-chan string {
