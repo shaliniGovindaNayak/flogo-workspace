@@ -21,10 +21,6 @@
     {
       "name": "password",
       "type": "string"
-    },
-    {
-      "name": "payload",
-      "type": "string"
     }
   ],
   "outputs": [
