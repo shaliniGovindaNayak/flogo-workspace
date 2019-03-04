@@ -3,24 +3,28 @@
   "version": "0.0.1",
   "type": "flogo:activity",
   "description": "activity description",
-  "ref": "github.com/shalinigovindanayak/flogo-workspace/activity/publishmqtt",
-  "author": "shalini.n@isteer.com",
+  "ref": "github.com/shaliniGovindaNayak/flogo-workspace/activtiy/publishmqtt",
+  "author": "ShaliniGovindaNayak <shalini.n@isteer.com>",
   "inputs":[
     {
       "name": "topic",
       "type": "string"
     },
     {
-      "name":"host",
-      "type":"string"
+      "name": "host",
+      "type": "string"
     },
     {
-      "name":"password",
-      "type":"string"
+      "name": "username",
+      "type": "string"
     },
     {
-      "name":"username",
-      "type":"string"
+      "name": "password",
+      "type": "string"
+    },
+    {
+      "name": "payload",
+      "type": "string"
     }
   ],
   "outputs": [
