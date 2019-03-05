@@ -1,0 +1,12 @@
+[
+    {
+        "name":"Sensor",
+        "properties":[
+        {
+            "name":"Connection",
+            "type":"string",
+            "pk-index":0
+        }
+        ]
+    }
+]

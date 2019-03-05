@@ -43,7 +43,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	host := context.GetInput("host").(string)
 	password := context.GetInput("password").(string)
 	username := context.GetInput("username").(string)
-	payload := context.GetInput("payload").(string)
+	payload := context.GetInput("payload")
 
 	credentails := params{topic, host, password, username, "host", false, 0, 1, "pub", ":memory"}
 	c1 := &credentails
