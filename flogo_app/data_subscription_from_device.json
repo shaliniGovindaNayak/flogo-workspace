@@ -1,0 +1,213 @@
+{
+  "name": "Data Subscription From Device",
+  "type": "flogo:app",
+  "version": "0.0.1",
+  "appModel": "1.0.0",
+  "triggers": [
+    {
+      "id": "receive_mqtt_message_from_device",
+      "ref": "github.com/TIBCOSoftware/flogo-contrib/trigger/mqtt",
+      "name": "Receive MQTT Message from device",
+      "description": "Simple MQTT Trigger",
+      "settings": {
+        "broker": "tcp://192.168.0.73:1883",
+        "id": "flogo",
+        "user": "username",
+        "password": "password",
+        "store": "ds"
+      },
+      "handlers": [
+        {
+          "action": {
+            "ref": "github.com/TIBCOSoftware/flogo-contrib/action/flow",
+            "data": {
+              "flowURI": "res://flow:subscribing_msg_from_device"
+            },
+            "mappings": {
+              "input": [
+                {
+                  "mapTo": "input",
+                  "type": "assign",
+                  "value": "$.message"
+                }
+              ]
+            }
+          },
+          "settings": {
+            "topic": "topic"
+          }
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "id": "flow:subscribing_msg_from_device",
+      "data": {
+        "name": "Subscribing_msg_from_device",
+        "metadata": {
+          "input": [
+            {
+              "name": "input",
+              "type": "string"
+            }
+          ],
+          "output": [
+            {
+              "name": "output",
+              "type": "string"
+            }
+          ]
+        },
+        "tasks": [
+          {
+            "id": "log_4",
+            "name": "Log Message",
+            "description": "The activity will displays the incoming data.",
+            "activity": {
+              "ref": "github.com/TIBCOSoftware/flogo-contrib/activity/log",
+              "input": {
+                "flowInfo": false,
+                "addToFlow": true
+              },
+              "mappings": {
+                "input": [
+                  {
+                    "type": "assign",
+                    "value": "$flow.input",
+                    "mapTo": "message"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": "stringtojson_5",
+            "name": "Conversion from String to Json object",
+            "description": "This activity helps to convert the incoming string data into an json Object.",
+            "activity": {
+              "ref": "github.com/shaliniGovindaNayak/flogo-workspace/activity/stringtojson",
+              "mappings": {
+                "input": [
+                  {
+                    "type": "assign",
+                    "value": "$flow.input",
+                    "mapTo": "Rawstring"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": "rest_6",
+            "name": "Invoke Front-man REST Service",
+            "description": "The activity invokes the rest service provided by the frontman and creates a Form that contains subscribed data.",
+            "activity": {
+              "ref": "github.com/TIBCOSoftware/flogo-contrib/activity/rest",
+              "input": {
+                "method": "POST",
+                "uri": "https://beta.frontman.isteer.com:8091/services/KYC/SaveUserForm",
+                "skipSsl": false
+              },
+              "mappings": {
+                "input": [
+                  {
+                    "type": "object",
+                    "value": {
+                      "UserFormDataRequest": {
+                        "UserFormData": {
+                          "FormDataRequest": {
+                            "FormData": [
+                              {
+                                "FormViewID": 1360,
+                                "HeaderID": 2079,
+                                "FieldID": 5972,
+                                "FieldLabel": "Temperature",
+                                "fieldType": "text",
+                                "FieldValue": "{{$activity[stringtojson_5].Json.temperature}}"
+                              },
+                              {
+                                "FormViewID": "1360",
+                                "HeaderID": 2079,
+                                "FieldID": 5973,
+                                "FieldLabel": " Humidity",
+                                "fieldType": "text",
+                                "FieldValue": "{{$activity[stringtojson_5].Json.humidity}}"
+                              },
+                              {
+                                "FormViewID": "1360",
+                                "HeaderID": 2079,
+                                "FieldID": 5974,
+                                "FieldLabel": "Atmosphere Pressure",
+                                "fieldType": "text",
+                                "FieldValue": " 623.0"
+                              }
+                            ]
+                          },
+                          "UserID": "pradyumna.chakicherla@gmail.com",
+                          "RecordID": "{{number.random(1000000000000000)}}",
+                          "ListDisplayFields": "",
+                          "FormID": 533,
+                          "Moment": " 2018-11-20T18:37:01.314695"
+                        }
+                      }
+                    },
+                    "mapTo": "content"
+                  },
+                  {
+                    "type": "object",
+                    "value": {
+                      "X_AUTH_TOKEN": "bb288427-6f82-4b63-9b46-2c04397f7e40",
+                      "Content-Type": "application/json"
+                    },
+                    "mapTo": "header"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "id": "sendazureiot_7",
+            "name": "Send the data to azure IOT",
+            "description": "The subscribed data is also send to the registered devie on azure IOT.",
+            "activity": {
+              "ref": "github.com/pradyuz3rocool/flogo-workspace/activity/sendazureiot",
+              "input": {
+                "connectionString": "HostName=HomeAutoHub.azure-devices.net;DeviceId=raspi;SharedAccessKey=/Me+Jt/cNQ1ID4tDqW3/zg==",
+                "Device ID": "raspi",
+                "Action": "Send"
+              },
+              "mappings": {
+                "input": [
+                  {
+                    "type": "assign",
+                    "value": "$activity[stringtojson_5].Json",
+                    "mapTo": "message"
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "links": [
+          {
+            "from": "log_4",
+            "to": "stringtojson_5"
+          },
+          {
+            "from": "stringtojson_5",
+            "to": "rest_6",
+            "type": "expression",
+            "value": "true"
+          },
+          {
+            "from": "stringtojson_5",
+            "to": "sendazureiot_7",
+            "type": "expression",
+            "value": "true"
+          }
+        ]
+      }
+    }
+  ]
+}
