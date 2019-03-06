@@ -1,0 +1,12 @@
+[
+    {
+        "name":"Temperature",
+        "properties":[
+            {
+            "name":"Value",
+            "type":"double",
+            "pk-index":0
+            }
+        ]
+    }
+]
