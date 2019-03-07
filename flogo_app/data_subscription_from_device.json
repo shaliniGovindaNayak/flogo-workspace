@@ -38,6 +38,28 @@
           }
         }
       ]
+    },
+    {
+      "id": "timer",
+      "ref": "github.com/TIBCOSoftware/flogo-contrib/trigger/timer",
+      "name": "Timer",
+      "description": "Simple Timer trigger",
+      "settings": {},
+      "handlers": [
+        {
+          "action": {
+            "ref": "github.com/TIBCOSoftware/flogo-contrib/action/flow",
+            "data": {
+              "flowURI": "res://flow:device_registration"
+            }
+          },
+          "settings": {
+            "repeating": "false",
+            "notImmediate": "true",
+            "startDate": "2018-01-01T12:00:00Z00:00"
+          }
+        }
+      ]
     }
   ],
   "resources": [
@@ -205,6 +227,43 @@
             "to": "sendazureiot_7",
             "type": "expression",
             "value": "true"
+          }
+        ]
+      }
+    },
+    {
+      "id": "flow:device_registration",
+      "data": {
+        "name": "Device Registration",
+        "tasks": [
+          {
+            "id": "azureiot_2",
+            "name": "azureiot",
+            "description": "Performs CRUD operations of device management in Azure IOT Hub",
+            "activity": {
+              "ref": "github.com/pradyuz3rocool/flogo-workspace/activity/azureiot",
+              "input": {
+                "Device ID": "RaspberryPi",
+                "Type of Operation": "Add Device",
+                "connectionString": "HostName=HomeAutoHub.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=0JE8ig33UrJNzLbZHn8B2rpT66LYmNzZ9JWEYhlEJJo="
+              }
+            }
+          },
+          {
+            "id": "subflow_3",
+            "name": "Subscribing_msg_from_device",
+            "activity": {
+              "ref": "github.com/TIBCOSoftware/flogo-contrib/activity/subflow",
+              "settings": {
+                "flowURI": "res://flow:subscribing_msg_from_device"
+              }
+            }
+          }
+        ],
+        "links": [
+          {
+            "from": "azureiot_2",
+            "to": "subflow_3"
           }
         ]
       }
