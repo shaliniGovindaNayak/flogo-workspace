@@ -13,7 +13,7 @@ import (
 func main() {
 	fmt.Println("** rulesapp: Example usage of the Rules module/API **")
 
-	var value float64
+	var tempValue float64
 
 	sensorType := dht.DHT11
 
@@ -25,9 +25,9 @@ func main() {
 	}
 
 	fmt.Println(temperature, humidity, retried)
-	value = float64(temperature)
+	tempValue = float64(temperature)
 
-	tupleDescAbsFileNm := common.GetAbsPathForResource("/home/isteer/TemperatureTupleDescription.json")
+	tupleDescAbsFileNm := common.GetAbsPathForResource("/home/isteer/flogo-workspace/rule/UnusualTemperatureBehaviour/TemperatureTupleDescription.json")
 	tupleDescriptor := common.FileToString(tupleDescAbsFileNm)
 
 	fmt.Printf("Loaded tuple descriptor: \n%s\n", tupleDescriptor)
@@ -41,7 +41,7 @@ func main() {
 	//Create a RuleSession
 	rs, _ := ruleapi.GetOrCreateRuleSession("asession")
 
-	//// check for name "Bob" in n1
+	//checking for temperature value
 	rule := ruleapi.NewRule("Temperature is = 0")
 	rule.AddCondition("c1", []string{"Temperature"}, checkForTempDec, nil)
 	rule.SetAction(checkForTempDecAction)
@@ -63,24 +63,13 @@ func main() {
 	rs.AddRule(rule2)
 	fmt.Printf("Rule added: [%s]\n", rule.GetName())
 
-	//Start the rule session
 	rs.Start(nil)
 
-	//Now assert a "n1" tuple
+	//Now assert a "Temperature" tuple
 	fmt.Println("Asserting Temperature tuple with Value=0")
-	t1, _ := model.NewTupleWithKeyValues("Temperature", value)
-	t1.SetDouble(nil, "Value", value)
+	t1, _ := model.NewTupleWithKeyValues("Temperature", tempValue)
+	t1.SetDouble(nil, "Value", tempValue)
 	rs.Assert(nil, t1)
-
-	fmt.Println("Asserting Temperature tuple with Value > 100")
-	t2, _ := model.NewTupleWithKeyValues("Temperature", value)
-	t2.SetDouble(nil, "Value", value)
-	rs.Assert(nil, t2)
-
-	fmt.Println("Asserting Temperature tuple with Value between 0 and 100")
-	t3, _ := model.NewTupleWithKeyValues("Temperature", value)
-	t3.SetDouble(nil, "Value", value)
-	rs.Assert(nil, t3)
 
 	//Retract tuples
 	rs.Retract(nil, t1)
@@ -93,7 +82,7 @@ func main() {
 }
 
 func checkForTempDec(ruleName string, condName string, tuples map[model.TupleType]model.Tuple, ctx model.RuleContext) bool {
-	//This conditions filters on name="Bob"
+	//This conditions filters on Temperature is 0 or less
 	t1 := tuples["Temperature"]
 	if t1 == nil {
 		fmt.Println("Should not get a nil tuple in FilterCondition! This is an error")
@@ -119,7 +108,7 @@ func checkForTempDecAction(ctx context.Context, rs model.RuleSession, ruleName s
 }
 
 func checkForTempExc(ruleName string, condName string, tuples map[model.TupleType]model.Tuple, ctx model.RuleContext) bool {
-	//This conditions filters on name="Bob"
+	//This conditions filters on Temperature is 100 or more
 	t1 := tuples["Temperature"]
 	if t1 == nil {
 		fmt.Println("Should not get a nil tuple in FilterCondition! This is an error")
@@ -145,14 +134,14 @@ func checkForTempExcAction(ctx context.Context, rs model.RuleSession, ruleName s
 }
 
 func checkForTempNorm(ruleName string, condName string, tuples map[model.TupleType]model.Tuple, ctx model.RuleContext) bool {
-	//This conditions filters on name="Bob"
+	//This conditions filters on Temperature lies between 0 to 100
 	t1 := tuples["Temperature"]
 	if t1 == nil {
 		fmt.Println("Should not get a nil tuple in FilterCondition! This is an error")
 		return false
 	}
 	name, _ := t1.GetDouble("Value")
-	return name > 0 || name < 100
+	return name > 0 && name < 100
 }
 
 func checkForTempNormAction(ctx context.Context, rs model.RuleSession, ruleName string, tuples map[model.TupleType]model.Tuple, ruleCtx model.RuleContext) {
@@ -161,7 +150,7 @@ func checkForTempNormAction(ctx context.Context, rs model.RuleSession, ruleName 
 	t1 := tuples["Temperature"]
 	data, _ := t1.GetDouble("Value")
 
-	if data < 100 || data > 0 {
+	if data < 100 && data > 0 {
 		fmt.Println("====> Temperature is Normal <=====")
 	}
 	if t1 == nil {
