@@ -1,4 +1,4 @@
-package dht11
+package dht
 
 import (
 	"io/ioutil"

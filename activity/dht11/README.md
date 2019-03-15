@@ -1,2 +1,0 @@
-
-# 	dht11 - Activity
