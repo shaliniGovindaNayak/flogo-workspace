@@ -15,7 +15,7 @@ const (
 	ovHumidity = "humidity"
 )
 
-var log = logger.GetLogger("go-dht")
+var log = logger.GetLogger("dht")
 
 // MyActivity is a stub for your Activity implementation
 type MyActivity struct {
@@ -44,7 +44,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		sensorType = dht.DHT11
 	}
 
-	humidity, temperature, retried, err := dht.ReadDHTxxWithRetry(sensorType, gpioPin, false, 10)
+	temperature, humidity, retried, err := dht.ReadDHTxxWithRetry(sensorType, gpioPin, false, 10)
 
 	if err != nil {
 		log.Error(err)
