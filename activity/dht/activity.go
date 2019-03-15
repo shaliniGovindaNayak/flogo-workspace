@@ -2,7 +2,7 @@ package dht
 
 import (
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
-	dht "github.com/d2r2/go-dht"
+	dht11 "github.com/d2r2/go-dht"
 )
 
 // MyActivity is a stub for your Activity implementation
@@ -26,13 +26,13 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	sensorType := context.GetInput("sensorType").(string)
 	gpiopin := context.GetInput("gpiopin").(int)
 
-	sensor := dht.DHT11
+	sensor := dht11.DHT11
 
 	if sensorType == "dht22" {
-		sensor = dht.DHT22
+		sensor = dht11.DHT22
 	}
 
-	temperature, humidity, err := dht.ReadDHTxx(sensor, gpiopin, false)
+	temperature, humidity, err := dht11.ReadDHTxx(sensor, gpiopin, false)
 
 	context.SetOutput("temperature", temperature)
 	context.SetOutput("humidity", humidity)
