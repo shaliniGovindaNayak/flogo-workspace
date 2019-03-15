@@ -5,7 +5,7 @@ import (
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 	"github.com/TIBCOSoftware/flogo-lib/logger"
-	"github.com/pakohan/dht"
+	dht "github.com/d2r2/go-dht"
 )
 
 const (
@@ -15,7 +15,7 @@ const (
 	ovHumidity = "humidity"
 )
 
-var log = logger.GetLogger("sensor_dht")
+var log = logger.GetLogger("go-dht")
 
 // MyActivity is a stub for your Activity implementation
 type MyActivity struct {
@@ -38,13 +38,13 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	deviceType := context.GetInput(ivType).(string)
 	gpioPin := context.GetInput(ivPin).(int)
 
-	sensorType := dht.SensorDHT22
+	sensorType := dht.DHT22
 
 	if deviceType == "DHT11" {
-		sensorType = dht.SensorDHT11
+		sensorType = dht.DHT11
 	}
 
-	humidity, temperature, err := dht.GetSensorData(sensorType, gpioPin)
+	humidity, temperature, retried, err := dht.ReadDHTxxWithRetry(sensorType, gpioPin, false, 10)
 
 	if err != nil {
 		log.Error(err)
@@ -52,7 +52,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	}
 
 	log.Debugf("DHT Sensor returned [%v] temperature and [%v] humidity", temperature, humidity)
-
+	fmt.Println(retried)
 	context.SetOutput(ovTemp, fmt.Sprint(temperature))
 	context.SetOutput(ovHumidity, fmt.Sprint(humidity))
 	return true, nil
