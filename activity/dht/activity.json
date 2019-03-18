@@ -3,27 +3,18 @@
   "version": "0.0.1",
   "type": "flogo:activity",
   "description": "activity description",
-  "ref": "github.com/shaliniGovindaNayak/flogo-workspace/activity/dht",
-  "author": "ShaliniGovindaNayak<shalini.n@isteer.com>",
+  "ref": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/dht",
+  "author": "shalini.n@isteer.com",
   "inputs":[
     {
-      "name": "sensor Type",
+      "name": "pin",
       "type": "string"
-    },
-    {
-      "name": "gpiopin",
-      "type":"intiger"
     }
-    
   ],
   "outputs": [
     {
-      "name": "temperature",
+      "name": "output",
       "type": "string"
-    },
-    {
-      "name":"humidity",
-      "type":"string"
     }
   ]
 }

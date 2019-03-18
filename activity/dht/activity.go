@@ -1,8 +1,13 @@
 package dht
 
 import (
+	"fmt"
+	"time"
+
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
-	dht11 "github.com/d2r2/go-dht"
+	"gobot.io/x/gobot"
+	"gobot.io/x/gobot/drivers/gpio"
+	"gobot.io/x/gobot/platforms/raspi"
 )
 
 // MyActivity is a stub for your Activity implementation
@@ -23,19 +28,24 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
-	sensorType := context.GetInput("sensorType").(string)
-	gpiopin := context.GetInput("gpiopin").(int)
+	pin := context.GetInput("pin").(string)
+	adaptor := raspi.NewAdaptor()
+	MQ := gpio.NewDirectPinDriver(adaptor, pin)
 
-	sensor := dht11.DHT11
-
-	if sensorType == "dht22" {
-		sensor = dht11.DHT22
+	work := func() {
+		gobot.Every(1*time.Second, func() {
+			value, _ := MQ.DigitalRead()
+			context.SetOutput("output", value)
+			fmt.Println(value)
+		})
 	}
 
-	temperature, humidity, err := dht11.ReadDHTxx(sensor, gpiopin, false)
+	robot := gobot.NewRobot("blinkBot",
+		[]gobot.Connection{adaptor},
+		[]gobot.Device{MQ},
+		work,
+	)
 
-	context.SetOutput("temperature", temperature)
-	context.SetOutput("humidity", humidity)
-
+	robot.Start()
 	return true, nil
 }
