@@ -1,9 +1,8 @@
 package generateUUID
 
 import (
-	"reflect"
-
-	uuid "github.com/satori/go.uuid"
+	"log"
+	"os/exec"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 )
@@ -26,10 +25,11 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
-	id, _ := uuid.NewV4()
-
-	deviceid := reflect.ValueOf(id).String()
-	context.SetOutput("uuid", deviceid)
-
+	out, err := exec.Command("uuidgen").Output()
+	if err != nil {
+		log.Fatal(err)
+	}
+	id := string(out)
+	context.SetOutput("uuid", id)
 	return true, nil
 }
