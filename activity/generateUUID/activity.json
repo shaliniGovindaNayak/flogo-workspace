@@ -10,7 +10,7 @@
   ],
   "outputs": [
     {
-      "name": "output",
+      "name": "uuid",
       "type": "string"
     }
   ]
