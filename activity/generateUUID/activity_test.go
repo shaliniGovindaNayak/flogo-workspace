@@ -1,4 +1,4 @@
-package dht
+package generateUUID
 
 import (
 	"io/ioutil"

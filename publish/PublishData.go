@@ -42,7 +42,7 @@ func main() {
 	lg.Notify("*** Uncomment/comment corresponding lines with call to ChangePackageLogLevel(...)")
 
 	//MQTT credentails are assinged to variabl with respect to a specific host- 192.168.0.73(Raspberry pi)
-	credentails := mqttParameters{"topic", "tcp://192.168.0.73:1883", "password", "username", "host", false, 0, 1, "pub", ":memory"}
+	credentails := mqttParameters{"topic", "tcp://192.168.43.130:1883", "password", "username", "host", false, 0, 1, "pub", ":memory"}
 	mqtt := &credentails
 
 	if mqtt.topic == "" {
@@ -77,6 +77,7 @@ func main() {
 	if token := client.Connect(); token.Wait() && token.Error() != nil {
 		panic(token.Error())
 	}
+
 	//loops up every one sec to gather the data and publishes them to the respected topic
 loop:
 	for {
@@ -103,17 +104,22 @@ loop:
 func generate() <-chan string {
 	c := make(chan string)
 	go func() {
+
+		var a [2]float32
+		var retried int
+		var err error
 		//Send activation request to DHTxx sensor via specific pin
 		//Then decode pulses sent back with asynchronous protocol specific for DHTxx sensors
-		temperature, humidity, retried, err :=
+		a[0], a[1], retried, err =
 			dht.ReadDHTxxWithRetry(dht.DHT11, 17, false, 10)
 		if err != nil {
 			lg.Fatal(err)
 		}
-		lg.Infof("Sensor = %v: Temperature = %v*C, Humidity = %v%% (retried %d times)",
-			dht.DHT11, temperature, humidity, retried)
 
-		c <- fmt.Sprintf(`{"temperature": "%v", "humidity": "%v"}`, temperature, humidity)
+		lg.Infof("Sensor = %v: Temperature = %v*C, Humidity = %v%% (retried %d times)",
+			dht.DHT11, a[0], a[1], retried)
+
+		c <- fmt.Sprintf(`{"temperature": "%v", "humidity": "%v"}`, a[0], a[1])
 
 	}()
 

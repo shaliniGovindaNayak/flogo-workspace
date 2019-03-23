@@ -1,13 +1,10 @@
-package dht
+package generateUUID
 
 import (
 	"fmt"
-	"time"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
-	"gobot.io/x/gobot"
-	"gobot.io/x/gobot/drivers/gpio"
-	"gobot.io/x/gobot/platforms/raspi"
+	"github.com/gofrs/uuid"
 )
 
 // MyActivity is a stub for your Activity implementation
@@ -28,24 +25,10 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
-	pin := context.GetInput("pin").(string)
-	adaptor := raspi.NewAdaptor()
-	MQ := gpio.NewDirectPinDriver(adaptor, pin)
+	u1 := uuid.Must(uuid.NewV4())
+	fmt.Printf("UUIDv4: %s\n", u1)
+	// do eval
 
-	work := func() {
-		gobot.Every(1*time.Second, func() {
-			value, _ := MQ.DigitalRead()
-			context.SetOutput("output", value)
-			fmt.Println(value)
-		})
-	}
-
-	robot := gobot.NewRobot("blinkBot",
-		[]gobot.Connection{adaptor},
-		[]gobot.Device{MQ},
-		work,
-	)
-
-	robot.Start()
+	context.SetOutput("uuid", u1)
 	return true, nil
 }

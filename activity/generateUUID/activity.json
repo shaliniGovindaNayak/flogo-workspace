@@ -1,15 +1,12 @@
 {
-  "name": "dht",
+  "name": "generateUUID",
   "version": "0.0.1",
   "type": "flogo:activity",
   "description": "activity description",
-  "ref": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/dht",
-  "author": "shalini.n@isteer.com",
+  "ref": "github.com/shaliniGovindaNayak/flogo-workspace/activity/generateUUID",
+  "author": "shaliniGovindaNayak<shalini.n@isteer.com>",
   "inputs":[
-    {
-      "name": "pin",
-      "type": "string"
-    }
+   
   ],
   "outputs": [
     {
