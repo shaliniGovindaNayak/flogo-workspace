@@ -115,11 +115,27 @@ func generate() <-chan string {
 		if err != nil {
 			lg.Fatal(err)
 		}
+		THV := 80
+		TLV := 20
+
+		HHV := 80
+		HLV := 20
 
 		lg.Infof("Sensor = %v: Temperature = %v*C, Humidity = %v%% (retried %d times)",
 			dht.DHT11, a[0], a[1], retried)
 
-		c <- fmt.Sprintf(`{"temperature": "%v", "humidity": "%v"}`, a[0], a[1])
+		c <- fmt.Sprintf(`{
+			"temperature": {
+				"HV": %v,
+				"LV": %v,
+				"PV": %v
+			},
+			"humidity": {
+				"HV": %v,
+				"LV": %v,
+				"PV": %v
+			}
+		}`, THV, TLV, a[0], HHV, HLV, a[1])
 
 	}()
 

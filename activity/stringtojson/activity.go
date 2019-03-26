@@ -24,6 +24,17 @@ func (a *MyActivity) Metadata() *activity.Metadata {
 	return a.metadata
 }
 
+type Data struct {
+	temperature []data `json:temperature`
+	humidity    []data `json:humidity`
+}
+
+type data struct {
+	HV int `json:HV`
+	LV int `json.LV`
+	PV int `json.PV`
+}
+
 // Eval implements activity.Activity.Eval
 func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
