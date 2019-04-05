@@ -51,14 +51,14 @@ func main() {
 	rule.SetAction(checkForConnAction)
 	rule.SetContext("This is a test of context")
 	rs.AddRule(rule) //Adding the new rule to session
-	//fmt.Printf("Rule added: [%s]\n", rule.GetName())
+	fmt.Printf("Rule added: [%s]\n", rule.GetName())
 
 	rule = ruleapi.NewRule("Sensor.Connection == false") //Configure the next rule,condition and the respective action to be performed
 	rule.AddCondition("c1", []string{"Sensor"}, checkForDisconn, nil)
 	rule.SetAction(checkForDisconnAction)
 	rule.SetContext("This is a test of context")
 	rs.AddRule(rule) //Adding rule to session
-	//fmt.Printf("Rule added: [%s]\n", rule.GetName())
+	fmt.Printf("Rule added: [%s]\n", rule.GetName())
 
 	rs.Start(nil)
 

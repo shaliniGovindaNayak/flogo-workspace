@@ -1,0 +1,40 @@
+{
+  "name": "devicetwinoperations",
+  "version": "0.0.1",
+  "type": "flogo:activity",
+  "description": "activity description",
+  "ref": "github.com/yourusername/yourrepository",
+  "author": "Your Name <you.name@example.org>",
+  "inputs":[
+    {
+      "name": "connectionString",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "Type of Operation",
+      "type": "string",
+      "required": true,
+      "allowed": ["Get Twin Details","Update device twin","Replace twin"]
+    },
+    {
+      "name": "Device ID",
+      "type": "string"
+    },
+    {
+      "name":"Json Doc",
+      "type": "Object"
+    }
+  ],
+  "outputs": [
+    
+    {
+      "name": "result",
+      "type":"any"
+    },
+    {
+      "name": "status",
+      "type":"any"
+    }
+  ]
+}
