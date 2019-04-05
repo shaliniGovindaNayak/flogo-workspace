@@ -22,8 +22,8 @@
       "type": "string"
     },
     {
-      "name":"Json Document",
-      "type": "object"
+      "name":"properties",
+      "type": "string"
     }
   ],
   "outputs": [
