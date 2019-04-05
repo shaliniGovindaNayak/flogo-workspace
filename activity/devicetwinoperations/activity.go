@@ -71,8 +71,9 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	connectionString := context.GetInput(ivconnectionString).(string)
 	methodType := context.GetInput(ivTypeofOp).(string)
 	deviceID := context.GetInput(ivDeviceID).(string)
-	jsonDoc := context.GetInput("Json Document").(string)
+	jsonDoc := context.GetInput("Json Document").(interface{})
 
+	JD := jsonDoc.(string)
 	log.Debug("The connection string to device is [%s]", connectionString)
 	log.Debug("The Method type selected is [%s]", methodType)
 	log.Debug("The Devic ID is [%s]", deviceID)
@@ -90,12 +91,12 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		context.SetOutput(ovStatus, status)
 
 	case "Update device twin":
-		resp, status := client.UpdateDeviceTwin(deviceID, jsonDoc)
+		resp, status := client.UpdateDeviceTwin(deviceID, JD)
 		context.SetOutput(ovResult, resp)
 		context.SetOutput(ovStatus, status)
 
 	case "Replace twin":
-		resp, status := client.ReplaceTwin(deviceID, jsonDoc)
+		resp, status := client.ReplaceTwin(deviceID, JD)
 		context.SetOutput(ovResult, resp)
 		context.SetOutput(ovStatus, status)
 	}
