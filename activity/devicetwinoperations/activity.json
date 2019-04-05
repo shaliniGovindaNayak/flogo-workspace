@@ -22,7 +22,7 @@
       "type": "string"
     },
     {
-      "name":"Json Doc",
+      "name":"Json Document",
       "type": "Object"
     }
   ],

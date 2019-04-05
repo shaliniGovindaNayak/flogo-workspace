@@ -25,7 +25,7 @@ const (
 	ivconnectionString = "connectionString"
 	ivTypeofOp         = "Type of Operation"
 	ivDeviceID         = "Device ID"
-	ivJsonDoc          = "Json Doc"
+	ivJsonDoc          = "Json Document"
 
 	ovResult = "result"
 	ovStatus = "status"
