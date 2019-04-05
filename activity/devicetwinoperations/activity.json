@@ -23,7 +23,7 @@
     },
     {
       "name":"Json Document",
-      "type": "Object"
+      "type": "object"
     }
   ],
   "outputs": [
