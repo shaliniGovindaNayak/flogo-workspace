@@ -23,7 +23,7 @@
     },
     {
       "name":"properties",
-      "type": "object"
+      "type": "string"
     }
   ],
   "outputs": [
