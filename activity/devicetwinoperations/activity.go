@@ -73,7 +73,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	deviceID := context.GetInput(ivDeviceID).(string)
 	jsonDoc := context.GetInput(ivJsonDoc).(interface{})
 
-	jsonDoc = jsonDoc.(string)
+	jsonDoc1 := jsonDoc.(string)
 
 	log.Debug("The connection string to device is [%s]", connectionString)
 	log.Debug("The Method type selected is [%s]", methodType)
@@ -92,12 +92,12 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		context.SetOutput(ovStatus, status)
 
 	case "Update device twin":
-		resp, status := client.UpdateDeviceTwin(deviceID, jsonDoc)
+		resp, status := client.UpdateDeviceTwin(deviceID, jsonDoc1)
 		context.SetOutput(ovResult, resp)
 		context.SetOutput(ovStatus, status)
 
 	case "Replace twin":
-		resp, status := client.ReplaceTwin(deviceID, jsonDoc)
+		resp, status := client.ReplaceTwin(deviceID, jsonDoc1)
 		context.SetOutput(ovResult, resp)
 		context.SetOutput(ovStatus, status)
 	}
