@@ -71,7 +71,9 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	connectionString := context.GetInput(ivconnectionString).(string)
 	methodType := context.GetInput(ivTypeofOp).(string)
 	deviceID := context.GetInput(ivDeviceID).(string)
-	jsonDoc := context.GetInput(ivJsonDoc).(string)
+	jsonDoc := context.GetInput(ivJsonDoc).(interface{})
+
+	jsonDoc = jsonDoc.(string)
 
 	log.Debug("The connection string to device is [%s]", connectionString)
 	log.Debug("The Method type selected is [%s]", methodType)
