@@ -99,10 +99,6 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		context.SetOutput(ovResult, resp)
 		context.SetOutput(ovStatus, status)
 
-	case "Delete twin":
-		resp, status := client.DeleteTwin(deviceID)
-		context.SetOutput(ovResult, resp)
-		context.SetOutput(ovStatus, status)
 	}
 
 	return true, nil
@@ -179,12 +175,6 @@ func (c *IotHubHTTPClient) ReplaceTwin(deviceID string, config string) (string, 
 
 	url := fmt.Sprintf("%s/twins/%s?api-version=2018-06-30", c.hostName, deviceID)
 	return c.performRequest("PUT", url, config)
-}
-
-func (c *IotHubHTTPClient) DeleteTwin(deviceID string) (string, string) {
-
-	url := fmt.Sprintf("%s/twins/%s?api-version=2018-06-30", c.hostName, deviceID)
-	return c.performRequest("DELETE", url, " ")
 }
 
 func (c *IotHubHTTPClient) buildSasToken(uri string) string {

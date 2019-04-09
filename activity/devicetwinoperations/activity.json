@@ -15,7 +15,7 @@
       "name": "Type of Operation",
       "type": "string",
       "required": true,
-      "allowed": ["Get Twin Details","Update device twin","Replace twin","Delete twin"]
+      "allowed": ["Get Twin Details","Update device twin","Replace twin"]
     },
     {
       "name": "Device ID",
