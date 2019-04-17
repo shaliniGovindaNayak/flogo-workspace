@@ -40,6 +40,9 @@ type data struct {
 }
 
 func main() {
+
+}
+func pub() {
 	defer logger.FinalizeLogger()
 
 	lg.Notify("***************************************************************************************************")
@@ -91,15 +94,15 @@ loop:
 		fmt.Println("************************************doing publish*******************************************************")
 
 		//loops on range of data ie result of generate function
-		for payload := range generate() {
+		//for payload := range generate() {
 
-			//Publishing the gathered data to the topic
-			client.Publish(mqtt.topic, byte(mqtt.qos), false, payload)
+		//Publishing the gathered data to the topic
+		client.Publish(mqtt.topic, byte(mqtt.qos), false, payload)
 
-			lg.Infof("Published message %s", payload)
-			lg.Infof("done...")
-			continue loop
-		}
+		lg.Infof("Published message %s", payload)
+		lg.Infof("done...")
+		continue loop
+		//}
 	}
 
 	client.Disconnect(250)

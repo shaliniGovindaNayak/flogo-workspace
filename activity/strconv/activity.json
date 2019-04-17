@@ -1,0 +1,20 @@
+{
+  "name": "strconv",
+  "version": "0.0.1",
+  "type": "flogo:activity",
+  "description": "activity description",
+  "ref": "github.com/shaliniGovindaNayak/flogo-workspace/tree/master/activity/strconv",
+  "author": "ShaliniGovindaNayak",
+  "inputs":[
+    {
+      "name": "input",
+      "type": "any"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "output",
+      "type": "string"
+    }
+  ]
+}
