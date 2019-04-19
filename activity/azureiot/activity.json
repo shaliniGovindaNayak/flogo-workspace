@@ -19,7 +19,7 @@
     },
     {
       "name": "DeviceID",
-      "type": "any"
+      "type": "string"
     }
   ],
   "outputs": [
