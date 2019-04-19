@@ -24,7 +24,7 @@ var log = logger.GetLogger("activity-azureiot")
 const (
 	ivconnectionString = "connectionString"
 	ivTypeofOp         = "Type of Operation"
-	ivDeviceID         = "DeviceID"
+	ivDeviceID         = "Deviceid"
 
 	ovResult = "result"
 	ovStatus = "status"
@@ -172,7 +172,7 @@ func (c *IotHubHTTPClient) GetDeviceID(deviceID string) (string, string) {
 	return c.performRequest("GET", url, "")
 }
 
-// DeleteDeviceID deletes device by id
+// DeleteDeviceID deletes device by id405 Method Not Allowed
 func (c *IotHubHTTPClient) DeleteDeviceID(deviceID string) (string, string) {
 	url := fmt.Sprintf("%s/devices/%s?api-version=%s", c.hostName, deviceID, apiVersion)
 	return c.performRequest("DELETE", url, "")

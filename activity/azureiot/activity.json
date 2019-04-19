@@ -18,7 +18,7 @@
       "allowed": ["Add Device", "Delete Device", "Purge Device", "Get Twin Details"]
     },
     {
-      "name": "DeviceID",
+      "name": "Deviceid",
       "type": "string"
     }
   ],
