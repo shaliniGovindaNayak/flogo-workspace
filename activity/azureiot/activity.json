@@ -1,0 +1,36 @@
+{
+  "name": "azureiot",
+  "version": "0.0.1",
+  "type": "flogo:activity",
+  "ref":"github.com/shaliniGovindaNayak/flogo-workspace/activity/azureiot",
+  "description": "Performs CRUD operations of device management in Azure IOT Hub",
+  "author": "Shalini Govinda Nayak<shalini.n@isteer.com>",
+  "inputs":[
+    {
+      "name": "connectionString",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "Type of Operation",
+      "type": "string",
+      "required": true,
+      "allowed": ["Add Device", "Delete Device", "Purge Device", "Get Twin Details"]
+    },
+    {
+      "name": "DeviceID",
+      "type": "string"
+    }
+  ],
+  "outputs": [
+    
+    {
+      "name": "result",
+      "type":"any"
+    },
+    {
+      "name": "status",
+      "type":"any"
+    }
+  ]
+}

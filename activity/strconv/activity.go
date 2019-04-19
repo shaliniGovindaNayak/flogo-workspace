@@ -1,8 +1,6 @@
 package strconv
 
 import (
-	"fmt"
-
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 )
 
@@ -26,8 +24,8 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	input := context.GetInput("input").(string)
 
-	output := fmt.Sprint(input)
+	output :=
 
-	context.SetOutput("output", output)
+		context.SetOutput("output", output)
 	return true, nil
 }
