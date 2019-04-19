@@ -163,7 +163,7 @@ func (c *IotHubHTTPClient) IsDevice() bool {
 func (c *IotHubHTTPClient) CreateDeviceID(deviceID string) (string, string) {
 	url := fmt.Sprintf("%s/devices/%s?api-version=%s", c.hostName, deviceID, apiVersion)
 	data := fmt.Sprintf(`{"deviceId":"%s"}`, deviceID)
-	return c.performRequest("POST", url, data)
+	return c.performRequest("PUT", url, data)
 }
 
 // GetDeviceID retrieves device by id
