@@ -1,24 +1,17 @@
 package main
 
 import (
-	"context"
 	"fmt"
+	"time"
 
 	dht "github.com/d2r2/go-dht"
-	"github.com/fatih/color"
-	"github.com/project-flogo/rules/common"
-	"github.com/project-flogo/rules/common/model"
-	"github.com/project-flogo/rules/ruleapi"
 
 	logger "github.com/d2r2/go-logger"
 
 	MQTT "github.com/eclipse/paho.mqtt.golang"
 )
 
-var lg = logger.NewPackageLogger("main",
-	logger.DebugLevel,
-	// logger.InfoLevel,
-)
+var lg = logger.NewPackageLogger("main", logger.DebugLevel)
 
 //Create a structure of MQTT credentials required to publish the message
 type mqttParameters struct {
@@ -35,8 +28,8 @@ type mqttParameters struct {
 	store  string
 }
 type data struct {
-	temp  string `json:"Temperature"`
-	humid string `json:"Humidity"`
+	TEMP  string `json:"Temperature"`
+	HUMID string `json:"Humidity"`
 }
 
 func main() {
@@ -50,7 +43,7 @@ func pub() {
 	lg.Notify("*** Uncomment/comment corresponding lines with call to ChangePackageLogLevel(...)")
 
 	//MQTT credentails are assinged to variabl with respect to a specific host- 192.168.0.73(Raspberry pi)
-	credentails := mqttParameters{"topic", "tcp://192.168.1.17:1883", "password", "username", "host", false, 0, 1, "pub", ":memory"}
+	credentails := mqttParameters{"topic", "tcp://192.168.1.59:1883", "password", "username", "host", false, 0, 1, "pub", ":memory"}
 	mqtt := &credentails
 
 	if mqtt.topic == "" {
@@ -94,15 +87,15 @@ loop:
 		fmt.Println("************************************doing publish*******************************************************")
 
 		//loops on range of data ie result of generate function
-		//for payload := range generate() {
+		for payload := range generate() {
 
-		//Publishing the gathered data to the topic
-		client.Publish(mqtt.topic, byte(mqtt.qos), false, payload)
+			//Publishing the gathered data to the topic
+			client.Publish(mqtt.topic, byte(mqtt.qos), false, payload)
 
-		lg.Infof("Published message %s", payload)
-		lg.Infof("done...")
-		continue loop
-		//}
+			lg.Infof("Published message %s", payload)
+			lg.Infof("done...")
+			continue loop
+		}
 	}
 
 	client.Disconnect(250)
@@ -118,84 +111,18 @@ func generate() <-chan string {
 		var err error
 
 		a[0], a[1], retried, err = dht.ReadDHTxxWithRetry(dht.DHT11, 17, false, 10)
+		timestamp := time.Now().Format("2019/00/00 00/00/00")
+
 		if err != nil {
-			value := "false"
-			rule(value)
+			fmt.Println(a[1])
+
 		}
 		//fmt.Println(a[0], a[1])
 		lg.Infof("retried %d times", retried)
 
-		c <- fmt.Sprintf(`{
-			"temperature": {
-				"PV": %v
-			},
-			"humidity": {
-				"PV": %v
-			}
-		}`, a[0], a[1])
+		c <- fmt.Sprintf(`{"temperature":{"value":%+v},"humidity":{"value":%+v},"timestamp":%+v}`, a[0], a[1], timestamp)
 
 	}()
 
 	return c
-}
-
-func rule(value string) {
-
-	//Load the tuple descriptor file (relative to GOPATH)
-	tupleDescAbsFileNm := common.GetAbsPathForResource("sensorconn.json") //Fetching the tuple structure
-	tupleDescriptor := common.FileToString(tupleDescAbsFileNm)
-
-	err := model.RegisterTupleDescriptors(tupleDescriptor) //Registers the tuple properties and displays error in case of failure
-	if err != nil {
-		fmt.Printf("Error [%s]\n", err)
-		return
-	}
-
-	rs, _ := ruleapi.GetOrCreateRuleSession("asession") //Creates a rule session
-
-	rule := ruleapi.NewRule("sensorConn.data == false")
-	rule.AddCondition("c1", []string{"sensorConn"}, checkForDisconn, nil)
-	rule.SetAction(checkForDisconnAction)
-	rule.SetContext("This is a test of context")
-	rs.AddRule(rule)
-	fmt.Printf("Rule added: [%s]\n", rule.GetName())
-
-	rs.Start(nil) //starts the rule session
-
-	fmt.Println("Asserting sensorConn tuple with data=false")
-	t1, _ := model.NewTupleWithKeyValues("sensorConn", value)
-	t1.SetString(nil, "data", value)
-	rs.Assert(nil, t1)
-}
-
-func checkForDisconn(ruleName string, condName string, tuples map[model.TupleType]model.Tuple, ctx model.RuleContext) bool {
-	//This conditions filters on data="false"
-	t1 := tuples["sensorConn"]
-	if t1 == nil {
-		fmt.Println("Should not get a nil tuple in FilterCondition! This is an error")
-		return false
-	}
-	data, _ := t1.GetString("data")
-	return data == "false"
-}
-
-func checkForDisconnAction(ctx context.Context, rs model.RuleSession, ruleName string, tuples map[model.TupleType]model.Tuple, ruleCtx model.RuleContext) {
-	//This Action is triggered when the rule is fired
-
-	fmt.Printf("Rule fired: [%s]\n", ruleName)
-	fmt.Printf("Context is [%s]\n", ruleCtx)
-	t1 := tuples["sensorConn"]
-
-	data, _ := t1.GetString("data")
-	if data == "false" {
-		fmt.Println()
-		fmt.Println()
-		fmt.Println(color.HiRedString("###################################  Sensor is DisConnected:(:(  ####################################"))
-		fmt.Println()
-		fmt.Println()
-	}
-	if t1 == nil {
-		fmt.Println("Should not get nil tuples here in JoinCondition! This is an error")
-		return
-	}
 }

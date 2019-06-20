@@ -98,6 +98,9 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		resp, status := client.GetDeviceTwin(deviceID)
 		context.SetOutput(ovResult, resp)
 		context.SetOutput(ovStatus, status)
+	case "Get sas token":
+		resp := client.Getsastoken(deviceID)
+		context.SetOutput(ovResult, resp)
 	}
 
 	return true, nil
@@ -193,6 +196,16 @@ func (c *IotHubHTTPClient) ListDeviceIDs() (string, string) {
 func (c *IotHubHTTPClient) GetDeviceTwin(deviceID string) (string, string) {
 	url := fmt.Sprintf("%s/twins/%s?api-version=2018-06-30", c.hostName, deviceID)
 	return c.performRequest("GET", url, "")
+}
+
+func (c *IotHubHTTPClient) Getsastoken(deviceID string) string {
+	url := fmt.Sprintf("%s/twins/%s?api-version=2018-06-30", c.hostName, deviceID)
+	return c.sastoken("GET", url, "")
+}
+
+func (c *IotHubHTTPClient) sastoken(method string, uri string, data string) string {
+	token := c.buildSasToken(uri)
+	return token
 }
 
 // // TODO: SendMessageToDevice as soon as that endpoint is exposed via HTTP
