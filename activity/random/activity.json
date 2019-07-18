@@ -1,0 +1,24 @@
+{
+  "name": "random",
+  "version": "0.0.1",
+  "type": "flogo:activity",
+  "description": "Randomizer",
+  "ref": "github.com/shaliniGovindaNayak/flogo-workspace/activity/stringtojson",
+  "author": "ShaliniGovindaNayak",
+  "inputs":[
+  ],
+  "outputs": [
+    {
+      "name": "headerID",
+      "type": "any"
+    },
+    {
+      "name": "fieldID",
+      "type": "any"
+    },
+    {
+      "name": "alertType",
+      "type": "any"
+    }
+  ]
+}
