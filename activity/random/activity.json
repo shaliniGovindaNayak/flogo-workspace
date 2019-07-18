@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "type": "flogo:activity",
   "description": "Randomizer",
-  "ref": "github.com/shaliniGovindaNayak/flogo-workspace/activity/stringtojson",
+  "ref": "github.com/shaliniGovindaNayak/flogo-workspace/activity/random",
   "author": "ShaliniGovindaNayak",
   "inputs":[
   ],
