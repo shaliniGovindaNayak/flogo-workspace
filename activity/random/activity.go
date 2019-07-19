@@ -58,7 +58,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	context.SetOutput("headerID", headerID[arr1Index])
 	context.SetOutput("fieldID", fieldId[arr1Index][arr2Index])
-	context.SetOutput("alertType", arr3Index)
+	context.SetOutput("alertType", alertType[arr3Index])
 	context.SetOutput("notificationTime", time.Now().UTC().Format("2006-01-02 15:04:05"))
 
 	return true, nil
