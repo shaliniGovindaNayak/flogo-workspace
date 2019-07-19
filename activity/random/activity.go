@@ -54,6 +54,8 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	arr3Index := rand.Intn(len(alertType))
 	fmt.Println(arr3Index)
 
+	fmt.Println(time.Now().UTC().Format("2006-01-02 15:04:05"))
+
 	context.SetOutput("headerID", headerID[arr1Index])
 	context.SetOutput("fieldID", fieldId[arr1Index][arr2Index])
 	context.SetOutput("alertType", arr3Index)
