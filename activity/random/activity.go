@@ -54,12 +54,12 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	arr3Index := rand.Intn(len(alertType))
 	fmt.Println(arr3Index)
 
-	fmt.Println(time.Now().UTC().Format("2006-01-02 15:04:05"))
+	fmt.Println(time.Now().UTC())
 
 	context.SetOutput("headerID", headerID[arr1Index])
 	context.SetOutput("fieldID", fieldId[arr1Index][arr2Index])
 	context.SetOutput("alertType", alertType[arr3Index])
-	context.SetOutput("notificationTime", time.Now().UTC().Format("2006-01-02 15:04:05"))
+	context.SetOutput("notificationTime", time.Now().UTC())
 
 	return true, nil
 }
