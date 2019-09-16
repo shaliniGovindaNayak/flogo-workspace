@@ -1,0 +1,43 @@
+{
+  "name": "service Now",
+  "type": "flogo:activity",
+  "version": "0.0.1",
+  "title": "Service Now",
+  "description": "activity to create insident",
+  "homepage": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/servicenow",
+  "settings": [
+    {
+      "name": "aSetting",
+      "type": "string",
+      "required": true
+    }
+  ],
+  "input": [
+    {
+      "name": "Instance url",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name":"Username",
+      "type":"string",
+      "required":true
+    },
+    {
+      "name":"password",
+      "type":"string",
+      "required":true
+    },
+    {
+      "name":"instance value",
+      "type":"Object",
+      "required":true
+    }
+  ],
+  "output": [
+    {
+      "name": "Output",
+      "type": "string"
+    }
+  ]
+}
