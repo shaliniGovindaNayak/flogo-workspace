@@ -65,7 +65,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	username := ctx.GetInput("Username").(string)
 	password := ctx.GetInput("Password").(string)
 	instanceURL := ctx.GetInput("Instance url").(string)
-	instanceVALUE := ctx.GetInput("instance value").(string)
+	instanceVALUE := ctx.GetInput("insident value").(string)
 
 	fmt.Println("requesting...")
 	S := basicAuth(username, password, instanceURL, instanceVALUE)
