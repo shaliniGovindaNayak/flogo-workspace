@@ -30,7 +30,7 @@
     },
     {
       "name":"insident value",
-      "type":"Object",
+      "type":"string",
       "required":true
     }
   ],
