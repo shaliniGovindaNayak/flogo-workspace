@@ -17,7 +17,7 @@ func init() {
 }
 
 type Input struct {
-	Username      string `md:"username"`    // The message to log
+	Username      string `md:"Username"`    // The message to log
 	Password      string `md:"Password"`    // Append contextual execution information to the log message
 	Instanceurl   string `md:"Instanceurl"` // The message to log
 	insidentvalue string `md:"insidentvalue"`
