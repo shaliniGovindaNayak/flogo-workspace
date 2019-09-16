@@ -14,7 +14,7 @@
   ],
   "input": [
     {
-      "name": "Instance url",
+      "name": "Instanceurl",
       "type": "string",
       "required": true
     },
@@ -29,7 +29,7 @@
       "required":true
     },
     {
-      "name":"insident value",
+      "name":"insidentvalue",
       "type":"string",
       "required":true
     }
