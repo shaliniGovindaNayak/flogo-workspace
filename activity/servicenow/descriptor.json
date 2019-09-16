@@ -7,29 +7,24 @@
   "homepage": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/servicenow",
   "settings": [
     {
-      "name": "aSetting",
+      "name": "Username",
       "type": "string",
       "required": true
+    },
+    {
+      "name":"Password",
+      "type":"string",
+      "required":true
+    },
+    {
+      "name":"Instanceurl",
+      "type":"string",
+      "required":true
     }
   ],
   "input": [
     {
-      "name": "Instanceurl",
-      "type": "string",
-      "required": true
-    },
-    {
-      "name":"Username",
-      "type":"string",
-      "required":true
-    },
-    {
-      "name":"password",
-      "type":"string",
-      "required":true
-    },
-    {
-      "name":"insidentvalue",
+      "name":"Content",
       "type":"string",
       "required":true
     }

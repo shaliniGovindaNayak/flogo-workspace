@@ -8,53 +8,13 @@ import (
 	"net/http"
 
 	"github.com/project-flogo/core/activity"
-	"github.com/project-flogo/core/data/coerce"
 	"github.com/project-flogo/core/data/metadata"
 )
 
-func init() {
-	_ = activity.Register(&Activity{}) //activity.Register(&Activity{}, New) to create instances using factory method 'New'
-}
-
-type Input struct {
-	Username      string `md:"Username"`    // The message to log
-	Password      string `md:"Password"`    // Append contextual execution information to the log message
-	Instanceurl   string `md:"Instanceurl"` // The message to log
-	insidentvalue string `md:"insidentvalue"`
-}
-
-func (i *Input) ToMap() map[string]interface{} {
-	return map[string]interface{}{
-		"Username":      i.Username,
-		"Password":      i.Password,
-		"Instanceurl":   i.Instanceurl,
-		"insidentvalue": i.insidentvalue,
-	}
-}
-
 var activityMd = activity.ToMetadata(&Settings{}, &Input{}, &Output{})
 
-func (i *Input) FromMap(values map[string]interface{}) error {
-
-	var err error
-	i.Username, err = coerce.ToString(values["Username"])
-	if err != nil {
-		return err
-	}
-	i.Password, err = coerce.ToString(values["Password"])
-	if err != nil {
-		return err
-	}
-	i.Instanceurl, err = coerce.ToString(values["Instanceurl"])
-	if err != nil {
-		return err
-	}
-	i.insidentvalue, err = coerce.ToString(values["insidentvalue"])
-	if err != nil {
-		return err
-	}
-
-	return nil
+func init() {
+	_ = activity.Register(&Activity{}) //activity.Register(&Activity{}, New) to create instances using factory method 'New'
 }
 
 //New optional factory method, should be used if one activity instance per configuration is desired
@@ -66,7 +26,9 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 		return nil, err
 	}
 
-	ctx.Logger().Debugf("Setting: %s", s.ASetting)
+	ctx.Logger().Debugf("Setting: %s", s.Username)
+	ctx.Logger().Debugf("Setting: %s", s.Password)
+	ctx.Logger().Debugf("Setting: %s", s.Instanceurl)
 
 	act := &Activity{} //add aSetting to instance
 
@@ -101,12 +63,14 @@ func basicAuth(username string, password string, instanceURL string, instanceVAL
 func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	input := &Input{}
+	Settings := &Settings{}
+	Output := &Output{}
 	ctx.GetInputObject(input)
 
-	username := input.Username
-	password := input.Password
-	instanceURL := input.Instanceurl
-	insidentVALUE := input.insidentvalue
+	username := Settings.Username
+	password := Settings.Password
+	instanceURL := Settings.Instanceurl
+	insidentVALUE := input.Content
 
 	fmt.Println("requesting...")
 	S := basicAuth(username, password, instanceURL, insidentVALUE)
@@ -117,7 +81,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 
-	output := "sucess"
+	Output.Output = "sucess"
 
 	return true, nil
 }
