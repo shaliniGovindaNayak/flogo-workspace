@@ -9,7 +9,7 @@ flogo install github.com/shaliniGovindaNayak/flogo-workspace/activity/servicenow
 ```
 Link for flogo web:
 ```
-https://github.com/shaliniGovindaNayak/flogo-workspace/activity/servicenow
+github.com/shaliniGovindaNayak/flogo-workspace/activity/servicenow
 ```
 
 ## Schema
