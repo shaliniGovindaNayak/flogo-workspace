@@ -55,7 +55,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	//fmt.Println(S)
 	fmt.Println("insident raised")
 
-	context.SetOutput("output", S`)
+	context.SetOutput("output", S)
 	return true, nil
 
 }
