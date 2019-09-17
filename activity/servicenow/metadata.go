@@ -9,33 +9,33 @@ type Settings struct {
 }
 
 type Input struct {
-	Content string `md:"content,required"`
+	Content string `md:"Content,required"`
 }
 
 type Output struct {
-	Output string `md:"output"`
+	Output string `md:"Output"`
 }
 
 func (i *Input) FromMap(values map[string]interface{}) error {
 	//var err error
-	i.Content, _ = coerce.ToString(values["content"])
+	i.Content, _ = coerce.ToString(values["Content"])
 	return nil
 }
 
 func (i *Input) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"content": i.Content,
+		"Content": i.Content,
 	}
 }
 
 func (o *Output) FromMap(values map[string]interface{}) error {
-	o.Output, _ = coerce.ToString(values["output"])
+	o.Output, _ = coerce.ToString(values["Output"])
 
 	return nil
 }
 
 func (o *Output) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"output": o.Output,
+		"Output": o.Output,
 	}
 }
