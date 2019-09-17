@@ -1,6 +1,6 @@
 module githib.com/project-flogo/shaliniGovindaNayak/flogo-workspace/activity/servicenow
 
-go 1.12
+go 1.2.3
 
 require (
 
