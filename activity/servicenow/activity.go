@@ -72,7 +72,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	instanceURL := Settings.Instanceurl
 	insidentVALUE := input.Content
 
-	fmt.Println(username , password,instanceURL)
+	fmt.Println(insidentVALUE)
 
 	fmt.Println("requesting...")
 	S := basicAuth(username, password, instanceURL, insidentVALUE)
