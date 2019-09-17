@@ -19,7 +19,6 @@ type Output struct {
 func (r *Input) FromMap(values map[string]interface{}) error {
 	//var err error
 	r.Content, _ = coerce.ToString(values["content"])
-
 	return nil
 }
 
