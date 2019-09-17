@@ -52,10 +52,10 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 
 	fmt.Println("requesting...")
 	S := basicAuth(username, password, instanceurl, incidentvalue)
-	fmt.Println(S)
+	//fmt.Println(S)
 	fmt.Println("insident raised")
 
-	context.SetOutput("output", "sucess")
+	context.SetOutput("output", S)
 	return true, nil
 
 }
