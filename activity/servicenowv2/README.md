@@ -6,11 +6,11 @@ This activity provides your Flogo app the ability to recieve message from Azure 
 ## Installation
 
 ```bash
-flogo install github.com/shaliniGovindaNayak/flogo-workspace/activity/servicenow
+flogo install github.com/shaliniGovindaNayak/flogo-workspace/activity/servicenowv2
 ```
 Link for flogo web:
 ```
-github.com/shaliniGovindaNayak/flogo-workspace/activity/servicenow
+github.com/shaliniGovindaNayak/flogo-workspace/activity/servicenowv2
 ```
 
 ## Schema
