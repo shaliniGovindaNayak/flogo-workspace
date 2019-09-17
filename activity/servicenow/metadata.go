@@ -3,28 +3,28 @@ package servicenow
 import "github.com/project-flogo/core/data/coerce"
 
 type Settings struct {
-	Username    string `md:"Username"`
-	Password    string `md:"Password"`
-	Instanceurl string `md:"Instanceurl`
+	Username    string `md:"Username,required"`
+	Password    string `md:"Password,required"`
+	Instanceurl string `md:"Instanceurl,required`
 }
 
 type Input struct {
-	Content string `md:"content"`
+	Content string `md:"content,required"`
 }
 
 type Output struct {
 	Output string `md:"output"`
 }
 
-func (r *Input) FromMap(values map[string]interface{}) error {
+func (i *Input) FromMap(values map[string]interface{}) error {
 	//var err error
-	r.Content, _ = coerce.ToString(values["content"])
+	i.Content, _ = coerce.ToString(values["content"])
 	return nil
 }
 
-func (r *Input) ToMap() map[string]interface{} {
+func (i *Input) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"content": r.Content,
+		"content": i.Content,
 	}
 }
 

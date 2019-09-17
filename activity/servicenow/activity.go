@@ -17,11 +17,6 @@ func init() {
 
 var activityMd = activity.ToMetadata(&Settings{}, &Input{}, &Output{})
 
-var username string
-var password string
-var instanceurl string
-var incidentvalue string
-
 //New optional factory method, should be used if one activity instance per configuration is desired
 func New(ctx activity.InitContext) (activity.Activity, error) {
 
@@ -35,18 +30,16 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 	ctx.Logger().Debugf("Setting: %s", s.Password)
 	ctx.Logger().Debugf("Setting: %s", s.Instanceurl)
 
-	username = s.Username
-	password = s.Password
-	instanceurl = s.Instanceurl
-
 	act := &Activity{} //add aSetting to instance
 
 	return act, nil
 }
 
-// Activity is an sample Activity that can be used as a base to create a custom activity
 type Activity struct {
+	settings *Settings
 }
+
+// Activity is an sample Activity that can be used as a base to create a custom activity
 
 // Metadata returns the activity's metadata
 func (a *Activity) Metadata() *activity.Metadata {
@@ -73,12 +66,15 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	input := &Input{}
 
+	username := a.settings.Username
+	password := a.settings.Password
+	instanceurl := a.settings.Instanceurl
+
 	err = ctx.GetInputObject(input)
 	if err != nil {
 		return true, err
 	}
-	incidentvalue = input.Content
-
+	incidentvalue := input.Content
 	fmt.Println(username)
 
 	fmt.Println("requesting...")
