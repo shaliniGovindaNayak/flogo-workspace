@@ -11,11 +11,16 @@ import (
 	"github.com/project-flogo/core/data/metadata"
 )
 
-var activityMd = activity.ToMetadata(&Settings{}, &Input{}, &Output{})
-
 func init() {
 	_ = activity.Register(&Activity{}) //activity.Register(&Activity{}, New) to create instances using factory method 'New'
 }
+
+var activityMd = activity.ToMetadata(&Settings{}, &Input{}, &Output{})
+
+var username string
+var password string
+var instanceurl string
+var incidentvalue string
 
 //New optional factory method, should be used if one activity instance per configuration is desired
 func New(ctx activity.InitContext) (activity.Activity, error) {
@@ -29,6 +34,10 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 	ctx.Logger().Debugf("Setting: %s", s.Username)
 	ctx.Logger().Debugf("Setting: %s", s.Password)
 	ctx.Logger().Debugf("Setting: %s", s.Instanceurl)
+
+	username = s.Username
+	password = s.Password
+	instanceurl = s.Instanceurl
 
 	act := &Activity{} //add aSetting to instance
 
@@ -63,27 +72,19 @@ func basicAuth(username string, password string, instanceURL string, instanceVAL
 func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	input := &Input{}
-	Settings := &Settings{}
-	Output := &Output{}
-	ctx.GetInputObject(input)
 
-	username := Settings.Username
-	password := Settings.Password
-	instanceURL := Settings.Instanceurl
-	insidentVALUE := input.Content
-
-	fmt.Println(insidentVALUE)
-
-	fmt.Println("requesting...")
-	S := basicAuth(username, password, instanceURL, insidentVALUE)
-	fmt.Println(S)
-	fmt.Println("insident raised")
 	err = ctx.GetInputObject(input)
 	if err != nil {
 		return true, err
 	}
+	incidentvalue = input.Content
 
-	Output.Output = "sucess"
+	fmt.Println(incidentvalue)
+
+	fmt.Println("requesting...")
+	S := basicAuth(username, password, instanceurl, incidentvalue)
+	fmt.Println(S)
+	fmt.Println("insident raised")
 
 	return true, nil
 }
