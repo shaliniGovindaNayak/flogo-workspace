@@ -53,15 +53,10 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	input := &Input{}
 
-	username := input.Username
-	password := input.Password
-	instanceurl := input.Instanceurl
-
 	err = ctx.GetInputObject(input)
 	if err != nil {
 		return true, err
 	}
-	incidentvalue := input.Content
 	fmt.Println(input.Username)
 
 	fmt.Println("requesting...")
