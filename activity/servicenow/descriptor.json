@@ -11,7 +11,7 @@
   "input": [
     {
       "name":"Content",
-      "type":"string",
+      "type":"any",
       "required":true
     },
     {
