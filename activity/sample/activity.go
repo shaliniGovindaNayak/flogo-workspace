@@ -55,7 +55,6 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 
-	s := settings.ASetting
 	log.Println(settings.ASetting)
 	ctx.Logger().Debug("Output: %s", settings.ASetting)
 	ctx.Logger().Debugf("Input: %s", input.AnInput)
