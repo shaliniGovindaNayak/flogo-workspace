@@ -30,7 +30,7 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 	ctx.Logger().Debugf("Setting: %s", s.Password)
 	ctx.Logger().Debugf("Setting: %s", s.Instanceurl)
 
-	act := &Activity{} //add aSetting to instance
+	act := &Activity{settings: s} //add aSetting to instance
 
 	return act, nil
 }
