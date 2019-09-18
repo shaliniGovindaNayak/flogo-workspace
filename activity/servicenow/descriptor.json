@@ -6,6 +6,14 @@
   "description": "activity to create insident",
   "homepage": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/servicenow",
   "settings": [
+    
+  ],
+  "input": [
+    {
+      "name":"Content",
+      "type":"string",
+      "required":true
+    },
     {
       "name": "Username",
       "type": "string",
@@ -18,13 +26,6 @@
     },
     {
       "name":"Instanceurl",
-      "type":"string",
-      "required":true
-    }
-  ],
-  "input": [
-    {
-      "name":"Content",
       "type":"string",
       "required":true
     }
