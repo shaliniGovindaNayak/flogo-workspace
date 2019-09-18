@@ -1,6 +1,7 @@
 package sample
 
 import (
+	"fmt"
 	"log"
 
 	"github.com/project-flogo/core/activity"
@@ -21,7 +22,7 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 	if err != nil {
 		return nil, err
 	}
-
+	fmt.Println("set:", s.ASetting)
 	ctx.Logger().Debugf("Setting: %s", s.ASetting)
 
 	act := &Activity{} //add aSetting to instance
