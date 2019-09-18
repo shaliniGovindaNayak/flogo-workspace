@@ -1,6 +1,8 @@
 package sample
 
 import (
+	"fmt"
+
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data/metadata"
 )
@@ -29,6 +31,7 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 
 // Activity is an sample Activity that can be used as a base to create a custom activity
 type Activity struct {
+	settings *Settings
 }
 
 // Metadata returns the activity's metadata
@@ -52,10 +55,12 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 
+	set := a.settings.ToMap()
+	fmt.Println(set)
 	ctx.Logger().Debug("Output: %s", settings.ASetting)
 	ctx.Logger().Debugf("Input: %s", input.AnInput)
 
-	output := &Output{AnOutput: settings.ASetting}
+	output := &Output{AnOutput: a.settings.ASetting}
 	err = ctx.SetOutputObject(output)
 	if err != nil {
 		return true, err
