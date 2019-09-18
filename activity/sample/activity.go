@@ -40,14 +40,22 @@ func (a *Activity) Metadata() *activity.Metadata {
 func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	input := &Input{}
+	settings := &Settings{}
+
 	err = ctx.GetInputObject(input)
 	if err != nil {
 		return true, err
 	}
 
+	err = ctx.GetInputObject(settings)
+	if err != nil {
+		return true, err
+	}
+
+	ctx.Logger().Debug("Output: %s", settings.ASetting)
 	ctx.Logger().Debugf("Input: %s", input.AnInput)
 
-	output := &Output{AnOutput: input.AnInput}
+	output := &Output{AnOutput: settings.ASetting}
 	err = ctx.SetOutputObject(output)
 	if err != nil {
 		return true, err

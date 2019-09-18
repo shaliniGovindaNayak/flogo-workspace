@@ -10,6 +10,18 @@ type Input struct {
 	AnInput string `md:"anInput,required"`
 }
 
+func (s *Settings) FromMap(values map[string]interface{}) error {
+	val, _ := coerce.ToString(values["aSetting"])
+	s.ASetting = val
+	return nil
+}
+
+func (s *Settings) ToMap() map[string]interface{} {
+	return map[string]interface{}{
+		"aSettings": s.ASetting,
+	}
+}
+
 func (r *Input) FromMap(values map[string]interface{}) error {
 	strVal, _ := coerce.ToString(values["anInput"])
 	r.AnInput = strVal
