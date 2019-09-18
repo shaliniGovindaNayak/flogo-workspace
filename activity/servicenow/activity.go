@@ -80,10 +80,12 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	fmt.Println(input.Content)
 
 	fmt.Println("requesting...")
-	S := basicAuth(username, password, instanceurl, incidentvalue)
+	basicAuth(username, password, instanceurl, incidentvalue)
 	fmt.Println("insident raised")
 
-	err = ctx.SetOutput("Output", S)
+	output := &Output{Output: input.Content}
+
+	err = ctx.SetOutputObject(output)
 	if err != nil {
 		return true, err
 	}
