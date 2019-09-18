@@ -17,6 +17,8 @@ func init() {
 
 var activityMd = activity.ToMetadata(&Settings{}, &Input{}, &Output{})
 
+var username string
+
 //New optional factory method, should be used if one activity instance per configuration is desired
 func New(ctx activity.InitContext) (activity.Activity, error) {
 
@@ -32,6 +34,7 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 
 	act := &Activity{settings: s} //add aSetting to instance
 
+	username = s.Username
 	return act, nil
 }
 
@@ -66,7 +69,6 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	input := &Input{}
 
-	username := a.settings.Username
 	password := a.settings.Password
 	instanceurl := a.settings.Instanceurl
 
@@ -75,7 +77,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 	incidentvalue := input.Content
-	fmt.Println(a.settings.Username)
+	fmt.Println(username)
 
 	fmt.Println("requesting...")
 	basicAuth(username, password, instanceurl, incidentvalue)
