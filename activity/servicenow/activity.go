@@ -67,6 +67,7 @@ func basicAuth(username string, password string, instanceURL string, instanceVAL
 func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	input := &Input{}
+	settings := &Settings{}
 
 	username := a.Username
 	password := a.Password
@@ -77,7 +78,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 	incidentvalue := input.Content
-	fmt.Println(input.Content)
+	fmt.Println(settings.Username)
 
 	fmt.Println("requesting...")
 	basicAuth(username, password, instanceurl, incidentvalue)
