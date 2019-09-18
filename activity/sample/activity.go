@@ -1,7 +1,7 @@
 package sample
 
 import (
-	"fmt"
+	"log"
 
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data/metadata"
@@ -56,7 +56,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	}
 
 	set := a.settings.ToMap()
-	fmt.Println(set)
+	log.Println(set)
 	ctx.Logger().Debug("Output: %s", settings.ASetting)
 	ctx.Logger().Debugf("Input: %s", input.AnInput)
 
