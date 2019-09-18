@@ -77,7 +77,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 	incidentvalue := input.Content
-	fmt.Println(username)
+	fmt.Println(input.Content)
 
 	fmt.Println("requesting...")
 	S := basicAuth(username, password, instanceurl, incidentvalue)
