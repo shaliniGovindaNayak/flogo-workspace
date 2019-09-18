@@ -5,9 +5,6 @@
   "title": "Service Now",
   "description": "activity to create insident",
   "homepage": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/servicenow",
-  "settings": [
-    
-  ],
   "input": [
     {
       "name":"Content",

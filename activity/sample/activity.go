@@ -51,11 +51,6 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 
-	err = ctx.GetInputObject(settings)
-	if err != nil {
-		return true, err
-	}
-
 	log.Println("setting:", settings.ASetting)
 	ctx.Logger().Debug("Output: %s", settings.ASetting)
 	ctx.Logger().Debugf("Input: %s", input.AnInput)
