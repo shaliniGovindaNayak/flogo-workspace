@@ -30,15 +30,13 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 	ctx.Logger().Debugf("Setting: %s", s.Password)
 	ctx.Logger().Debugf("Setting: %s", s.Instanceurl)
 
-	act := &Activity{Username: s.Username, Password: s.Password, Instanceurl: s.Instanceurl} //add aSetting to instance
+	act := &Activity{} //add aSetting to instance
 
 	return act, nil
 }
 
 type Activity struct {
-	Username    string
-	Password    string
-	Instanceurl string
+	settings *Settings
 }
 
 // Activity is an sample Activity that can be used as a base to create a custom activity
@@ -67,18 +65,17 @@ func basicAuth(username string, password string, instanceURL string, instanceVAL
 func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	input := &Input{}
-	settings := &Settings{}
 
-	username := a.Username
-	password := a.Password
-	instanceurl := a.Instanceurl
+	username := a.settings.Username
+	password := a.settings.Password
+	instanceurl := a.settings.Instanceurl
 
 	err = ctx.GetInputObject(input)
 	if err != nil {
 		return true, err
 	}
 	incidentvalue := input.Content
-	fmt.Println(settings.Username)
+	fmt.Println(a.settings.Username)
 
 	fmt.Println("requesting...")
 	basicAuth(username, password, instanceurl, incidentvalue)
