@@ -23,12 +23,11 @@
     },
     {
       "name":"Username",
-      "type":"string",
+      "type":"string"
     },
     {
       "name":"Password",
-      "type":"string",
-      "required":true
+      "type":"string"
     }
   ],
   "output": [

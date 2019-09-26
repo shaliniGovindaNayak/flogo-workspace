@@ -1,29 +1,19 @@
 package influxdb
 
 import (
-	"fmt"
 	"log"
 
 	"github.com/project-flogo/core/activity"
-	"github.com/project-flogo/core/data/metadata"
 )
 
 func init() {
 	_ = activity.Register(&Activity{}) //activity.Register(&Activity{}, New) to create instances using factory method 'New'
 }
 
-var activityMd = activity.ToMetadata(&Settings{}, &Input{}, &Output{})
+var activityMd = activity.ToMetadata(&Input{}, &Output{})
 
 //New optional factory method, should be used if one activity instance per configuration is desired
 func New(ctx activity.InitContext) (activity.Activity, error) {
-
-	s := &Settings{}
-	err := metadata.MapToStruct(ctx.Settings(), s, true)
-	if err != nil {
-		return nil, err
-	}
-	fmt.Println("set:", s.ASetting)
-	ctx.Logger().Debugf("Setting: %s", s.ASetting)
 
 	act := &Activity{} //add aSetting to instance
 
@@ -32,7 +22,6 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 
 // Activity is an sample Activity that can be used as a base to create a custom activity
 type Activity struct {
-	settings *Settings
 }
 
 // Metadata returns the activity's metadata
