@@ -2,8 +2,8 @@ package influxdb
 
 import (
 	"fmt"
-	"log"
 
+	client "github.com/influxdata/influxdb1-client/v2" // this is important because of the bug in go mod
 	"github.com/project-flogo/core/activity"
 	"github.com/project-flogo/core/data/metadata"
 )
@@ -44,18 +44,30 @@ func (a *Activity) Metadata() *activity.Metadata {
 func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	input := &Input{}
-	settings := &Settings{}
 
 	err = ctx.GetInputObject(input)
 	if err != nil {
 		return true, err
 	}
 
-	log.Println("setting:", settings.ASetting)
-	ctx.Logger().Debug("Output: %s", settings.ASetting)
-	ctx.Logger().Debugf("Input: %s", input.AnInput)
+	fmt.Println(host)
+	c, err := client.NewHTTPClient(client.HTTPConfig{
+		Addr: input.Host,
+	})
 
-	output := &Output{AnOutput: settings.ASetting}
+	if err != nil {
+		fmt.Println("Error creating InfluxDB Client: ", err.Error())
+	}
+	defer c.Close()
+
+	query := "SELECT * FROM " + input.Table
+	q := client.NewQuery("SELECT * FROM cpu_load", input.Schema, "")
+	if response, err := c.Query(q); err == nil && response.Error() == nil {
+		fmt.Println(response.Results)
+		res := response.Results
+	}
+
+	output := &Output{Output: res}
 	err = ctx.SetOutputObject(output)
 	if err != nil {
 		return true, err

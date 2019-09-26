@@ -12,23 +12,21 @@
       "required": true
     },
     {
-      "name":"Port",
-      "type":"string",
-      "required":true
-    },
-    {
       "name":"Schema",
       "type":"string",
       "required":true
     },
     {
+        "name":"Table",
+        "type":"string"
+    },
+    {
       "name":"Username",
-      "type":"string",
+      "type":"string"
     },
     {
       "name":"Password",
-      "type":"string",
-      "required":true
+      "type":"string"
     }
   ],
   "output": [
