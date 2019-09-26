@@ -35,13 +35,13 @@ func (a *Activity) Metadata() *activity.Metadata {
 func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	input := &Input{}
+	fmt.Println(input.Host)
 
 	err = ctx.GetInputObject(input)
 	if err != nil {
 		return true, err
 	}
 
-	fmt.Println(input.Host)
 	c, err := client.NewHTTPClient(client.HTTPConfig{
 		Addr: input.Host,
 	})
