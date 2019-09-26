@@ -35,7 +35,7 @@ func (a *Activity) Metadata() *activity.Metadata {
 func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	input := &Input{}
-	fmt.Println(input.Host)
+	fmt.Println(input.Schema)
 
 	err = ctx.GetInputObject(input)
 	if err != nil {
