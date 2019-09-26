@@ -3,6 +3,7 @@ package influxdb
 import (
 	"fmt"
 
+	_ "github.com/influxdata/influxdb1-client"         // this is important because of the bug in go mod
 	client "github.com/influxdata/influxdb1-client/v2" // this is important because of the bug in go mod
 	"github.com/project-flogo/core/activity"
 )
