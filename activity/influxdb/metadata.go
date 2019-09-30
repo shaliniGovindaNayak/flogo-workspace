@@ -6,24 +6,24 @@ import (
 )
 
 type Input struct {
-	Host   string                 `md:"host.required"`
-	Schema string                 `md:"schema.required"`
-	Table  string                 `md:"table.required"`
-	Values map[string]interface{} `md:"values"`
+	Host   string                 `md:"Host.required"`
+	Schema string                 `md:"Schema.required"`
+	Table  string                 `md:"Table"`
+	Values map[string]interface{} `md:"Values"`
 }
 
 func (r *Input) FromMap(values map[string]interface{}) error {
 
-	Val1, _ := coerce.ToString(values["host"])
+	Val1, _ := coerce.ToString(values["Host"])
 	r.Host = Val1
 
-	Val2, _ := coerce.ToString(values["schema"])
+	Val2, _ := coerce.ToString(values["Schema"])
 	r.Schema = Val2
 
-	Val3, _ := coerce.ToString(values["table"])
+	Val3, _ := coerce.ToString(values["Table"])
 	r.Table = Val3
 
-	Val4, _ := coerce.ToObject("values")
+	Val4, _ := coerce.ToObject("Values")
 	//Val4, _ := coerce.ToParams(values["values"])
 	r.Values = Val4
 
@@ -32,10 +32,10 @@ func (r *Input) FromMap(values map[string]interface{}) error {
 
 func (r *Input) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"host":   r.Host,
-		"schema": r.Schema,
-		"table":  r.Table,
-		"values": r.Values,
+		"Host":   r.Host,
+		"Schema": r.Schema,
+		"Table":  r.Table,
+		"Values": r.Values,
 	}
 }
 
