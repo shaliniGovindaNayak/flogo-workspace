@@ -2,6 +2,7 @@ package influxdb
 
 import (
 	"github.com/project-flogo/core/data/coerce"
+	"github.com/spf13/cast"
 )
 
 type Input struct {
@@ -10,6 +11,8 @@ type Input struct {
 	Table string `md:"table.required"`
 	Values map[string]interface{} `md:"values"`
 }
+
+
 
 func (r *Input) FromMap(values map[string]interface{}) error {
 
@@ -22,7 +25,8 @@ func (r *Input) FromMap(values map[string]interface{}) error {
 	Val3, _ := coerce.ToString(values["table"])
 	r.Table = Val3
 
-	Val4, _ := coerce.ToParams(values["values"])
+	Val4 := cast.ToStringMap(json)
+	//Val4, _ := coerce.ToParams(values["values"])
 	r.Values = Val4
 	
 	return nil
