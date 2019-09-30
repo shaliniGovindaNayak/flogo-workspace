@@ -9,7 +9,7 @@ type Input struct {
 	Host string `md:"host.required`
 	Schema string `md:"schema.required"`
 	Table string `md:"table.required"`
-	Values string `md:"values"`
+	Values map[string]interface{}  `md:"values"`
 }
 
 
@@ -25,7 +25,7 @@ func (r *Input) FromMap(values map[string]interface{}) error {
 	Val3, _ := coerce.ToString(values["table"])
 	r.Table = Val3
 
-	Val4 := cast.ToStringMap(values["values"])
+	Val4 := coerce.toObject(values["values"]
 	//Val4, _ := coerce.ToParams(values["values"])
 	r.Values = Val4
 	
