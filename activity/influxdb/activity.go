@@ -44,7 +44,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	}
 
 	c, err := client.NewHTTPClient(client.HTTPConfig{
-		Addr: input.Host,
+		Addr: "http://localhost:8086",
 	})
 
 	json := input.Values
