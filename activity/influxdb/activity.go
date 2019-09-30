@@ -47,8 +47,6 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		Addr: input.Host,
 	})
 
-	json := input.Values
-
 	if err != nil {
 		fmt.Println("Error creating InfluxDB Client: ", err.Error())
 	}
@@ -62,7 +60,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	// Create a point and add to batch
 	tags := map[string]string{}
-	fields := json
+	fields := input.Values
 	pt, err := client.NewPoint(input.Table, tags, fields, time.Now())
 	if err != nil {
 		fmt.Println("Error: ", err.Error())
