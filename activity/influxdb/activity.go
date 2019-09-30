@@ -1,12 +1,13 @@
 package influxdb
 
 import (
-	"fmt"
+	"log"
 
-	_ "github.com/influxdata/influxdb1-client"         // this is important because of the bug in go mod
-	client "github.com/influxdata/influxdb1-client/v2" // this is important because of the bug in go mod
 	"github.com/project-flogo/core/activity"
+	_ "github.com/influxdata/influxdb-client" // this is important because of the bug in go mod
+   client "github.com/influxdata/influxdb1-client/v2"
 )
+
 
 func init() {
 	_ = activity.Register(&Activity{}) //activity.Register(&Activity{}, New) to create instances using factory method 'New'
@@ -35,7 +36,6 @@ func (a *Activity) Metadata() *activity.Metadata {
 func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	input := &Input{}
-	fmt.Println(input.Schema)
 
 	err = ctx.GetInputObject(input)
 	if err != nil {
@@ -43,24 +43,41 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	}
 
 	c, err := client.NewHTTPClient(client.HTTPConfig{
-		Addr: "http://localhost:8086",
+		Addr: input.Host,
 	})
+
+	json := input.Values
 
 	if err != nil {
 		fmt.Println("Error creating InfluxDB Client: ", err.Error())
 	}
 	defer c.Close()
 
-	var res []client.Result
-	query := "SELECT * FROM " + input.Table
-	q := client.NewQuery(query, input.Schema, "")
-	if response, err := c.Query(q); err == nil && response.Error() == nil {
-		fmt.Println(response.Results)
-		res = response.Results
-		fmt.Println(res)
+	// Create a new point batch
+	bp, _ := client.NewBatchPoints(client.BatchPointsConfig{
+		Database:  input.Schema,
+		Precision: "s",
+	})
+
+	// Create a point and add to batch
+	tags := map[string]string{}
+	fields := json
+	pt, err := client.NewPoint(input.Table, tags, fields, time.Now())
+	if err != nil {
+		fmt.Println("Error: ", err.Error())
 	}
 
-	output := &Output{Output: "sucess"}
+	bp.AddPoint(pt)
+
+	// Write the batch
+	err = c.Write(bp)
+	if err != nil {
+		fmt.Println(err)
+	}
+
+	ctx.Logger().Debugf("Input: %s", input.AnInput)
+
+	output := &Output{AnOutput: settings.ASetting}
 	err = ctx.SetOutputObject(output)
 	if err != nil {
 		return true, err
