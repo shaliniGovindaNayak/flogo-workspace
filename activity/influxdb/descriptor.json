@@ -21,7 +21,7 @@
       "type":"string"
     },
     {
-       "name":"value",
+       "name":"Value",
        "type":"string"
     }
   ],

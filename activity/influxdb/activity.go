@@ -1,14 +1,11 @@
 package influxdb
 
 import (
-	
-	"time"
 	"fmt"
-	"github.com/project-flogo/core/activity"
-	_ "github.com/influxdata/influxdb1-client" // this is important because of the bug in go mod
-   client "github.com/influxdata/influxdb1-client/v2"
-)
 
+	_ "github.com/influxdata/influxdb1-client" // this is important because of the bug in go mod
+	"github.com/project-flogo/core/activity"
+)
 
 func init() {
 	_ = activity.Register(&Activity{}) //activity.Register(&Activity{}, New) to create instances using factory method 'New'
@@ -37,18 +34,18 @@ func (a *Activity) Metadata() *activity.Metadata {
 func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	input := &Input{}
+	fmt.Println(input)
 
 	err = ctx.GetInputObject(input)
 	if err != nil {
 		return true, err
 	}
 
-	c, err := client.NewHTTPClient(client.HTTPConfig{
-		Addr: "http://localhost:8086",
+	/*c, err := client.NewHTTPClient(client.HTTPConfig{
+		Addr: input.Host,
 	})
 
 	json := input.Values
-	fmt.Println(input.Host)
 
 	if err != nil {
 		fmt.Println("Error creating InfluxDB Client: ", err.Error())
@@ -76,8 +73,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	if err != nil {
 		fmt.Println(err)
 	}
-
-
+	*/
 	output := &Output{Output: "ok"}
 	err = ctx.SetOutputObject(output)
 	if err != nil {
