@@ -2,7 +2,7 @@ package influxdb
 
 import (
 	"github.com/project-flogo/core/data/coerce"
-	"github.com/spf13/cast"
+	//"github.com/spf13/cast"
 )
 
 type Input struct {
