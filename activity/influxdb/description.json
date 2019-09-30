@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "title": "InfluxDB",
   "description": "CRUD on influx",
-  "homepage": "https://github.com/shaliniGovindaNayaka/activity/influxdb",
+  "homepage": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/influxdb",
   "input": [
     {
       "name": "Host",
