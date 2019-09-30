@@ -2,8 +2,10 @@ package influxdb
 
 import (
 	"fmt"
+	"time"
 
 	_ "github.com/influxdata/influxdb1-client" // this is important because of the bug in go mod
+	client "github.com/influxdata/influxdb1-client/v2"
 	"github.com/project-flogo/core/activity"
 )
 
@@ -39,9 +41,9 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	if err != nil {
 		return true, err
 	}
-	fmt.Println(input)
+	//fmt.Println(input)
 
-	/*c, err := client.NewHTTPClient(client.HTTPConfig{
+	c, err := client.NewHTTPClient(client.HTTPConfig{
 		Addr: input.Host,
 	})
 
@@ -73,7 +75,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	if err != nil {
 		fmt.Println(err)
 	}
-	*/
+
 	output := &Output{Output: "ok"}
 	err = ctx.SetOutputObject(output)
 	if err != nil {
