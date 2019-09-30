@@ -1,8 +1,9 @@
 package influxdb
 
 import (
-	"log"
-
+	
+	"time"
+	"fmt"
 	"github.com/project-flogo/core/activity"
 	_ "github.com/influxdata/influxdb1-client" // this is important because of the bug in go mod
    client "github.com/influxdata/influxdb1-client/v2"
@@ -75,9 +76,9 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		fmt.Println(err)
 	}
 
-	ctx.Logger().Debugf("Input: %s", input.AnInput)
+	ctx.Logger().Debugf("Input: %s", input.Input)
 
-	output := &Output{AnOutput: settings.ASetting}
+	output := &Output{Output: "ok"}
 	err = ctx.SetOutputObject(output)
 	if err != nil {
 		return true, err
