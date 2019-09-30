@@ -25,7 +25,7 @@ func (r *Input) FromMap(values map[string]interface{}) error {
 	Val3, _ := coerce.ToString(values["table"])
 	r.Table = Val3
 
-	Val4 := cast.ToStringMap(json)
+	Val4 := cast.ToStringMap("values")
 	//Val4, _ := coerce.ToParams(values["values"])
 	r.Values = Val4
 	
