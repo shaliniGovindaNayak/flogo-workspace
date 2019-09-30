@@ -48,6 +48,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	})
 
 	json := input.Values
+	fmt.Println(input.Host)
 
 	if err != nil {
 		fmt.Println("Error creating InfluxDB Client: ", err.Error())
