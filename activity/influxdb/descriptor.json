@@ -22,7 +22,7 @@
     },
     {
        "name":"Value",
-       "type":"string"
+       "type":"any"
     }
   ],
   "output": [
