@@ -1,6 +1,8 @@
 package influxdb
 
 import (
+	"fmt"
+
 	"github.com/project-flogo/core/data/coerce"
 	//"github.com/spf13/cast"
 )
@@ -26,6 +28,7 @@ func (r *Input) FromMap(values map[string]interface{}) error {
 	Val4, _ := coerce.ToObject("Values")
 	//Val4, _ := coerce.ToParams(values["values"])
 	r.Values = Val4
+	fmt.Println(r.Values)
 
 	return nil
 }
