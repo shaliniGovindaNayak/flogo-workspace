@@ -28,7 +28,8 @@ func (r *Input) FromMap(values map[string]interface{}) error {
 	Val4, _ := coerce.ToObject("Value")
 	//Val4, _ := coerce.ToParams(values["values"])
 	r.Value = Val4
-	fmt.Println(values["Value"])
+	fmt.Println(Val4)
+	fmt.Println(r.Value)
 
 	return nil
 }
