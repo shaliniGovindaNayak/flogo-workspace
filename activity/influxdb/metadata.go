@@ -38,7 +38,7 @@ func (r *Input) ToMap() map[string]interface{} {
 		"Host":   r.Host,
 		"Schema": r.Schema,
 		"Table":  r.Table,
-		"Values": r.Values,
+		"Value":  r.Value,
 	}
 }
 
