@@ -1,6 +1,6 @@
 
 # 	InfluxDB - Activity
-This activity provides your Flogo app the ability to recieve message from Azure Iot Hub from a device
+This activity provides your Flogo app the ability to insert data on InfluxDB
 
 ## Installation
 
