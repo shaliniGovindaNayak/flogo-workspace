@@ -18,7 +18,7 @@ func (r *Input) FromMap(values map[string]interface{}) error {
 
 	Val1, _ := coerce.ToString(values["Host"])
 	r.Host = Val1
-	fmt.Println(values["Host"])
+	fmt.Println(values["Schema"])
 	Val2, _ := coerce.ToString(values["Schema"])
 	r.Schema = Val2
 
