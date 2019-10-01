@@ -1,5 +1,5 @@
 
-# 	recieveazure - Activity
+# 	ServiceNow - Activity
 This activity provides your Flogo app the ability to recieve message from Azure Iot Hub from a device
 
 ## Installation
