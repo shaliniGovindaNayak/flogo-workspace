@@ -41,7 +41,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	if err != nil {
 		return true, err
 	}
-	fmt.Println(input.Values)
+	fmt.Println(input.Value)
 
 	c, err := client.NewHTTPClient(client.HTTPConfig{
 		Addr: input.Host,
@@ -60,7 +60,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	// Create a point and add to batch
 	tags := map[string]string{}
-	fields := input.Values
+	fields := input.Value
 	pt, err := client.NewPoint(input.Table, tags, fields, time.Now())
 	if err != nil {
 		fmt.Println("Error: ", err.Error())
