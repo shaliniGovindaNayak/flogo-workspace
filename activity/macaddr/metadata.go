@@ -1,4 +1,4 @@
-package influxdb
+package macaddr
 
 import "github.com/project-flogo/core/data/coerce"
 
