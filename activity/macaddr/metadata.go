@@ -4,7 +4,7 @@ import "github.com/project-flogo/core/data/coerce"
 
 
 type Output struct {
-	AnOutput string `md:"Output"`
+	Output string `md:"Output"`
 }
 
 func (o *Output) FromMap(values map[string]interface{}) error {

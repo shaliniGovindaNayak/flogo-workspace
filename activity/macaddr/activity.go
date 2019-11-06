@@ -2,7 +2,8 @@ package macaddr
 
 import (
 	"log"
-
+	"fmt"
+    "net"
 	"github.com/project-flogo/core/activity"
 )
 
@@ -10,7 +11,7 @@ func init() {
 	_ = activity.Register(&Activity{}) //activity.Register(&Activity{}, New) to create instances using factory method 'New'
 }
 
-var activityMd = activity.ToMetadata(&Input{}, &Output{})
+var activityMd = activity.ToMetadata(&Output{})
 
 //New optional factory method, should be used if one activity instance per configuration is desired
 func New(ctx activity.InitContext) (activity.Activity, error) {
@@ -53,7 +54,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
     }
     //for _, a := range as {
 		out := as[1]
-
+		fmt.Println(out)
 	//log.Println("setting:", settings.ASetting)
 	//ctx.Logger().Debug("Output: %s", settings.ASetting)
 	//ctx.Logger().Debugf("Input: %s", input.AnInput)
