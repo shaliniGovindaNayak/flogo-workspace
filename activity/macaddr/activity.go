@@ -3,16 +3,13 @@ package macaddr
 import (
 	"log"
 	"fmt"
-    "net"
 	"github.com/project-flogo/core/activity"
-	"fmt"
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/disk"
 	"github.com/shirou/gopsutil/host"
 	"github.com/shirou/gopsutil/mem"
 	"github.com/shirou/gopsutil/net"
 	"github.com/distatus/battery"
-	//"net/http"
 	"runtime"
 	"strconv"
 )
@@ -217,8 +214,8 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
         log.Fatal(err)
     }
     //for _, a := range as {
-		macaddr := as[1]
-		fmt.Println(out)
+	macaddr := as[1]
+	fmt.Println(out)
 	//log.Println("setting:", settings.ASetting)
 	//ctx.Logger().Debug("Output: %s", settings.ASetting)
 	//ctx.Logger().Debugf("Input: %s", input.AnInput)

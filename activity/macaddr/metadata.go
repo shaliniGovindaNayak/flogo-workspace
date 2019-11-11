@@ -19,6 +19,6 @@ func (o *Output) FromMap(values map[string]interface{}) error {
 func (o *Output) ToMap() map[string]interface{} {
 	return map[string]interface{}{
 		"Output": o.Output,
-		"mac_address":o.MacAddr
+		"mac_address":o.MacAddr,
 	}
 }
