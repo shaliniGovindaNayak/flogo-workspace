@@ -166,7 +166,7 @@ func GetHardwareData() string{
 	batteries, err := battery.GetAll()
 	if err != nil {
 		fmt.Println("Could not get battery info!")
-		return
+
 	}
 	for i, battery := range batteries {
 		fmt.Println("Bat: ", i)
@@ -223,7 +223,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	//ctx.Logger().Debugf("Input: %s", input.AnInput)
 
 	macaddr := &Output{MacAddr: macaddrr}
-	err = ctx.SetOutputObject(mac_address)
+	err = ctx.SetOutputObject(macaddr)
 	if err != nil {
 		return true, err
 	}
