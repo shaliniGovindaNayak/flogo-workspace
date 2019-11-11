@@ -13,7 +13,7 @@ import (
 	"github.com/distatus/battery"
 	"runtime"
 	"strconv"
-	"json"
+	"encoding/json"
 )
 
 func init() {
