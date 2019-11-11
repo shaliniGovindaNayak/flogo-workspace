@@ -1,5 +1,5 @@
 {
-  "name": "mac adress",
+  "name": "mac address",
   "type": "flogo:activity",
   "version": "0.0.1",
   "title": "MacAdrr",
@@ -11,6 +11,10 @@
     {
       "name": "Output",
       "type": "any"
+    },
+    {
+      "name":"mac_address",
+      "type":"any"
     }
   ]
 }
