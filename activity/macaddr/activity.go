@@ -3,15 +3,17 @@ package macaddr
 import (
 	"log"
 	"fmt"
+	"net"
 	"github.com/project-flogo/core/activity"
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/disk"
 	"github.com/shirou/gopsutil/host"
 	"github.com/shirou/gopsutil/mem"
-	"github.com/shirou/gopsutil/net"
+	nett "github.com/shirou/gopsutil/net"
 	"github.com/distatus/battery"
 	"runtime"
 	"strconv"
+	"json"
 )
 
 func init() {
@@ -60,7 +62,7 @@ func dealwithErr(err error) {
 }
 
 type Details struct {
-	Total_memory string `json:"Total_memory"`
+	Total_memory string
 	Free_memory string
 	Percentage_used_memory string
 	Total_disk_space string
@@ -113,7 +115,7 @@ func GetHardwareData() string{
          dealwithErr(err)
 
          // get interfaces MAC/hardware address
-		 interfStat, err := net.Interfaces()
+		 interfStat, err := nett.Interfaces()
 		 //fmt.Println(interfStat)
 		 dealwithErr(err)
 		 
@@ -214,14 +216,14 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
         log.Fatal(err)
     }
     //for _, a := range as {
-	macaddr := as[1]
-	fmt.Println(out)
+	macaddrr := as[1]
+	fmt.Println(macaddrr)
 	//log.Println("setting:", settings.ASetting)
 	//ctx.Logger().Debug("Output: %s", settings.ASetting)
 	//ctx.Logger().Debugf("Input: %s", input.AnInput)
 
-	macaddr := &Output{macaddr: macaddr}
-	err = ctx.SetOutputObject(macaddr)
+	macaddr := &Output{MacAddr: macaddrr}
+	err = ctx.SetOutputObject(mac_address)
 	if err != nil {
 		return true, err
 	}
