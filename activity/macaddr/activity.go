@@ -76,8 +76,6 @@ type Details struct {
 	Uptime string
 	Number_of_processes_running string
 	Host_ID string
-	battery1 *battery.Battery
-	battery2 *battery.Battery
  }	
 
 func GetHardwareData() string{
@@ -122,7 +120,7 @@ func GetHardwareData() string{
 		 //serial := disk.GetDiskSerialNumber("/dev/sda")
 
 
-		 fmt.Println( "Total memory:",strconv.FormatUint(diskStat.Total, 10))
+		 /*fmt.Println( "Total memory:",strconv.FormatUint(diskStat.Total, 10))
 		 fmt.Println("Free memory:",strconv.FormatUint(vmStat.Free, 10))
 		 fmt.Println("Percentage used memory: " ,strconv.FormatFloat(vmStat.UsedPercent, 'f', 2, 64))
 		 //fmt.Println( "Disk serial number: ", serial)
@@ -137,46 +135,30 @@ func GetHardwareData() string{
 		 fmt.Println( "Uptime: " + strconv.FormatUint(hostStat.Uptime, 10))
 		 fmt.Println( "Number of processes running: " + strconv.FormatUint(hostStat.Procs, 10))
 		 fmt.Println( "Host ID(uuid): " + hostStat.HostID)
-	
+	*/
 
 		
 		 for idx, cpupercent := range percentage {
-			fmt.Println("Current CPU utilization: [" + strconv.Itoa(idx) + "] " + strconv.FormatFloat(cpupercent, 'f', 2, 64) )
+			//fmt.Println("Current CPU utilization: [" + strconv.Itoa(idx) + "] " + strconv.FormatFloat(cpupercent, 'f', 2, 64) )
 
 		}
 		
 		for _, interf := range interfStat {
-		 	fmt.Println("Interface Name: " + interf.Name) 
+		 	//fmt.Println("Interface Name: " + interf.Name) 
 
 			if interf.HardwareAddr != "" {
-					fmt.Println("Hardware(MAC) Address: " + interf.HardwareAddr)
+					//fmt.Println("Hardware(MAC) Address: " + interf.HardwareAddr)
 			}
 
 			for _, flag := range interf.Flags {
-					fmt.Println("Interface behavior or flags: " + flag)
+					//fmt.Println("Interface behavior or flags: " + flag)
 			}
 
 			for _, addr := range interf.Addrs {
-					fmt.Println("IPv6 or IPv4 addresses: " + addr.String())
+					//fmt.Println("IPv6 or IPv4 addresses: " + addr.String())
 
 			}
 
-	}
-
-	batteries, err := battery.GetAll()
-	if err != nil {
-		fmt.Println("Could not get battery info!")
-
-	}
-	for i, battery := range batteries {
-		fmt.Println("Bat: ", i)
-		fmt.Println("Battery state: , ", battery.State)
-		fmt.Println("Battery current capacity: mWh, ", battery.Current)
-		fmt.Println("Battery last full capacity: mWh, ", battery.Full)
-		fmt.Println("Battery design capacity: mWh, ", battery.Design)
-		fmt.Println("Battery charge rate: mW, ", battery.ChargeRate)
-		fmt.Println("Battery voltage: V, ", battery.Voltage)
-		fmt.Println("Battery design voltage: V", battery.DesignVoltage)
 	}
 
 	jsondata := Details{
@@ -194,8 +176,6 @@ func GetHardwareData() string{
 		Uptime:strconv.FormatUint(hostStat.Uptime, 10),
 		Number_of_processes_running:strconv.FormatUint(hostStat.Procs, 10),
 		Host_ID:hostStat.HostID,
-		battery1:batteries[0],
-		battery2:batteries[1],
 	}
 
 	b, err := json.Marshal(jsondata)
@@ -206,11 +186,25 @@ func GetHardwareData() string{
 	out := string(b)
 	return(out)
 }
+
+func battery1() interface {
+	batteries, err := battery.GetAll()
+	if err != nil {
+		fmt.Println("Could not get battery info!")
+
+	}
+	for i, battery := range batteries {
+	return batteries[i]
+	}
+}
+
 // Eval implements api.Activity.Eval - Logs the Message
 func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 
 	out := GetHardwareData()
+	bat1 := battery1()
+	bat2 := battery2()
 	as, err := getMacAddr()
     if err != nil {
         log.Fatal(err)
@@ -228,6 +222,18 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 	
+	output := &Output{Output: out}
+	err = ctx.SetOutputObject(output)
+	if err != nil {
+		return true, err
+	}
+
+	output := &Output{: out}
+	err = ctx.SetOutputObject(output)
+	if err != nil {
+		return true, err
+	}
+
 	output := &Output{Output: out}
 	err = ctx.SetOutputObject(output)
 	if err != nil {

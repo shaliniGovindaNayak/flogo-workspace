@@ -1,0 +1,47 @@
+{
+  "name": "SQL Activity",
+  "type": "flogo:activity",
+  "version": "0.9.0",
+  "title": "SQL Database Activity",
+  "description": "SQL Database Activity",
+  "homepage": "https://github.com/project-flogo/contrib/sql",
+  "settings": [
+    {
+      "dbType": "mysql",
+      "type":"string",
+      "required":true,
+      "allowed": [ "mysql", "oracle", "postres", "sqlite", "sqlserver" ]
+    },
+    {
+      "name":"drivername",
+      "type":"string",
+      "required":true
+    },
+    {
+      "name": "dataSourceName",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "query",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "columnTypes",
+      "type": "params"
+    }
+  ],
+  "input":[
+    {
+      "name": "params",
+      "type": "object"
+    }
+  ],
+  "output": [
+    {
+      "name": "results",
+      "type": "array"
+    }
+  ]
+}
