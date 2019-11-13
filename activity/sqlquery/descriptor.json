@@ -4,7 +4,7 @@
   "version": "0.9.0",
   "title": "SQL Database Activity",
   "description": "SQL Database Activity",
-  "homepage": "https://github.com/project-flogo/contrib/sql",
+  "homepage": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/sqlquery",
   "settings": [
     {
       "dbType": "mysql",

@@ -1,4 +1,4 @@
-module github.com/project-flogo/contrib/activity/sqlquery
+module github.com/shaliniGovindaNayak/flogo-workspace/activity/sqlquery
 
 go 1.12
 
