@@ -9,7 +9,6 @@
     {
       "dbType": "mysql",
       "type":"string",
-      "allowed": [ "mysql", "oracle", "postres", "sqlite", "sqlserver" ],
       "required":true
       
     },
