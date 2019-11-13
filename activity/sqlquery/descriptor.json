@@ -9,8 +9,9 @@
     {
       "dbType": "mysql",
       "type":"string",
-      "required":true,
-      "allowed": [ "mysql", "oracle", "postres", "sqlite", "sqlserver" ]
+      "allowed": [ "mysql", "oracle", "postres", "sqlite", "sqlserver" ],
+      "required":true
+      
     },
     {
       "name":"drivername",
