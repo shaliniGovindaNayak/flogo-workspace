@@ -119,10 +119,10 @@ func GetHardwareData() string{
 		 //serial := disk.GetDiskSerialNumber("/dev/sda")
 
 
-		 /*fmt.Println( "Total memory:",strconv.FormatUint(diskStat.Total, 10))
+		 fmt.Println( "Total memory:",strconv.FormatUint(diskStat.Total, 10))
 		 fmt.Println("Free memory:",strconv.FormatUint(vmStat.Free, 10))
 		 fmt.Println("Percentage used memory: " ,strconv.FormatFloat(vmStat.UsedPercent, 'f', 2, 64))
-		 //fmt.Println( "Disk serial number: ", serial)
+		 fmt.Println( "Disk serial number: ", serial)
 		 fmt.Println( "Total disk space: " , strconv.FormatUint(diskStat.Total, 10))
 		 fmt.Println( "Used disk space: " , strconv.FormatUint(diskStat.Used, 10))
 		 fmt.Println( "Free disk space: " , strconv.FormatUint(diskStat.Free, 10))
@@ -134,31 +134,31 @@ func GetHardwareData() string{
 		 fmt.Println( "Uptime: " + strconv.FormatUint(hostStat.Uptime, 10))
 		 fmt.Println( "Number of processes running: " + strconv.FormatUint(hostStat.Procs, 10))
 		 fmt.Println( "Host ID(uuid): " + hostStat.HostID)
-	*/
+	
 
 		
 		 for idx, cpupercent := range percentage {
-			fmt.Println("Current CPU utilization: [" + strconv.Itoa(idx) + "] " + strconv.FormatFloat(cpupercent, 'f', 2, 64) )
+			//fmt.Println("Current CPU utilization: [" + strconv.Itoa(idx) + "] " + strconv.FormatFloat(cpupercent, 'f', 2, 64) )
 
 		}
 		
 		for _, interf := range interfStat {
-		 	fmt.Println("Interface Name: " + interf.Name) 
+		 	//fmt.Println("Interface Name: " + interf.Name) 
 
 			if interf.HardwareAddr != "" {
-					fmt.Println("Hardware(MAC) Address: " + interf.HardwareAddr)
+					//fmt.Println("Hardware(MAC) Address: " + interf.HardwareAddr)
 			}
 
 			for _, flag := range interf.Flags {
-					fmt.Println("Interface behavior or flags: " + flag)
+					//fmt.Println("Interface behavior or flags: " + flag)
 			}
 
 			for _, addr := range interf.Addrs {
-					fmt.Println("IPv6 or IPv4 addresses: " + addr.String())
+					//fmt.Println("IPv6 or IPv4 addresses: " + addr.String())
 
 			}
 
-		}
+	}
 
 	jsondata := Details{
 		Total_memory: strconv.FormatUint(diskStat.Total, 10),
@@ -203,7 +203,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	//ctx.Logger().Debug("Output: %s", settings.ASetting)
 	//ctx.Logger().Debugf("Input: %s", input.AnInput)
 
-	macaddr := &Output{macaddr: macaddrr}
+	macaddr := &Output{MacAddr: macaddrr}
 	err = ctx.SetOutputObject(macaddr)
 	if err != nil {
 		return true, err
