@@ -86,7 +86,7 @@ func insertdata(username string, url string, password string, content interface{
 
 	// insert Document in collection
 	// insert Document in collection
-	err = collection.Insert(content)
+	err = collection.Insert(&Details(content))
 	if err != nil {
 		log.Fatal(err)
 		os.Exit(1)
