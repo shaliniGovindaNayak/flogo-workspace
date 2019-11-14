@@ -3,10 +3,10 @@ package cosmodb
 import "github.com/project-flogo/core/data/coerce"
 
 type Input struct {
-	Content     string `md:"Content,required"`
+	Content     interface{} `md:"Content,required"`
 	Username    string `md:"Username,required"`
 	Password    string `md:"Password,required"`
-	Connectionstring interface{} `md:"Connectionstring,required`
+	Connectionstring string `md:"Connectionstring,required`
 
 }
 
