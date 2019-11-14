@@ -7,6 +7,7 @@ type Input struct {
 	Username    string `md:"Username,required"`
 	Password    string `md:"Password,required"`
 	Connectionstring string `md:"Connectionstring,required`
+	
 }
 
 type Output struct {

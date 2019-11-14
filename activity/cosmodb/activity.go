@@ -37,7 +37,9 @@ func (a *Activity) Metadata() *activity.Metadata {
 	return activityMd
 }
 
-func insertdata(database string, username string, url string, password string, content string){
+func insertdata(username string, url string, password string, content string){
+
+	database := username
 	dialInfo := &mgo.DialInfo{
 		Addrs:    []string{url}, // Get HOST + PORT
 		//smartflo-iotdata:0E594yhEhx7UVptwtVGeAam5IOfLBcPMJzxFxDyo3TUjeOAI5wuPcTXRCgLomUnLhgo1KFcP1L5OQ7sDrsUvZA==@
@@ -103,8 +105,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	fmt.Println(input.Username)
 
 	fmt.Println("requesting...")
-	insertdata(input.Database, input.Username, input.Connectionstring, input.Password, input.Content)
-	fmt.Println("insident raised")
+	insertdata(input.Username, input.Connectionstring, input.Password, input.Content)
 
 	output := &Output{Output: input.Content}
 
