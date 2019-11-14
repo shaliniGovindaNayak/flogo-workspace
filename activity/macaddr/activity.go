@@ -10,7 +10,6 @@ import (
 	"github.com/shirou/gopsutil/host"
 	"github.com/shirou/gopsutil/mem"
 	nett "github.com/shirou/gopsutil/net"
-	"github.com/distatus/battery"
 	"runtime"
 	"strconv"
 	"encoding/json"
@@ -193,8 +192,6 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 
 	out := GetHardwareData()
-	bat1 := battery1()
-	bat2 := battery2()
 	as, err := getMacAddr()
     if err != nil {
         log.Fatal(err)
