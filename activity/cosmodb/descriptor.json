@@ -8,21 +8,30 @@
   "input": [
       {
           "name":"password",
-          "type":"string"
+          "type":"string",
+          "required":true
       },
       {
           "name":"username",
-          "type":"string"
+          "type":"string",
+          "required":true
       },
       {
           "name":"database",
-          "type":"string"
+          "type":"string",
+          "required":true
+      },
+      {
+          "name":"url",
+          "type":"string",
+          "required":true
       }
   ],
   "output": [
     {
       "name": "Output",
-      "type": "any"
+      "type": "any",
+      "required":true
     }
   ]
 }
