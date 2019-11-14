@@ -86,7 +86,7 @@ func GetHardwareData() string{
          cpuStat, err := cpu.Info()
 		 dealwithErr(err)
 		 //fmt.Println(cpuStat)
-		 //percentage, err := cpu.Percent(0, true)
+		 percentage, err := cpu.Percent(0, true)
 		 //fmt.Println(percentage)
 		 //dealwithErr(err)
 
@@ -96,7 +96,7 @@ func GetHardwareData() string{
          dealwithErr(err)
 
          // get interfaces MAC/hardware address
-		 //interfStat, err := nett.Interfaces()
+		 interfStat, err := nett.Interfaces()
 		 //fmt.Println(interfStat)
 		// dealwithErr(err)
 		 
