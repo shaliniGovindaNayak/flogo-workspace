@@ -1,13 +1,12 @@
 package cosmodb
 
 import (
-	"crypto/tls"
+	"bytes"
 	"fmt"
+	"io/ioutil"
 	"log"
-	"net"
-	"os"
-	"time"
-	"gopkg.in/mgo.v2"
+	"net/http"
+
 	"github.com/project-flogo/core/activity"
 )
 
@@ -34,11 +33,7 @@ func (a *Activity) Metadata() *activity.Metadata {
 	return activityMd
 }
 
-func insert(db string, pw string , un string , url string, data string) string{
-	//username := "smartflo-iotdata"
-	database := db
-	password := pw
-
+func insertdata(database string, username string, url string, password string, content string) string{
 	dialInfo := &mgo.DialInfo{
 		Addrs:    []string{url}, // Get HOST + PORT
 		//smartflo-iotdata:0E594yhEhx7UVptwtVGeAam5IOfLBcPMJzxFxDyo3TUjeOAI5wuPcTXRCgLomUnLhgo1KFcP1L5OQ7sDrsUvZA==@
@@ -64,16 +59,48 @@ func insert(db string, pw string , un string , url string, data string) string{
 	session.SetSafe(&mgo.Safe{})
 	collection := session.DB(database).C("details")
 
+	type Details struct {
+		Total_memory string
+		Free_memory string
+		Percentage_used_memory string
+		Total_disk_space string
+		Used_disk_space string
+		Free_disk_space string
+		Percentage_disk_space_usage string
+		CPU_index_number string
+		VendorID string
+		Family string
+		Speed string
+		Uptime string
+		Number_of_processes_running string
+		Host_ID string
+	 }
+
 	// insert Document in collection
 	// insert Document in collection
-	err = collection.Insert(data)
+	err = collection.Insert(content)
 	if err != nil {
 		log.Fatal(err)
 		os.Exit(1)
 	}else{
 		fmt.Println("inserted")
 	}
-	return "success"
+}
+
+
+func basicAuth(username string, password string, instanceURL string, instanceVALUE string) string {
+
+	client := &http.Client{}
+
+	req, err := http.NewRequest("POST", instanceURL, bytes.NewBufferString(instanceVALUE))
+	req.SetBasicAuth(username, password)
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal(err)
+	}
+	bodyText, err := ioutil.ReadAll(resp.Body)
+	s := string(bodyText)
+	return s
 }
 
 // Eval implements api.Activity.Eval - Logs the Message
@@ -85,13 +112,13 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	if err != nil {
 		return true, err
 	}
-	fmt.Println(input.username)
+	fmt.Println(input.Username)
 
 	fmt.Println("requesting...")
-	insert(input.database , input.username, input.password, input.url, input.data)
-	//fmt.Println("insident raised")
+	insertdata(input.Username, input.Password, input.Connectionstring, input.Content)
+	fmt.Println("insident raised")
 
-	output := &Output{Output: " "}
+	output := &Output{Output: input.Content}
 
 	err = ctx.SetOutputObject(output)
 	if err != nil {

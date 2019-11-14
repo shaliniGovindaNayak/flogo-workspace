@@ -1,42 +1,36 @@
 {
-  "name": "cosmodb",
+  "name": "cosmo DB",
   "type": "flogo:activity",
   "version": "0.0.1",
   "title": "Cosmo DB",
-  "description": "Fetches the hardware Address",
-  "homepage": "https://github.com/shaliniGovindaNayaka/activity/cosmodb",
+  "description": "activity to create insident",
+  "homepage": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/cosmodb",
   "input": [
-      {
-          "name":"password",
-          "type":"string",
-          "required":true
-      },
-      {
-          "name":"username",
-          "type":"string",
-          "required":true
-      },
-      {
-          "name":"database",
-          "type":"string",
-          "required":true
-      },
-      {
-          "name":"url",
-          "type":"string",
-          "required":true
-      },
-      {
-        "name":"data",
-        "type":"any"
-      }
-      
+    {
+      "name":"Content",
+      "type":"any",
+      "required":true
+    },
+    {
+      "name": "Username",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name":"Password",
+      "type":"string",
+      "required":true
+    },
+    {
+      "name":"Connectionstring",
+      "type":"string",
+      "required":true
+    }
   ],
   "output": [
     {
       "name": "Output",
-      "type": "any",
-      "required":true
+      "type": "string"
     }
   ]
 }
