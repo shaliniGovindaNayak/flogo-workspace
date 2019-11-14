@@ -28,8 +28,8 @@ func (i *Input) FromMap(values map[string]interface{}) error {
 func (i *Input) ToMap() map[string]interface{} {
 	return map[string]interface{}{
 		"database":     i.database,
-		"Username":    i.username,
-		"Password":    i.password,
+		"username":    i.username,
+		"password":    i.password,
 		"url": i.url,
 		"data": i.data,
 	}
