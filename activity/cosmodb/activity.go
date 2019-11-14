@@ -108,7 +108,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	fmt.Println("requesting...")
 	insertdata(input.Username, input.Connectionstring, input.Password, input.Content)
-	output := &Output{Output: string(input.Content)}
+	output := &Output{Output: "success"}
 
 	err = ctx.SetOutputObject(output)
 	if err != nil {
