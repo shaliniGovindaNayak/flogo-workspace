@@ -138,23 +138,23 @@ func GetHardwareData() string{
 
 		
 		 for idx, cpupercent := range percentage {
-			//fmt.Println("Current CPU utilization: [" + strconv.Itoa(idx) + "] " + strconv.FormatFloat(cpupercent, 'f', 2, 64) )
+			fmt.Println("Current CPU utilization: [" + strconv.Itoa(idx) + "] " + strconv.FormatFloat(cpupercent, 'f', 2, 64) )
 
 		}
 		
 		for _, interf := range interfStat {
-		 	//fmt.Println("Interface Name: " + interf.Name) 
+		 	fmt.Println("Interface Name: " + interf.Name) 
 
 			if interf.HardwareAddr != "" {
-					//fmt.Println("Hardware(MAC) Address: " + interf.HardwareAddr)
+					fmt.Println("Hardware(MAC) Address: " + interf.HardwareAddr)
 			}
 
 			for _, flag := range interf.Flags {
-					//fmt.Println("Interface behavior or flags: " + flag)
+					fmt.Println("Interface behavior or flags: " + flag)
 			}
 
 			for _, addr := range interf.Addrs {
-					//fmt.Println("IPv6 or IPv4 addresses: " + addr.String())
+					fmt.Println("IPv6 or IPv4 addresses: " + addr.String())
 
 			}
 
