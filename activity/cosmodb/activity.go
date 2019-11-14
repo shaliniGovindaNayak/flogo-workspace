@@ -41,7 +41,7 @@ func insertdata(username string, url string, password string, content string){
 
 	database := username
 	dialInfo := &mgo.DialInfo{
-		Addrs:    []string{url}, // Get HOST + PORT
+		Addrs:    url, // Get HOST + PORT
 		//smartflo-iotdata:0E594yhEhx7UVptwtVGeAam5IOfLBcPMJzxFxDyo3TUjeOAI5wuPcTXRCgLomUnLhgo1KFcP1L5OQ7sDrsUvZA==@
 		Timeout:  60 * time.Second,
 		Database: database, // It can be anything
@@ -106,7 +106,6 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	fmt.Println("requesting...")
 	insertdata(input.Username, input.Connectionstring, input.Password, input.Content)
-
 	output := &Output{Output: input.Content}
 
 	err = ctx.SetOutputObject(output)
