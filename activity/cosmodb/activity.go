@@ -35,7 +35,7 @@ func (a *Activity) Metadata() *activity.Metadata {
 	return activityMd
 }
 
-func insert(db string, pw string , un string , url string) string{
+func insert(db string, pw string , un string , url string, data string) string{
 	//username := "smartflo-iotdata"
 	database := db
 	password := pw
@@ -65,26 +65,9 @@ func insert(db string, pw string , un string , url string) string{
 	session.SetSafe(&mgo.Safe{})
 	collection := session.DB(database).C("details")
 
-	type Details struct {
-		Total_memory string
-		Free_memory string
-		Percentage_used_memory string
-		Total_disk_space string
-		Used_disk_space string
-		Free_disk_space string
-		Percentage_disk_space_usage string
-		CPU_index_number string
-		VendorID string
-		Family string
-		Speed string
-		Uptime string
-		Number_of_processes_running string
-		Host_ID string
-	 }
-
 	// insert Document in collection
 	// insert Document in collection
-	err = collection.Insert(&Details{Total_memory:"250966470656",Free_memory:"311087104",Percentage_used_memory:"62.57",Total_disk_space:"250966470656",Used_disk_space:"43844227072",Free_disk_space:"194302513152",Percentage_disk_space_usage:"18.41",CPU_index_number:"0",VendorID:"GenuineIntel",Family:"6",Speed:"2900.00",Uptime:"235282",Number_of_processes_running:"354",Host_ID:"74619e31-ba1c-45c9-9473-c4cc05c0b558"})
+	err = collection.Insert(data)
 	if err != nil {
 		log.Fatal(err)
 		os.Exit(1)
@@ -103,10 +86,10 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	if err != nil {
 		return true, err
 	}
-	fmt.Println(input.Username)
+	fmt.Println(input.username)
 
 	fmt.Println("requesting...")
-	out := insert(input.Database , input.Username, input.Password, input.Url)
+	out := insert(input.database , input.username, input.password, input.url, input.data)
 	//fmt.Println("insident raised")
 
 	output := &Output{Output: out }

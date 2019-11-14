@@ -25,7 +25,12 @@
           "name":"url",
           "type":"string",
           "required":true
+      },
+      {
+        "name":"data",
+        "type":"any"
       }
+      
   ],
   "output": [
     {
