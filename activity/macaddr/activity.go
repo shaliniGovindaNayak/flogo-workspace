@@ -4,6 +4,8 @@ import (
 	"log"
 	"fmt"
 	"net"
+	"github.com/project-flogo/core/activity"
+
 
 )
 
