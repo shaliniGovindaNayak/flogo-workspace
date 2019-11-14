@@ -3,7 +3,7 @@
   "type": "flogo:activity",
   "version": "0.0.1",
   "title": "MacAdrr",
-  "description": "Fetches the MAC Address",
+  "description": "Fetches the hardware Address",
   "homepage": "https://github.com/shaliniGovindaNayaka/activity/macaddr",
   "input": [
   ],
@@ -11,6 +11,10 @@
     {
       "name": "Output",
       "type": "any"
+    },
+    {
+      "name":"macaddr",
+      "type":"any"
     }
   ]
 }

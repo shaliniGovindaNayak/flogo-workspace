@@ -1,4 +1,4 @@
-package macaddr
+package hardware
 
 import "github.com/project-flogo/core/data/coerce"
 
