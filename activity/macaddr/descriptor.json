@@ -1,5 +1,5 @@
 {
-  "name": "mac address",
+  "name": "Hardware Details",
   "type": "flogo:activity",
   "version": "0.0.1",
   "title": "MacAdrr",
