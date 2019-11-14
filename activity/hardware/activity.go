@@ -86,9 +86,9 @@ func GetHardwareData() string{
          cpuStat, err := cpu.Info()
 		 dealwithErr(err)
 		 //fmt.Println(cpuStat)
-		 percentage, err := cpu.Percent(0, true)
+		 //percentage, err := cpu.Percent(0, true)
 		 //fmt.Println(percentage)
-		 dealwithErr(err)
+		 //dealwithErr(err)
 
          // host or machine kernel, uptime, platform Info
 		 hostStat, err := host.Info()
@@ -96,9 +96,9 @@ func GetHardwareData() string{
          dealwithErr(err)
 
          // get interfaces MAC/hardware address
-		 interfStat, err := nett.Interfaces()
+		 //interfStat, err := nett.Interfaces()
 		 //fmt.Println(interfStat)
-		 dealwithErr(err)
+		// dealwithErr(err)
 		 
 		 //serial := disk.GetDiskSerialNumber("/dev/sda")
 
@@ -121,12 +121,12 @@ func GetHardwareData() string{
 	
 
 		
-		 for idx, cpupercent := range percentage {
+		for idx, cpupercent := range percentage {
 			fmt.Println("Current CPU utilization: [" + strconv.Itoa(idx) + "] " + strconv.FormatFloat(cpupercent, 'f', 2, 64) )
 
 		}
 		
-		for _, interf := range interfStat {
+		/*for _, interf := range interfStat {
 		 	fmt.Println("Interface Name: " + interf.Name) 
 
 			if interf.HardwareAddr != "" {
@@ -142,7 +142,7 @@ func GetHardwareData() string{
 
 			}
 
-	}
+	}*/
 
 	jsondata := Details{
 		Total_memory: strconv.FormatUint(diskStat.Total, 10),

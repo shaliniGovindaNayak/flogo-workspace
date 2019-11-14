@@ -1,0 +1,28 @@
+{
+  "name": "cosmodb",
+  "type": "flogo:activity",
+  "version": "0.0.1",
+  "title": "Cosmo DB",
+  "description": "Fetches the hardware Address",
+  "homepage": "https://github.com/shaliniGovindaNayaka/activity/cosmodb",
+  "input": [
+      {
+          "name":"password",
+          "type":"string"
+      },
+      {
+          "name":"username",
+          "type":"string"
+      },
+      {
+          "name":"database",
+          "type":"string"
+      }
+  ],
+  "output": [
+    {
+      "name": "Output",
+      "type": "any"
+    }
+  ]
+}

@@ -11,10 +11,6 @@
     {
       "name": "Output",
       "type": "any"
-    },
-    {
-      "name":"macaddr",
-      "type":"any"
     }
   ]
 }
