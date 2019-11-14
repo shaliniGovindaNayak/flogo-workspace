@@ -88,10 +88,10 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	fmt.Println(input.username)
 
 	fmt.Println("requesting...")
-	out := insert(input.database , input.username, input.password, input.url, input.data)
+	insert(input.database , input.username, input.password, input.url, input.data)
 	//fmt.Println("insident raised")
 
-	output := &Output{Output: out }
+	output := &Output{Output: " "}
 
 	err = ctx.SetOutputObject(output)
 	if err != nil {
