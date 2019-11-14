@@ -13,15 +13,7 @@
       "type": "any"
     },
     {
-      "name":"mac_address",
-      "type":"any"
-    },
-    {
-      "name":"battery1",
-      "type":"any"
-    },
-    {
-      "name":"battery2",
+      "name":"macaddr",
       "type":"any"
     }
   ]
