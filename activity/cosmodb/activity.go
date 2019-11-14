@@ -80,13 +80,13 @@ func insertdata(username string, url string, password string, content interface{
 	defer session.Close()
 
 	session.SetSafe(&mgo.Safe{})
-	collection := session.DB(database).C("details")
+	collection := session.DB(database)
 
 
 
 	// insert Document in collection
 	// insert Document in collection
-	err = collection.Insert(&Details(content))
+	err = collection.Insert(content)
 	if err != nil {
 		log.Fatal(err)
 		os.Exit(1)
