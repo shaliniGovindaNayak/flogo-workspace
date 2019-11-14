@@ -1,11 +1,15 @@
 package cosmodb
 
 import (
-	"bytes"
+	"crypto/tls"
 	"fmt"
-	"io/ioutil"
 	"log"
-	"net/http"
+	"net"
+	"os"
+	"time"
+
+	//utils "github.com/Azure/go-autorest/autorest"
+	"gopkg.in/mgo.v2"
 
 	"github.com/project-flogo/core/activity"
 )
