@@ -16,7 +16,7 @@ type Output struct {
 
 func (i *Input) FromMap(values map[string]interface{}) error {
 	//var err error
-	i.Content, _ = coerce.ToString(values["Content"])
+	i.Content, _ = values["Content"]
 	i.Username, _ = coerce.ToString(values["Username"])
 	i.Password, _ = coerce.ToString(values["Password"])
 	i.Connectionstring, _ = coerce.ToString(values["Connectionstring"])
