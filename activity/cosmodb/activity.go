@@ -37,7 +37,7 @@ func (a *Activity) Metadata() *activity.Metadata {
 	return activityMd
 }
 
-func insertdata(database string, username string, url string, password string, content string) string{
+func insertdata(database string, username string, url string, password string, content string){
 	dialInfo := &mgo.DialInfo{
 		Addrs:    []string{url}, // Get HOST + PORT
 		//smartflo-iotdata:0E594yhEhx7UVptwtVGeAam5IOfLBcPMJzxFxDyo3TUjeOAI5wuPcTXRCgLomUnLhgo1KFcP1L5OQ7sDrsUvZA==@
