@@ -91,22 +91,6 @@ func insertdata(database string, username string, url string, password string, c
 	}
 }
 
-
-func basicAuth(username string, password string, instanceURL string, instanceVALUE string) string {
-
-	client := &http.Client{}
-
-	req, err := http.NewRequest("POST", instanceURL, bytes.NewBufferString(instanceVALUE))
-	req.SetBasicAuth(username, password)
-	resp, err := client.Do(req)
-	if err != nil {
-		log.Fatal(err)
-	}
-	bodyText, err := ioutil.ReadAll(resp.Body)
-	s := string(bodyText)
-	return s
-}
-
 // Eval implements api.Activity.Eval - Logs the Message
 func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
@@ -119,7 +103,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	fmt.Println(input.Username)
 
 	fmt.Println("requesting...")
-	insertdata(input.Username, input.Password, input.Connectionstring, input.Content)
+	insertdata(input.Database, input.Username, input.Connectionstring, input.Password, input.Content)
 	fmt.Println("insident raised")
 
 	output := &Output{Output: input.Content}
