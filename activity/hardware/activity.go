@@ -1,9 +1,8 @@
 package hardware
 
 import (
-	"log"
 	"fmt"
-	"net"
+
 	"github.com/project-flogo/core/activity"
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/disk"
