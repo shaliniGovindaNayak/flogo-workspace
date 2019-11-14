@@ -187,16 +187,6 @@ func GetHardwareData() string{
 	return(out)
 }
 
-func battery1() interface {
-	batteries, err := battery.GetAll()
-	if err != nil {
-		fmt.Println("Could not get battery info!")
-
-	}
-	for i, battery := range batteries {
-	return batteries[i]
-	}
-}
 
 // Eval implements api.Activity.Eval - Logs the Message
 func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
@@ -222,18 +212,6 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 	
-	output := &Output{Output: out}
-	err = ctx.SetOutputObject(output)
-	if err != nil {
-		return true, err
-	}
-
-	output := &Output{: out}
-	err = ctx.SetOutputObject(output)
-	if err != nil {
-		return true, err
-	}
-
 	output := &Output{Output: out}
 	err = ctx.SetOutputObject(output)
 	if err != nil {
