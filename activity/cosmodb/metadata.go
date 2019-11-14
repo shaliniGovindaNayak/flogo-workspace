@@ -31,7 +31,7 @@ func (i *Input) ToMap() map[string]interface{} {
 		"Username":    i.username,
 		"Password":    i.password,
 		"url": i.url,
-		"data": i.data
+		"data": i.data,
 	}
 }
 
