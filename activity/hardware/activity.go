@@ -126,7 +126,7 @@ func GetHardwareData() string{
 
 		}
 		
-		/*for _, interf := range interfStat {
+		for _, interf := range interfStat {
 		 	fmt.Println("Interface Name: " + interf.Name) 
 
 			if interf.HardwareAddr != "" {
@@ -142,7 +142,7 @@ func GetHardwareData() string{
 
 			}
 
-	}*/
+	}
 
 	jsondata := Details{
 		Total_memory: strconv.FormatUint(diskStat.Total, 10),
