@@ -122,7 +122,7 @@ func GetHardwareData() string{
 		 fmt.Println( "Total memory:",strconv.FormatUint(diskStat.Total, 10))
 		 fmt.Println("Free memory:",strconv.FormatUint(vmStat.Free, 10))
 		 fmt.Println("Percentage used memory: " ,strconv.FormatFloat(vmStat.UsedPercent, 'f', 2, 64))
-		 fmt.Println( "Disk serial number: ", serial)
+		 //fmt.Println( "Disk serial number: ", serial)
 		 fmt.Println( "Total disk space: " , strconv.FormatUint(diskStat.Total, 10))
 		 fmt.Println( "Used disk space: " , strconv.FormatUint(diskStat.Used, 10))
 		 fmt.Println( "Free disk space: " , strconv.FormatUint(diskStat.Free, 10))
