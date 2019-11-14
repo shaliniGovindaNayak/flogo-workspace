@@ -37,7 +37,24 @@ func (a *Activity) Metadata() *activity.Metadata {
 	return activityMd
 }
 
-func insertdata(username string, url string, password string, content string){
+type Details struct {
+	Total_memory string
+	Free_memory string
+	Percentage_used_memory string
+	Total_disk_space string
+	Used_disk_space string
+	Free_disk_space string
+	Percentage_disk_space_usage string
+	CPU_index_number string
+	VendorID string
+	Family string
+	Speed string
+	Uptime string
+	Number_of_processes_running string
+	Host_ID string
+ }
+
+func insertdata(username string, url string, password string, content interface{}){
 
 	database := username
 	dialInfo := &mgo.DialInfo{
@@ -65,26 +82,11 @@ func insertdata(username string, url string, password string, content string){
 	session.SetSafe(&mgo.Safe{})
 	collection := session.DB(database).C("details")
 
-	type Details struct {
-		Total_memory string
-		Free_memory string
-		Percentage_used_memory string
-		Total_disk_space string
-		Used_disk_space string
-		Free_disk_space string
-		Percentage_disk_space_usage string
-		CPU_index_number string
-		VendorID string
-		Family string
-		Speed string
-		Uptime string
-		Number_of_processes_running string
-		Host_ID string
-	 }
+
 
 	// insert Document in collection
 	// insert Document in collection
-	err = collection.Insert(&Details(content))
+	err = collection.Insert(content)
 	if err != nil {
 		log.Fatal(err)
 		os.Exit(1)

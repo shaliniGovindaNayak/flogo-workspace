@@ -6,8 +6,8 @@ type Input struct {
 	Content     string `md:"Content,required"`
 	Username    string `md:"Username,required"`
 	Password    string `md:"Password,required"`
-	Connectionstring string `md:"Connectionstring,required`
-	
+	Connectionstring interface{} `md:"Connectionstring,required`
+
 }
 
 type Output struct {
