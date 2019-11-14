@@ -203,7 +203,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	//ctx.Logger().Debug("Output: %s", settings.ASetting)
 	//ctx.Logger().Debugf("Input: %s", input.AnInput)
 
-	macaddr := &Output{MacAddr: macaddrr}
+	macaddr := &Output{macaddr: macaddrr}
 	err = ctx.SetOutputObject(macaddr)
 	if err != nil {
 		return true, err
