@@ -41,7 +41,7 @@ func insertdata(username string, url string, password string, content string){
 
 	database := username
 	dialInfo := &mgo.DialInfo{
-		Addrs:    url, // Get HOST + PORT
+		Addrs:    []string{url}, // Get HOST + PORT
 		//smartflo-iotdata:0E594yhEhx7UVptwtVGeAam5IOfLBcPMJzxFxDyo3TUjeOAI5wuPcTXRCgLomUnLhgo1KFcP1L5OQ7sDrsUvZA==@
 		Timeout:  60 * time.Second,
 		Database: database, // It can be anything
@@ -65,7 +65,7 @@ func insertdata(username string, url string, password string, content string){
 	session.SetSafe(&mgo.Safe{})
 	collection := session.DB(database).C("details")
 
-	type Details struct {
+	/*type Details struct {
 		Total_memory string
 		Free_memory string
 		Percentage_used_memory string
@@ -80,7 +80,7 @@ func insertdata(username string, url string, password string, content string){
 		Uptime string
 		Number_of_processes_running string
 		Host_ID string
-	 }
+	 }*/
 
 	// insert Document in collection
 	// insert Document in collection
