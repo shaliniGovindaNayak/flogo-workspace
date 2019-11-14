@@ -2,7 +2,7 @@
   "name": "Hardware Details",
   "type": "flogo:activity",
   "version": "0.0.1",
-  "title": "MacAdrr",
+  "title": "Hardware Details",
   "description": "Fetches the hardware Address",
   "homepage": "https://github.com/shaliniGovindaNayaka/activity/hardware",
   "input": [
