@@ -65,7 +65,7 @@ func insertdata(username string, url string, password string, content string){
 	session.SetSafe(&mgo.Safe{})
 	collection := session.DB(database).C("details")
 
-	/*type Details struct {
+	type Details struct {
 		Total_memory string
 		Free_memory string
 		Percentage_used_memory string
@@ -80,11 +80,11 @@ func insertdata(username string, url string, password string, content string){
 		Uptime string
 		Number_of_processes_running string
 		Host_ID string
-	 }*/
+	 }
 
 	// insert Document in collection
 	// insert Document in collection
-	err = collection.Insert(content)
+	err = collection.Insert(&Details(content))
 	if err != nil {
 		log.Fatal(err)
 		os.Exit(1)
