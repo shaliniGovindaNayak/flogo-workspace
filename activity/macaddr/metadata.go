@@ -5,21 +5,21 @@ import "github.com/project-flogo/core/data/coerce"
 
 type Output struct {
 	Output string `md:"Output"`
-	MacAddr string `md:macaddr`
+	macaddr string `md:macaddr`
 
 }
 
 func (o *Output) FromMap(values map[string]interface{}) error {
 	strVal, _ := coerce.ToString(values["Output"])
 	o.Output = strVal
-	strVal1, _ := coerce.ToString(values["MacAddr"])
-	o.MacAddr = strVal1
+	strVal1, _ := coerce.ToString(values["macaddr"])
+	o.macaddr = strVal1
 	return nil
 }
 
 func (o *Output) ToMap() map[string]interface{} {
 	return map[string]interface{}{
 		"Output": o.Output,
-		"macaddr":o.MacAddr,
+		"macaddr":o.macaddr,
 	}
 }
