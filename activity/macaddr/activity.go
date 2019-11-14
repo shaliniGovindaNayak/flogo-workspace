@@ -137,7 +137,7 @@ func GetHardwareData() string{
 	*/
 
 		
-		 for idx, cpupercent := range percentage {
+	/*	 for idx, cpupercent := range percentage {
 			//fmt.Println("Current CPU utilization: [" + strconv.Itoa(idx) + "] " + strconv.FormatFloat(cpupercent, 'f', 2, 64) )
 
 		}
@@ -158,7 +158,7 @@ func GetHardwareData() string{
 
 			}
 
-	}
+	}*/
 
 	jsondata := Details{
 		Total_memory: strconv.FormatUint(diskStat.Total, 10),
