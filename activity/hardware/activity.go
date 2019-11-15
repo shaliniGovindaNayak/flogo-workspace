@@ -121,10 +121,28 @@ func GetHardwareData() string{
 	
 
 		
-		for idx, cpupercent := range percentage {
+		 var cpuarray [4]string
+		 for idx, cpupercent := range percentage {
 			fmt.Println("Current CPU utilization: [" + strconv.Itoa(idx) + "] " + strconv.FormatFloat(cpupercent, 'f', 2, 64) )
-
+			temp := strconv.FormatFloat(cpupercent, 'f', 2, 64)
+			cpuarray[idx] = temp
 		}
+		
+		//fmt.Println(cpuarray)
+		cpudetails:=map[string]interface{}{
+			"cpu1":cpuarray[0],
+			"cpu2":cpuarray[1],
+			"cpu3":cpuarray[2],
+			"cpu4":cpuarray[3],
+		}
+		//fmt.Printf("unexpected type %T", cpudetails)
+		c, err := json.Marshal(cpudetails)
+		if err != nil {
+		fmt.Println("error:", err)
+		}
+		//os.Stdout.Write(b)
+		output := string(c)
+		fmt.Println(output)
 		
 		for _, interf := range interfStat {
 		 	fmt.Println("Interface Name: " + interf.Name) 
