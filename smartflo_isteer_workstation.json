@@ -1,0 +1,156 @@
+{
+  "name": "smartflo-isteer-workstation",
+  "type": "flogo:app",
+  "version": "0.0.1",
+  "appModel": "1.1.0",
+  "description": "This Application will register the respective workstation of an iSteer Employee and send event reports and messages to the Smartflo platform for device monitoring and network utilization metrics for  understanding behaviour patterns ",
+  "imports": [
+    "github.com/project-flogo/contrib/activity/log",
+    "github.com/project-flogo/contrib/trigger/timer",
+    "github.com/project-flogo/flow",
+    "github.com/shaliniGovindaNayak/flogo-workspace/activity/azureiot",
+    "github.com/shaliniGovindaNayak/flogo-workspace/activity/cosmodb",
+    "github.com/shaliniGovindaNayak/flogo-workspace/activity/hardware",
+    "github.com/shaliniGovindaNayak/flogo-workspace/activity/macaddr"
+  ],
+  "triggers": [
+    {
+      "id": "timer_start",
+      "ref": "#timer",
+      "name": "Timer-Start",
+      "description": "Timer to Start the operation of registering device to IoT Hub",
+      "handlers": [
+        {
+          "settings": {
+            "startDelay": "1s"
+          },
+          "action": {
+            "ref": "#flow",
+            "settings": {
+              "flowURI": "res://flow:device_registration"
+            }
+          }
+        },
+        {
+          "settings": {
+            "startDelay": "5s",
+            "repeatInterval": "5s"
+          },
+          "action": {
+            "ref": "#flow",
+            "settings": {
+              "flowURI": "res://flow:device_data_submission"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "resources": [
+    {
+      "id": "flow:device_registration",
+      "data": {
+        "name": "Device Registration",
+        "description": "This flow registers a new device on the Azure IoTHub platform",
+        "tasks": [
+          {
+            "id": "macaddr_2",
+            "name": "Get MAC Address",
+            "description": "Fetches the Hardware details of the device",
+            "activity": {
+              "ref": "#macaddr"
+            }
+          },
+          {
+            "id": "azureiot_3",
+            "name": "Device Registration ",
+            "description": "Performs CRUD operations of device management in Azure IOT Hub",
+            "activity": {
+              "ref": "#azureiot",
+              "input": {
+                "connectionString": "HostName=smartflo-beta.azure-devices.net;SharedAccessKeyName=iothubowner;SharedAccessKey=XC9wn6yF5APFphRMCGQyo9jOh+CWpvRkK49rEnRz0fI=",
+                "Type of Operation": "Add Device",
+                "Deviceid": "=$activity[macaddr_2].Output"
+              }
+            }
+          },
+          {
+            "id": "log_4",
+            "name": "Log",
+            "description": "Logs a message",
+            "activity": {
+              "ref": "#log",
+              "input": {
+                "message": "Device Registerd successfully",
+                "addDetails": false
+              }
+            }
+          }
+        ],
+        "links": [
+          {
+            "from": "macaddr_2",
+            "to": "azureiot_3"
+          },
+          {
+            "from": "azureiot_3",
+            "to": "log_4"
+          }
+        ]
+      }
+    },
+    {
+      "id": "flow:device_data_submission",
+      "data": {
+        "name": "Device data submission",
+        "description": "This flow submits the device hardware details to Azure cosmoDB",
+        "tasks": [
+          {
+            "id": "hardware_2",
+            "name": "Hardware Details",
+            "description": "Fetches the hardware Address",
+            "activity": {
+              "ref": "#hardware"
+            }
+          },
+          {
+            "id": "cosmodb_3",
+            "name": "Cosmo DB",
+            "description": "activity to create insident",
+            "activity": {
+              "ref": "#cosmodb",
+              "input": {
+                "Connectionstring": "smartflo-iotdata.documents.azure.com:10255",
+                "Content": "=$activity[hardware_2].Output",
+                "Password": "0E594yhEhx7UVptwtVGeAam5IOfLBcPMJzxFxDyo3TUjeOAI5wuPcTXRCgLomUnLhgo1KFcP1L5OQ7sDrsUvZA==",
+                "Username": "smartflo-iotdata"
+              }
+            }
+          },
+          {
+            "id": "log_4",
+            "name": "Log",
+            "description": "Logs a message",
+            "activity": {
+              "ref": "#log",
+              "input": {
+                "addDetails": false,
+                "message": "=$activity[cosmodb_3].Output"
+              }
+            }
+          }
+        ],
+        "links": [
+          {
+            "from": "hardware_2",
+            "to": "cosmodb_3"
+          },
+          {
+            "from": "cosmodb_3",
+            "to": "log_4"
+          }
+        ]
+      }
+    }
+  ]
+}
