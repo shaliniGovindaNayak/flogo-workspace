@@ -185,7 +185,7 @@ func GetHardwareData() string{
 			//fmt.Println(temp1)
 			addr = temp1.String()
 			fmt.Println(addr)
-		}else {
+		    }else {
 			temp1 := temp.Addrs[1]
 			//fmt.Println(temp1)
 			addr = temp1.String()
@@ -196,7 +196,7 @@ func GetHardwareData() string{
 	//fmt.Println(addr)
 
 	jsondata := map[string]interface{}{
-		"ip_address":addr,
+		"Ip_address":addr,
 		"mac_address":as[1],
 		"Operating_system":runtimeOS,
 		"current_cpu_utilization":output,
