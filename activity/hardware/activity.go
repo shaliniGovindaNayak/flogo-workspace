@@ -198,6 +198,7 @@ func GetHardwareData() string{
 	out := string(b)
 	return(out)
 
+}
 
 // Eval implements api.Activity.Eval - Logs the Message
 func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
@@ -209,8 +210,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	//ctx.Logger().Debug("Output: %s", settings.ASetting)
 	//ctx.Logger().Debugf("Input: %s", input.AnInput)
 
-	
-	output := &Output{Output: out}
+	output = &Output{Output: out}
 	err = ctx.SetOutputObject(output)
 	if err != nil {
 		return true, err
