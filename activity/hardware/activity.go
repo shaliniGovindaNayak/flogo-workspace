@@ -8,6 +8,7 @@ import (
 	"github.com/shirou/gopsutil/disk"
 	"github.com/shirou/gopsutil/host"
 	"github.com/shirou/gopsutil/mem"
+	"net"
 	//nett "github.com/shirou/gopsutil/net"
 	"runtime"
 	"strconv"
@@ -157,7 +158,20 @@ func GetHardwareData() string{
 
 	}*/
 
+	ifas, err := net.Interfaces()
+    if err != nil {
+        return nil, err
+    }
+    var as []string
+    for _, ifa := range ifas {
+        a := ifa.HardwareAddr.String()
+        if a != "" {
+            as = append(as, a)
+        }
+    }
+
 	jsondata := map[string]interface{}{
+		"mac_address":as[1]
 		"Operating_system":runtimeOS,
 		"current_cpu_utilization":output,
 		"Total_memory": strconv.FormatUint(diskStat.Total, 10),
