@@ -82,7 +82,7 @@ func insertdata(username string, url string, password string, content interface{
 	session.SetSafe(&mgo.Safe{})
 	collection := session.DB(database).C("details")
 
-	cont := Details(content)
+	cont := content.*main.details
 
 	// insert Document in collection
 	// insert Document in collection
