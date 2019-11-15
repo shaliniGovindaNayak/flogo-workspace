@@ -137,7 +137,7 @@ func GetHardwareData() string{
 		fmt.Println("error:", err)
 		}
 		//os.Stdout.Write(b)
-		output := string(c)
+		//output := string(c)
 		//fmt.Println(output)
 		json.Unmarshal(c, &cpudetails)
 		//fmt.Println(cpudetails)
