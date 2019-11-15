@@ -139,6 +139,8 @@ func GetHardwareData() string{
 		//os.Stdout.Write(b)
 		output := string(c)
 		//fmt.Println(output)
+		json.Unmarshal(c, &cpudetails)
+		//fmt.Println(cpudetails)
 		
 		/*for _, interf := range interfStat {
 		 	fmt.Println("Interface Name: " + interf.Name) 
@@ -173,7 +175,7 @@ func GetHardwareData() string{
 	interfStat, _ := nett.Interfaces()
 	//index = interfStat[0].index
 
-	var addr string
+	var addr nett.InterfaceAddr
 	for i, interf := range interfStat {
 		name := interf.Name
 		if name == "wlp3s0" || name == "Wi-Fi"{
@@ -188,7 +190,7 @@ func GetHardwareData() string{
 		    }else {
 			temp1 := temp.Addrs[1]
 			//fmt.Println(temp1)
-			addr = temp1.String()
+			addr = temp1
 			fmt.Println(addr)
 		}
 	}
@@ -199,7 +201,7 @@ func GetHardwareData() string{
 		"Ip_address":addr,
 		"mac_address":as[1],
 		"Operating_system":runtimeOS,
-		"current_cpu_utilization":output,
+		"current_cpu_utilization":cpudetails,
 		"Total_memory": strconv.FormatUint(diskStat.Total, 10),
 		"Free_memory ": strconv.FormatUint(vmStat.Free, 10),
 		"Percentage_used_memory":strconv.FormatFloat(vmStat.UsedPercent, 'f', 2, 64),
