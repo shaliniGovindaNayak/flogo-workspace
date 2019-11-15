@@ -204,7 +204,7 @@ func GetHardwareData() string{
 func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 
-	out := GetHardwareData()
+	out = GetHardwareData()
 
     //for _, a := range as {	//log.Println("setting:", settings.ASetting)
 	//ctx.Logger().Debug("Output: %s", settings.ASetting)
