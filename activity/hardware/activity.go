@@ -204,13 +204,13 @@ func GetHardwareData() string{
 func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 
-	out = GetHardwareData()
+	out := GetHardwareData()
 
     //for _, a := range as {	//log.Println("setting:", settings.ASetting)
 	//ctx.Logger().Debug("Output: %s", settings.ASetting)
 	//ctx.Logger().Debugf("Input: %s", input.AnInput)
 
-	output = &Output{Output: out}
+	output := &Output{Output: out}
 	err = ctx.SetOutputObject(output)
 	if err != nil {
 		return true, err
