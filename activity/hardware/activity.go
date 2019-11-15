@@ -173,6 +173,7 @@ func GetHardwareData() string{
 	interfStat, _ := nett.Interfaces()
 	//index = interfStat[0].index
 
+	var addr string
 	for i, interf := range interfStat {
 		name := interf.Name
 		if name == "wlp3s0" || name == "Wi-Fi"{
@@ -187,7 +188,7 @@ func GetHardwareData() string{
 		}else {
 			temp1 := temp.Addrs[1]
 			//fmt.Println(temp1)
-			addr := temp1.String()
+			addr = temp1.String()
 			fmt.Println(addr)
 		}
 	}
