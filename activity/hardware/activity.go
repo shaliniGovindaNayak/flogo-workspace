@@ -185,7 +185,7 @@ func GetHardwareData() string{
 			if runtimeOS == "linux" {
 			temp1 := temp.Addrs[0]
 			//fmt.Println(temp1)
-			addr = temp1.String()
+			addr = temp1
 			fmt.Println(addr)
 		    }else {
 			temp1 := temp.Addrs[1]
