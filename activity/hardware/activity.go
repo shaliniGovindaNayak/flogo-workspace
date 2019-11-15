@@ -201,7 +201,7 @@ func GetHardwareData() string{
 	//fmt.Println(addr)
 
 	jsondata := map[string]interface{}{
-		"Time_Stamp":time.Now().UTC().Format("2006-01-02 15:04:05"),
+		"Time_Stamp":time.Now().Format("2006-01-02 15:04:05"),
 		"Ip_address":addr,
 		"mac_address":as[1],
 		"Operating_system":runtimeOS,
