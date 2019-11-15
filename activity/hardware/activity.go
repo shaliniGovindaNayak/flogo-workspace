@@ -9,7 +9,7 @@ import (
 	"github.com/shirou/gopsutil/host"
 	"github.com/shirou/gopsutil/mem"
 	"net"
-	//nett "github.com/shirou/gopsutil/net"
+	nett "github.com/shirou/gopsutil/net"
 	"runtime"
 	"strconv"
 	"encoding/json"
@@ -168,9 +168,17 @@ func GetHardwareData() string{
         if a != "" {
             as = append(as, a)
         }
-    }
+	}
+	
+	interfStat, _ := nett.Interfaces()
+	//index = interfStat[0].index
+	temp := interfStat[2]
+	temp1 := temp.Addrs[0]
+	addr := temp1.String()
+	//fmt.Println(addr)
 
 	jsondata := map[string]interface{}{
+		"ip_address":addr
 		"mac_address":as[1],
 		"Operating_system":runtimeOS,
 		"current_cpu_utilization":output,
