@@ -144,21 +144,22 @@ func GetHardwareData() string{
 
 	}
 
-	jsondata := Details{
-		Total_memory: strconv.FormatUint(diskStat.Total, 10),
-		Free_memory : strconv.FormatUint(vmStat.Free, 10),
-		Percentage_used_memory:strconv.FormatFloat(vmStat.UsedPercent, 'f', 2, 64),
-		Total_disk_space:strconv.FormatUint(diskStat.Total, 10),
-		Used_disk_space:strconv.FormatUint(diskStat.Used, 10),
-		Free_disk_space:strconv.FormatUint(diskStat.Free, 10),
-		Percentage_disk_space_usage:strconv.FormatFloat(diskStat.UsedPercent, 'f', 2, 64),
-		CPU_index_number:strconv.FormatInt(int64(cpuStat[0].CPU), 10),
-		VendorID:cpuStat[0].VendorID,
-		Family:cpuStat[0].Family,
-		Speed:strconv.FormatFloat(cpuStat[0].Mhz, 'f', 2, 64),
-		Uptime:strconv.FormatUint(hostStat.Uptime, 10),
-		Number_of_processes_running:strconv.FormatUint(hostStat.Procs, 10),
-		Host_ID:hostStat.HostID,
+	jsondata := map[string]interface{}{
+		"current_cpu_utilization":output,
+		"Total_memory": strconv.FormatUint(diskStat.Total, 10),
+		"Free_memory ": strconv.FormatUint(vmStat.Free, 10),
+		"Percentage_used_memory":strconv.FormatFloat(vmStat.UsedPercent, 'f', 2, 64),
+		"Total_disk_space":strconv.FormatUint(diskStat.Total, 10),
+		"Used_disk_space":strconv.FormatUint(diskStat.Used, 10),
+		"Free_disk_space":strconv.FormatUint(diskStat.Free, 10),
+		"Percentage_disk_space_usage":strconv.FormatFloat(diskStat.UsedPercent, 'f', 2, 64),
+		"CPU_index_number":strconv.FormatInt(int64(cpuStat[0].CPU), 10),
+		"VendorID":cpuStat[0].VendorID,
+		"Family":cpuStat[0].Family,
+		"Speed":strconv.FormatFloat(cpuStat[0].Mhz, 'f', 2, 64),
+		"Uptime":strconv.FormatUint(hostStat.Uptime, 10),
+		"Number_of_processes_running":strconv.FormatUint(hostStat.Procs, 10),
+		"Host_ID":hostStat.HostID,
 	}
 
 	b, err := json.Marshal(jsondata)
