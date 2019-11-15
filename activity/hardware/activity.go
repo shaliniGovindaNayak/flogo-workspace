@@ -8,7 +8,7 @@ import (
 	"github.com/shirou/gopsutil/disk"
 	"github.com/shirou/gopsutil/host"
 	"github.com/shirou/gopsutil/mem"
-	nett "github.com/shirou/gopsutil/net"
+	//nett "github.com/shirou/gopsutil/net"
 	"runtime"
 	"strconv"
 	"encoding/json"
@@ -62,9 +62,9 @@ type Details struct {
  }	
 
 func GetHardwareData() string{
-	runtimeOS := runtime.GOOS
+		runtimeOS := runtime.GOOS
 		 
-		 fmt.Println("operation system:",runtimeOS)
+		 //fmt.Println("operation system:",runtimeOS)
          // memory
 		 vmStat, err := mem.VirtualMemory()
 		 //fmt.Println(strconv.FormatUint(vmStat.Total, 10))
@@ -96,14 +96,14 @@ func GetHardwareData() string{
          dealwithErr(err)
 
          // get interfaces MAC/hardware address
-		 interfStat, err := nett.Interfaces()
+		// interfStat, err := nett.Interfaces()
 		 //fmt.Println(interfStat)
 		// dealwithErr(err)
 		 
 		 //serial := disk.GetDiskSerialNumber("/dev/sda")
 
 
-		 fmt.Println( "Total memory:",strconv.FormatUint(diskStat.Total, 10))
+		/* fmt.Println( "Total memory:",strconv.FormatUint(diskStat.Total, 10))
 		 fmt.Println("Free memory:",strconv.FormatUint(vmStat.Free, 10))
 		 fmt.Println("Percentage used memory: " ,strconv.FormatFloat(vmStat.UsedPercent, 'f', 2, 64))
 		 //fmt.Println( "Disk serial number: ", serial)
@@ -118,23 +118,18 @@ func GetHardwareData() string{
 		 fmt.Println( "Uptime: " + strconv.FormatUint(hostStat.Uptime, 10))
 		 fmt.Println( "Number of processes running: " + strconv.FormatUint(hostStat.Procs, 10))
 		 fmt.Println( "Host ID(uuid): " + hostStat.HostID)
-	
+		*/
 
 		
 		 var cpuarray [4]string
 		 for idx, cpupercent := range percentage {
-			fmt.Println("Current CPU utilization: [" + strconv.Itoa(idx) + "] " + strconv.FormatFloat(cpupercent, 'f', 2, 64) )
+			//fmt.Println("Current CPU utilization: [" + strconv.Itoa(idx) + "] " + strconv.FormatFloat(cpupercent, 'f', 2, 64) )
 			temp := strconv.FormatFloat(cpupercent, 'f', 2, 64)
 			cpuarray[idx] = temp
 		}
 		
 		//fmt.Println(cpuarray)
-		cpudetails:=map[string]interface{}{
-			"cpu1":cpuarray[0],
-			"cpu2":cpuarray[1],
-			"cpu3":cpuarray[2],
-			"cpu4":cpuarray[3],
-		}
+		cpudetails:=map[string]interface{}{"cpu1":cpuarray[0],"cpu2":cpuarray[1],"cpu3":cpuarray[2],"cpu4":cpuarray[3],}
 		//fmt.Printf("unexpected type %T", cpudetails)
 		c, err := json.Marshal(cpudetails)
 		if err != nil {
@@ -142,9 +137,9 @@ func GetHardwareData() string{
 		}
 		//os.Stdout.Write(b)
 		output := string(c)
-		fmt.Println(output)
+		//fmt.Println(output)
 		
-		for _, interf := range interfStat {
+		/*for _, interf := range interfStat {
 		 	fmt.Println("Interface Name: " + interf.Name) 
 
 			if interf.HardwareAddr != "" {
@@ -160,9 +155,10 @@ func GetHardwareData() string{
 
 			}
 
-	}
+	}*/
 
 	jsondata := map[string]interface{}{
+		"Operating_system":runtimeOS,
 		"current_cpu_utilization":output,
 		"Total_memory": strconv.FormatUint(diskStat.Total, 10),
 		"Free_memory ": strconv.FormatUint(vmStat.Free, 10),
