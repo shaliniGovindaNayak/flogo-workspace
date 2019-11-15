@@ -54,7 +54,7 @@ type Details struct {
 	Host_ID string
  }
 
-func insertdata(username string, url string, password string, content interface{}){
+func insertdata(username string, url string, password string, content map[string]interface{}){
 
 	database := username
 	dialInfo := &mgo.DialInfo{
@@ -82,11 +82,11 @@ func insertdata(username string, url string, password string, content interface{
 	session.SetSafe(&mgo.Safe{})
 	collection := session.DB(database).C("details")
 
-	cont := content.(Details)
+	//cont := content.(Details)
 
 	// insert Document in collection
 	// insert Document in collection
-	err = collection.Insert(cont)
+	err = collection.Insert(content)
 	if err != nil {
 		log.Fatal(err)
 		os.Exit(1)
