@@ -170,7 +170,7 @@ func GetHardwareData() string{
         }
 	}
 	
-	interfStat, _ := net.Interfaces()
+	interfStat, _ := nett.Interfaces()
 	//index = interfStat[0].index
 
 	for i, interf := range interfStat {
