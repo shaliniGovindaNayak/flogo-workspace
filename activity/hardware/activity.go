@@ -171,7 +171,7 @@ func GetHardwareData() string{
     }
 
 	jsondata := map[string]interface{}{
-		"mac_address":as[1]
+		"mac_address":as[1],
 		"Operating_system":runtimeOS,
 		"current_cpu_utilization":output,
 		"Total_memory": strconv.FormatUint(diskStat.Total, 10),
@@ -197,7 +197,6 @@ func GetHardwareData() string{
 	//os.Stdout.Write(b)
 	out := string(b)
 	return(out)
-}
 
 
 // Eval implements api.Activity.Eval - Logs the Message
