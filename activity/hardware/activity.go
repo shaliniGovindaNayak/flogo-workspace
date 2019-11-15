@@ -160,7 +160,7 @@ func GetHardwareData() string{
 
 	ifas, err := net.Interfaces()
     if err != nil {
-        return nil, err
+        //return nil, err
     }
     var as []string
     for _, ifa := range ifas {
