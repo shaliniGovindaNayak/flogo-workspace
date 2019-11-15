@@ -3,7 +3,7 @@ package cosmodb
 import "github.com/project-flogo/core/data/coerce"
 
 type Input struct {
-	Content     interface{} `md:"Content,required"`
+	Content     map[string]interface{} `md:"Content,required"`
 	Username    string `md:"Username,required"`
 	Password    string `md:"Password,required"`
 	Connectionstring string `md:"Connectionstring,required`
@@ -16,7 +16,7 @@ type Output struct {
 
 func (i *Input) FromMap(values map[string]interface{}) error {
 	//var err error
-	i.Content, _ = values["Content"]
+	i.Content, _ = coerce.ToObject(values["Content"])
 	i.Username, _ = coerce.ToString(values["Username"])
 	i.Password, _ = coerce.ToString(values["Password"])
 	i.Connectionstring, _ = coerce.ToString(values["Connectionstring"])
