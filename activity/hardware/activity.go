@@ -121,18 +121,10 @@ func GetHardwareData() string{
 		 fmt.Println( "Number of processes running: " + strconv.FormatUint(hostStat.Procs, 10))
 		 fmt.Println( "Host ID(uuid): " + hostStat.HostID)
 		*/
-
-		
-		 var cpuarray [4]string
-		 for idx, cpupercent := range percentage {
-			//fmt.Println("Current CPU utilization: [" + strconv.Itoa(idx) + "] " + strconv.FormatFloat(cpupercent, 'f', 2, 64) )
-			temp := strconv.FormatFloat(cpupercent, 'f', 2, 64)
-			cpuarray[idx] = temp
-		}
 		
 		//fmt.Println(cpuarray)
 		length := len(percentage)
-		cpuarray := make([]string, length)
+		cpuarray = make([]string, length)
 
 	   //var [length] string
 	   //fmt.Println()
