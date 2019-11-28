@@ -124,7 +124,7 @@ func GetHardwareData() string{
 		
 		//fmt.Println(cpuarray)
 		length := len(percentage)
-		cpuarray = make([]string, length)
+		cpuarray := make([]string, length)
 
 	   //var [length] string
 	   //fmt.Println()
@@ -173,7 +173,7 @@ func GetHardwareData() string{
 	interfStat, _ := nett.Interfaces()
 	//index = interfStat[0].index
 
-	/*var addr string
+	var addr string
 	for i, interf := range interfStat {
 		name := interf.Name
 		if name == "wlp3s0" || name == "Wi-Fi"{
@@ -193,7 +193,7 @@ func GetHardwareData() string{
 		}
 	}
 }
-*/
+
 //rand.Seed(time.Now().Unix()) 
 	//fmt.Println(addr)
 
