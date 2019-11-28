@@ -1,0 +1,63 @@
+{
+  "name": "azure mqtt",
+  "type": "flogo:activity",
+  "version": "0.0.1",
+  "title": "Azure Mqtt",
+  "description": "activity to create insident",
+  "homepage": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/azuremqtt",
+  "input": [
+    {
+      "name": "Username",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name":"Password",
+      "type":"string",
+      "required":true
+    },
+    {
+      "name":"Brokerurl",
+      "type":"string",
+      "required":true
+    },
+    {
+      "name": "Id",
+      "type": "string",
+      "required": true,
+      "description": "The id of client"
+    },
+    {
+      "name": "Topic",
+      "type": "string",
+      "description": "The topic to publish to"
+    },
+    {
+      "name": "Store",
+      "type": "string",
+      "description": "The store for message persistence"
+    },
+    {
+      "name": "message",
+      "type": "string",
+      "description": "The message to send"
+    },
+    {
+      "name": "connectionString",
+      "type": "string",
+      "required": true
+    },
+    {
+      "name": "Type of Operation",
+      "type": "string",
+      "required": true,
+      "allowed": ["Add Device", "Delete Device", "Purge Device", "Get Twin Details","Get sas token"]
+    }
+  ],
+  "output": [
+    {
+      "name": "Output",
+      "type": "string"
+    }
+  ]
+}

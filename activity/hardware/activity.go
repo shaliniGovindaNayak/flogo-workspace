@@ -131,7 +131,7 @@ func GetHardwareData() string{
 		}
 		
 		//fmt.Println(cpuarray)
-		cpudetails:=map[string]interface{}{"cpu1":cpuarray[0],"cpu2":cpuarray[1],"cpu3":cpuarray[2],"cpu4":cpuarray[3],}
+		//cpudetails:=map[string]interface{}{"cpu1":cpuarray[0],"cpu2":cpuarray[1],"cpu3":cpuarray[2],"cpu4":cpuarray[3],}
 		//fmt.Printf("unexpected type %T", cpudetails)
 		c, err := json.Marshal(cpudetails)
 		if err != nil {
@@ -205,7 +205,7 @@ func GetHardwareData() string{
 		"Ip_address":addr,
 		"mac_address":as[1],
 		"Operating_system":runtimeOS,
-		"current_cpu_utilization":cpudetails,
+		//"current_cpu_utilization":cpudetails,
 		"Total_memory": strconv.FormatUint(diskStat.Total, 10),
 		"Free_memory ": strconv.FormatUint(vmStat.Free, 10),
 		"Percentage_used_memory":strconv.FormatFloat(vmStat.UsedPercent, 'f', 2, 64),
