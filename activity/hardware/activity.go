@@ -204,7 +204,7 @@ if err != nil {
 	//fmt.Println(addr)
 
 	jsondata := map[string]interface{}{
-		"Username": user.Name
+		"Username": user.Name,
 		"Time_Stamp":time.Now().Format("2006-01-02 15:04:05"),
 		"Ip_address":addr,
 		"mac_address":as[1],
