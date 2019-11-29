@@ -7,6 +7,7 @@ type Input struct {
 	Username    string `md:"Username,required"`
 	Password    string `md:"Password,required"`
 	Brokerurl string `md:"Brokerurl,required"`
+	Id        string `md:"Id,required"`
 }
 
 type Output struct {

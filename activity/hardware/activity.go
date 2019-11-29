@@ -14,6 +14,7 @@ import (
 	"strconv"
 	"encoding/json"
 	"time"
+	"os/user"
 )
 
 func init() {
@@ -194,10 +195,16 @@ func GetHardwareData() string{
 	}
 }
 
+user, err := user.Current()
+if err != nil {
+	panic(err)
+}
+
 //rand.Seed(time.Now().Unix()) 
 	//fmt.Println(addr)
 
 	jsondata := map[string]interface{}{
+		"Username": user.Name
 		"Time_Stamp":time.Now().Format("2006-01-02 15:04:05"),
 		"Ip_address":addr,
 		"mac_address":as[1],
