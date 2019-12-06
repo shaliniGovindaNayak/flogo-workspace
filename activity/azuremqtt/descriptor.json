@@ -5,7 +5,7 @@
   "title": "Azure Mqtt",
   "description": "activity to create insident",
   "homepage": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/azuremqtt",
-  "input": [
+  "settings": [
     {
       "name": "Username",
       "type": "string",
@@ -36,7 +36,8 @@
       "name": "Store",
       "type": "string",
       "description": "The store for message persistence"
-    },
+    }], 
+    "input": [
     {
       "name": "message",
       "type": "string",

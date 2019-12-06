@@ -2,12 +2,19 @@ package azuremqtt
 
 import "github.com/project-flogo/core/data/coerce"
 
+type Settings struct {
+	Broker       string                 `md:"broker,required"` // The broker URL
+	Id           string                 `md:"id,required"`     // The id of client
+	Username     string                 `md:"username"`        // The user's name
+	Password     string                 `md:"password"`        // The user's password
+	Store        string                 `md:"store"`           // The store for message persistence
+	Topic        string                 `md:"topic,required"`  // The topic to publish to
+}
+
 type Input struct {
-	Content     string `md:"Content,required"`
-	Username    string `md:"Username,required"`
-	Password    string `md:"Password,required"`
-	Brokerurl string `md:"Brokerurl,required"`
-	Id        string `md:"Id,required"`
+	Message   string `md:"Message,required"`
+	ConnectionString string `md:"ConnectionString,required`
+	Type of Operation string `md:"Type of Operation"`	
 }
 
 type Output struct {
@@ -16,19 +23,24 @@ type Output struct {
 
 func (i *Input) FromMap(values map[string]interface{}) error {
 	//var err error
-	i.Content, _ = coerce.ToString(values["Content"])
-	i.Username, _ = coerce.ToString(values["Username"])
-	i.Password, _ = coerce.ToString(values["Password"])
-	i.Instanceurl, _ = coerce.ToString(values["Instanceurl"])
+	i.Message,_ = coerce.ToString(values["Message"])
+	i.ConnectionString,_ = coerce.ToString(values["ConnectionString"])
+	i.Type_of_Operation,_ = coerce.ToString(values["Type of Operation"])
 	return nil
 }
 
 func (i *Input) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"Content":     i.Content,
 		"Username":    i.Username,
 		"Password":    i.Password,
-		"Instanseurl": i.Instanceurl,
+		"Brokerurl": i.Brokerurl,
+		"Id": i.Id,
+		"Topic": i.Topic,
+		"Store": i.Store,
+		"Message": i.Message,
+		"ConnectionString": i.ConnectionString
+		"Type of Operation": i.Type_of_Operation
+
 	}
 }
 

@@ -60,7 +60,7 @@ func insertdata(username string, url string, password string, content map[string
 	dialInfo := &mgo.DialInfo{
 		Addrs:    []string{url}, // Get HOST + PORT
 		//smartflo-iotdata:0E594yhEhx7UVptwtVGeAam5IOfLBcPMJzxFxDyo3TUjeOAI5wuPcTXRCgLomUnLhgo1KFcP1L5OQ7sDrsUvZA==@
-		Timeout:  60 * time.Second,
+		Timeout:  1000 * time.Second,
 		Database: database, // It can be anything
 		Username: database, // Username
 		Password: password, // PASSWORD
