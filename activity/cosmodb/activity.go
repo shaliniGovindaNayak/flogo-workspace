@@ -69,6 +69,7 @@ func insertdata(username string, url string, password string, content map[string
 		},
 	}
 
+	fmt.Println(dialInfo.Timeout)
 	session, err := mgo.DialWithInfo(dialInfo)
 
 	if err != nil {
