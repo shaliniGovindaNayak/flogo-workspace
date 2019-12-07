@@ -165,7 +165,7 @@ func (c *IotHubHTTPClient) GetDeviceTwin(deviceID string) (string, string) {
 	return c.performRequest("GET", url, "")
 }
 
-func (c *IotHubHTTPClient) UpdateDeviceTwin(deviceID string, config string) (string, string) {
+func (c *IotHubHTTPClient) UpdateDeviceTwin(deviceID string, config map[string]interface{}) (string, string) {
 
 	url := fmt.Sprintf("%s/twins/%s?api-version=2018-06-30", c.hostName, deviceID)
 	return c.performRequest("PATCH", url, config)
