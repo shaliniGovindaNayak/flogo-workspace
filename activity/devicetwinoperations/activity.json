@@ -23,7 +23,7 @@
     },
     {
       "name":"properties",
-      "type": "string"
+      "type": "any"
     }
   ],
   "outputs": [
