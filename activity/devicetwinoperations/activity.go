@@ -196,7 +196,7 @@ func (c *IotHubHTTPClient) buildSasToken(uri string) string {
 	return fmt.Sprintf("SharedAccessSignature sig=%s&se=%d&sr=%s", encodedSignature, timestamp, encodedURI)
 }
 
-func (c *IotHubHTTPClient) performRequest(method string, uri string, interface{}) (string, string) {
+func (c *IotHubHTTPClient) performRequest(method string, uri string, data interface{}) (string, string) {
 	token := c.buildSasToken(uri)
 	//log.("%s https://%s\n", method, uri)
 	//log.Printf(data)
