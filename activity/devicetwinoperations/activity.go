@@ -202,7 +202,7 @@ func (c *IotHubHTTPClient) performRequest(method string, uri string, data string
 	//log.("%s https://%s\n", method, uri)
 	//log.Printf(data)
 	data = By
-	req, _ := http.NewRequest(method, "https://"+uri, data)
+	req, _ := http.NewRequest(method, "https://"+uri, bytes.NewBufferString(data))
 
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("User-Agent", "golang-iot-client")
