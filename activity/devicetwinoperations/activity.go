@@ -71,7 +71,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	connectionString := context.GetInput(ivconnectionString).(string)
 	methodType := context.GetInput(ivTypeofOp).(string)
 	deviceID := context.GetInput(ivDeviceID).(string)
-	jsonDoc := context.GetInput(ivJsonDoc).(string)
+	jsonDoc := context.GetInput(ivJsonDoc)
 
 	log.Debug("The connection string to device is [%s]", connectionString)
 	log.Debug("The Method type selected is [%s]", methodType)
@@ -165,13 +165,13 @@ func (c *IotHubHTTPClient) GetDeviceTwin(deviceID string) (string, string) {
 	return c.performRequest("GET", url, "")
 }
 
-func (c *IotHubHTTPClient) UpdateDeviceTwin(deviceID string, config string) (string, string) {
+func (c *IotHubHTTPClient) UpdateDeviceTwin(deviceID string, config interface{}) (string, string) {
 
 	url := fmt.Sprintf("%s/twins/%s?api-version=2018-06-30", c.hostName, deviceID)
 	return c.performRequest("PATCH", url, config)
 }
 
-func (c *IotHubHTTPClient) ReplaceTwin(deviceID string, config string) (string, string) {
+func (c *IotHubHTTPClient) ReplaceTwin(deviceID string, config interface{}) (string, string) {
 
 	url := fmt.Sprintf("%s/twins/%s?api-version=2018-06-30", c.hostName, deviceID)
 	return c.performRequest("PUT", url, config)
@@ -196,12 +196,12 @@ func (c *IotHubHTTPClient) buildSasToken(uri string) string {
 	return fmt.Sprintf("SharedAccessSignature sig=%s&se=%d&sr=%s", encodedSignature, timestamp, encodedURI)
 }
 
-func (c *IotHubHTTPClient) performRequest(method string, uri string, data string) (string, string) {
+func (c *IotHubHTTPClient) performRequest(method string, uri string, data interface{}) (string, string) {
 	token := c.buildSasToken(uri)
 	fmt.Println(token)
 	//log.("%s https://%s\n", method, uri)
 	//log.Printf(data)
-	req, _ := http.NewRequest(method, "https://"+uri, bytes.NewBufferString(data))
+	req, _ := http.NewRequest(method, "https://"+uri, data)
 
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("User-Agent", "golang-iot-client")
