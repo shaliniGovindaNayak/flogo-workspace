@@ -201,7 +201,7 @@ func (c *IotHubHTTPClient) performRequest(method string, uri string, data string
 	fmt.Println(token)
 	//log.("%s https://%s\n", method, uri)
 	//log.Printf(data)
-	data = By
+	
 	req, _ := http.NewRequest(method, "https://"+uri, bytes.NewBufferString(data))
 
 	req.Header.Set("Content-Type", "application/json")
