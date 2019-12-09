@@ -71,8 +71,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	connectionString := context.GetInput(ivconnectionString).(string)
 	methodType := context.GetInput(ivTypeofOp).(string)
 	deviceID := context.GetInput(ivDeviceID).(string)
-	jsonDoc := context.GetInput(ivJsonDoc)
-	jsonDoc = fmt.Sprintf("%v",jsonDoc)
+	jsonDoc := context.GetInput(ivJsonDoc).(string)
 
 	log.Debug("The connection string to device is [%s]", connectionString)
 	log.Debug("The Method type selected is [%s]", methodType)
@@ -202,7 +201,8 @@ func (c *IotHubHTTPClient) performRequest(method string, uri string, data string
 	fmt.Println(token)
 	//log.("%s https://%s\n", method, uri)
 	//log.Printf(data)
-	req, _ := http.NewRequest(method, "https://"+uri, bytes.NewBufferString(data))
+	data = By
+	req, _ := http.NewRequest(method, "https://"+uri, data)
 
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("User-Agent", "golang-iot-client")
