@@ -38,7 +38,7 @@ func (i *Input) ToMap() map[string]interface{} {
 
 func (i *Input) FromMap(values map[string]interface{}) error {
 	var err error
-	i.Password, _ = values["password"]
+	i.Password, _ = coerce.ToParams(values["password"])
 	i.Message, _ = values["message"]
 	i.TopicParams, err = coerce.ToParams(values["topicParams"])
 	if err != nil {

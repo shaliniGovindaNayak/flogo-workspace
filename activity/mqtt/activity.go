@@ -85,6 +85,7 @@ func (t Topic) String(params map[string]string) string {
 
 func New(ctx activity.InitContext) (activity.Activity, error) {
 	settings := &Settings{}
+	
 	err := metadata.MapToStruct(ctx.Settings(), settings, true)
 	if err != nil {
 		return nil, err
@@ -170,8 +171,9 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	return true, nil
 }
 
-func initClientOption(logger log.Logger, settings *Settings, input *Input) *mqtt.ClientOptions {
+func initClientOption(logger log.Logger, settings *Settings) *mqtt.ClientOptions {
 
+	input := &Input{}
 	opts := mqtt.NewClientOptions()
 	opts.AddBroker(settings.Broker)
 	opts.SetClientID(settings.Id)
