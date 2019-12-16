@@ -30,7 +30,7 @@ type Output struct {
 
 func (i *Input) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"password": i.Password
+		"password": i.Password,
 		"message":     i.Message,
 		"topicParams": i.TopicParams,
 	}
