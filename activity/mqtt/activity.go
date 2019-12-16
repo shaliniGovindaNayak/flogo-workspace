@@ -92,7 +92,15 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 		return nil, err
 	}
 
-	options := initClientOption(ctx.Logger(), settings)
+	input := &Input{}
+
+	err = ctx.GetInputObject(input)
+
+	if err != nil {
+		return true, err
+	}
+
+	options := initClientOption(ctx.Logger(), settings, input)
 
 	if strings.HasPrefix(settings.Broker, "ssl") {
 
@@ -175,12 +183,6 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 func initClientOption(logger log.Logger, settings *Settings) *mqtt.ClientOptions {
 
-	input := &Input{}
-	err := ctx.GetInputObject(input)
-
-	if err != nil {
-		fmt.Println(err)
-	}
 
 	fmt.Println(input.Password)
 	opts := mqtt.NewClientOptions()
