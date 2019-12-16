@@ -204,7 +204,10 @@ func fetchpassword() string{
 	kn := tryGetKeyByName(url, "SharedAccessKeyName")
 	k := tryGetKeyByName(url, "SharedAccessKey")
 	//d := tryGetKeyByName(url, "DeviceId")
-
+	fmt.Println(h)
+	fmt.Println(kn)
+	fmt.Println(k)
+	fmt.Println(deviceID)
 
 	uri := fmt.Sprintf("%s/twins/%s?api-version=2018-06-30", h, deviceID)
 	timestamp := time.Now().Unix() + int64(3600)
@@ -221,6 +224,7 @@ func fetchpassword() string{
 	if kn != "" {
 		return fmt.Sprintf("SharedAccessSignature sig=%s&se=%d&skn=%s&sr=%s", encodedSignature, timestamp, kn, encodedURI)
 	}
+	fmt.Sprintf("SharedAccessSignature sig=%s&se=%d&sr=%s", encodedSignature, timestamp, encodedURI)
 
 	return fmt.Sprintf("SharedAccessSignature sig=%s&se=%d&sr=%s", encodedSignature, timestamp, encodedURI)
 }
