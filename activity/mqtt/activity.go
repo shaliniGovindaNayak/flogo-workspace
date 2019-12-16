@@ -188,7 +188,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 func initClientOption(logger log.Logger, settings *Settings) *mqtt.ClientOptions {
 
-	ctx activity.Context
+	var ctx activity.Context
 
 	input := &Input{}
 	err = ctx.GetInputObject(input)
