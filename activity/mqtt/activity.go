@@ -28,7 +28,7 @@ func init() {
 // TokenType is a type of token
 type TokenType int
 
-const connString string
+type connString string
 const (
 	// Literal is a literal token type
 	Literal TokenType = iota
@@ -167,7 +167,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 
-	fmt.input.Password
+	fmt.Println(input.Password)
 	connString = input.Password
 	topic := a.settings.Topic
 	if params := input.TopicParams; len(params) > 0 {
@@ -183,6 +183,13 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	return true, nil
 }
 
+func tryGetKeyByName(v url.Values, key string) string {
+	if len(v[key]) == 0 {
+		return ""
+	}
+
+	return strings.Replace(v[key][0], " ", "+", -1)
+}
 func fetchpassword() string{
 
 	url, err := url.ParseQuery(connString)
