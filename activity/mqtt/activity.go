@@ -3,13 +3,13 @@ package mqtt
 import (
 	"strconv"
 	"strings"
-	"crypto/hmac"
-	"crypto/sha256"
-	"encoding/base64"
+	//"crypto/hmac"
+	//"crypto/sha256"
+	//"encoding/base64"
 	"fmt"
-	"html/template"
-	"net/url"
-	"time"
+	//"html/template"
+	//"net/url"
+	//"time"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/project-flogo/core/activity"
@@ -28,8 +28,7 @@ func init() {
 // TokenType is a type of token
 type TokenType int
 
-var connString string
-var deviceID string
+var pwd string
 const (
 	// Literal is a literal token type
 	Literal TokenType = iota
@@ -101,7 +100,14 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 		return nil, err
 	}
 
-	options := initClientOption(ctx.Logger(), settings)
+	input := &Input{}
+
+	err = metadata.MapToStruct(ctx.Input(), input, true)
+	if err != nil {
+		return nil, err
+	}
+
+	options := initClientOption(ctx.Logger(), settings , input)
 
 	if strings.HasPrefix(settings.Broker, "ssl") {
 
@@ -168,9 +174,9 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 
-	fmt.Println(input.Password)
-	connString = input.Password
-	deviceID = input.DeviceId
+	//fmt.Println(input.Password)
+	pwd = input.Password
+	//deviceID = input.DeviceId
 	topic := a.settings.Topic
 	if params := input.TopicParams; len(params) > 0 {
 		topic = a.topic.String(params)
@@ -193,46 +199,14 @@ func tryGetKeyByName(v url.Values, key string) string {
 	return strings.Replace(v[key][0], " ", "+", -1)
 }
 
-func fetchpassword() string{
+func initClientOption(logger log.Logger, settings *Settings, input *Input) *mqtt.ClientOptions {
 
-	url, err := url.ParseQuery(connString)
-	if err != nil {
-		fmt.Println(err)
-	}
-
-	h := tryGetKeyByName(url, "HostName")
-	kn := tryGetKeyByName(url, "SharedAccessKeyName")
-	k := tryGetKeyByName(url, "SharedAccessKey")
-	//d := tryGetKeyByName(url, "DeviceId")
-
-
-	uri := fmt.Sprintf("%s/twins/%s?api-version=2018-06-30", h, deviceID)
-	timestamp := time.Now().Unix() + int64(3600)
-	encodedURI := template.URLQueryEscaper(uri)
-
-	toSign := encodedURI + "\n" + strconv.FormatInt(timestamp, 10)
-
-	binKey, _ := base64.StdEncoding.DecodeString(k)
-	mac := hmac.New(sha256.New, []byte(binKey))
-	mac.Write([]byte(toSign))
-
-	encodedSignature := template.URLQueryEscaper(base64.StdEncoding.EncodeToString(mac.Sum(nil)))
-
-	if kn != "" {
-		return fmt.Sprintf("SharedAccessSignature sig=%s&se=%d&skn=%s&sr=%s", encodedSignature, timestamp, kn, encodedURI)
-	}
-
-	return fmt.Sprintf("SharedAccessSignature sig=%s&se=%d&sr=%s", encodedSignature, timestamp, encodedURI)
-}
-
-func initClientOption(logger log.Logger, settings *Settings) *mqtt.ClientOptions {
-
-	fmt.Println(fetchpassword())
+	fmt.Println(input.Password)
 	opts := mqtt.NewClientOptions()
 	opts.AddBroker(settings.Broker)
 	opts.SetClientID(settings.Id)
 	opts.SetUsername(settings.Username)
-	opts.SetPassword(fetchpassword())
+	opts.SetPassword(input.Password)
 	
 	opts.SetCleanSession(settings.CleanSession)
 
