@@ -203,7 +203,7 @@ func fetchpassword() string{
 	h := tryGetKeyByName(url, "HostName")
 	kn := tryGetKeyByName(url, "SharedAccessKeyName")
 	k := tryGetKeyByName(url, "SharedAccessKey")
-	d := tryGetKeyByName(url, "DeviceId")
+	//d := tryGetKeyByName(url, "DeviceId")
 
 
 	uri := fmt.Sprintf("%s/twins/%s?api-version=2018-06-30", h, deviceID)
