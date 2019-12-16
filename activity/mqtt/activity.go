@@ -233,6 +233,10 @@ func initClientOption(logger log.Logger, settings *Settings) *mqtt.ClientOptions
 
 	fmt.Println(settings.Connstring)
 	password := fetchpassword(settings.Connstring)
+	fmt.Println(settings.Broker)
+	fmt.Println(settings.Id)
+	fmt.Println(settings.Username)
+
 	opts := mqtt.NewClientOptions()
 	opts.AddBroker(settings.Broker)
 	opts.SetClientID(settings.Id)
@@ -245,6 +249,7 @@ func initClientOption(logger log.Logger, settings *Settings) *mqtt.ClientOptions
 		logger.Debugf("Using file store: %s", settings.Store)
 		opts.SetStore(mqtt.NewFileStore(settings.Store))
 	}
+	fmt.Println(opts)
 
 	return opts
 }
