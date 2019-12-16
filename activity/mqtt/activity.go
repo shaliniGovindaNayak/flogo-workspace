@@ -92,7 +92,7 @@ func (t Topic) String(params map[string]string) string {
 	return output.String()
 }
 
-func New(ctx activity.InitContext) (activity.Activity, error) {
+func New(ctx activity.InitContext, ctx1 activity.Context) (activity.Activity, error) {
 	settings := &Settings{}
 	
 	err := metadata.MapToStruct(ctx.Settings(), settings, true)
@@ -102,9 +102,10 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 
 	input := &Input{}
 
-	err = metadata.MapToStruct(ctx.Input(), input, true)
+	err = ctx1.GetInputObject(input)
+
 	if err != nil {
-		return nil, err
+		return true, err
 	}
 
 	options := initClientOption(ctx.Logger(), settings , input)
