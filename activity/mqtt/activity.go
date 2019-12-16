@@ -232,6 +232,7 @@ func fetchpassword(connString string) string{
 func initClientOption(logger log.Logger, settings *Settings) *mqtt.ClientOptions {
 
 	fmt.Println(settings.Connstring)
+	fmt.Println(fetchpassword(settings.Connstring))
 	opts := mqtt.NewClientOptions()
 	opts.AddBroker(settings.Broker)
 	opts.SetClientID(settings.Id)
