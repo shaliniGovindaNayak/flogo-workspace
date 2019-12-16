@@ -191,10 +191,10 @@ func initClientOption(logger log.Logger, settings *Settings) *mqtt.ClientOptions
 	var ctx activity.Context
 
 	input := &Input{}
-	err = ctx.GetInputObject(input)
+	err := ctx.GetInputObject(input)
 
 	if err != nil {
-		return true, err
+		fmt.Println(err)
 	}
 
 	fmt.Println(input.Password)
