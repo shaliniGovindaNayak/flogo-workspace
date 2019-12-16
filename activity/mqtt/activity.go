@@ -92,7 +92,7 @@ func (t Topic) String(params map[string]string) string {
 	return output.String()
 }
 
-func New(ctx activity.InitContext, ctx1 activity.Context) (activity.Activity, error) {
+func New(ctx activity.InitContext) (activity.Activity, error) {
 	settings := &Settings{}
 	
 	err := metadata.MapToStruct(ctx.Settings(), settings, true)
@@ -100,15 +100,9 @@ func New(ctx activity.InitContext, ctx1 activity.Context) (activity.Activity, er
 		return nil, err
 	}
 
-	input := &Input{}
 
-	err = ctx1.GetInputObject(input)
 
-	if err != nil {
-		return true, err
-	}
-
-	options := initClientOption(ctx.Logger(), settings , input)
+	options := initClientOption(ctx.Logger(), settings)
 
 	if strings.HasPrefix(settings.Broker, "ssl") {
 
@@ -192,15 +186,16 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	return true, nil
 }
 
-func tryGetKeyByName(v url.Values, key string) string {
-	if len(v[key]) == 0 {
-		return ""
+func initClientOption(logger log.Logger, settings *Settings) *mqtt.ClientOptions {
+
+	ctx activity.Context
+
+	input := &Input{}
+	err = ctx.GetInputObject(input)
+
+	if err != nil {
+		return true, err
 	}
-
-	return strings.Replace(v[key][0], " ", "+", -1)
-}
-
-func initClientOption(logger log.Logger, settings *Settings, input *Input) *mqtt.ClientOptions {
 
 	fmt.Println(input.Password)
 	opts := mqtt.NewClientOptions()
