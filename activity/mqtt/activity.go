@@ -28,7 +28,8 @@ func init() {
 // TokenType is a type of token
 type TokenType int
 
-type connString string
+var connString string
+var deviceID string
 const (
 	// Literal is a literal token type
 	Literal TokenType = iota
@@ -169,6 +170,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
 	fmt.Println(input.Password)
 	connString = input.Password
+	deviceID = input.DeviceId
 	topic := a.settings.Topic
 	if params := input.TopicParams; len(params) > 0 {
 		topic = a.topic.String(params)
@@ -190,11 +192,12 @@ func tryGetKeyByName(v url.Values, key string) string {
 
 	return strings.Replace(v[key][0], " ", "+", -1)
 }
+
 func fetchpassword() string{
 
 	url, err := url.ParseQuery(connString)
 	if err != nil {
-		return "", "", "", "", err
+		fmt.Println(err)
 	}
 
 	h := tryGetKeyByName(url, "HostName")
@@ -203,6 +206,7 @@ func fetchpassword() string{
 	d := tryGetKeyByName(url, "DeviceId")
 
 
+	url := fmt.Sprintf("%s/twins/%s?api-version=2018-06-30", hostName, deviceID)
 	timestamp := time.Now().Unix() + int64(3600)
 	encodedURI := template.URLQueryEscaper(uri)
 
@@ -214,7 +218,7 @@ func fetchpassword() string{
 
 	encodedSignature := template.URLQueryEscaper(base64.StdEncoding.EncodeToString(mac.Sum(nil)))
 
-	if c.sharedAccessKeyName != "" {
+	if sharedAccessKeyName != "" {
 		return fmt.Sprintf("SharedAccessSignature sig=%s&se=%d&skn=%s&sr=%s", encodedSignature, timestamp, kn, encodedURI)
 	}
 

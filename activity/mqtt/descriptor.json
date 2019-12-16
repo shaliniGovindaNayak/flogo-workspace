@@ -86,6 +86,10 @@
   ],
   "input": [
     {
+      "name": "DeviceId",
+      "type": "string"
+    },
+    {
       "name": "password",
       "type": "string",
       "description": "The user's password"
