@@ -206,7 +206,7 @@ func fetchpassword() string{
 	d := tryGetKeyByName(url, "DeviceId")
 
 
-	url := fmt.Sprintf("%s/twins/%s?api-version=2018-06-30", hostName, deviceID)
+	uri := fmt.Sprintf("%s/twins/%s?api-version=2018-06-30", h, deviceID)
 	timestamp := time.Now().Unix() + int64(3600)
 	encodedURI := template.URLQueryEscaper(uri)
 
@@ -218,7 +218,7 @@ func fetchpassword() string{
 
 	encodedSignature := template.URLQueryEscaper(base64.StdEncoding.EncodeToString(mac.Sum(nil)))
 
-	if sharedAccessKeyName != "" {
+	if kn != "" {
 		return fmt.Sprintf("SharedAccessSignature sig=%s&se=%d&skn=%s&sr=%s", encodedSignature, timestamp, kn, encodedURI)
 	}
 
@@ -227,8 +227,6 @@ func fetchpassword() string{
 
 func initClientOption(logger log.Logger, settings *Settings) *mqtt.ClientOptions {
 
-
-	fmt.Println(input.Password)
 	opts := mqtt.NewClientOptions()
 	opts.AddBroker(settings.Broker)
 	opts.SetClientID(settings.Id)
