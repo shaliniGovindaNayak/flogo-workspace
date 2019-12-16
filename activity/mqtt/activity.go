@@ -3,6 +3,7 @@ package mqtt
 import (
 	"strconv"
 	"strings"
+	"fmt"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/project-flogo/core/activity"
