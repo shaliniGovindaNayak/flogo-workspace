@@ -3,19 +3,12 @@ package mqtt
 import (
 	"strconv"
 	"strings"
-	"fmt"
-	"bytes"
 	"crypto/hmac"
 	"crypto/sha256"
 	"encoding/base64"
 	"fmt"
 	"html/template"
-	"io"
-	"io/ioutil"
-	"net/http"
 	"net/url"
-	"strconv"
-	"strings"
 	"time"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
@@ -35,7 +28,7 @@ func init() {
 // TokenType is a type of token
 type TokenType int
 
-const connString 
+const connString string
 const (
 	// Literal is a literal token type
 	Literal TokenType = iota
@@ -107,7 +100,7 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 		return nil, err
 	}
 
-	options := initClientOption(ctx.Logger(), settings, input)
+	options := initClientOption(ctx.Logger(), settings)
 
 	if strings.HasPrefix(settings.Broker, "ssl") {
 
@@ -221,7 +214,7 @@ func fetchpassword() string{
 	return fmt.Sprintf("SharedAccessSignature sig=%s&se=%d&sr=%s", encodedSignature, timestamp, encodedURI)
 }
 
-func initClientOption(logger log.Logger, settings *Settings, input *Input) *mqtt.ClientOptions {
+func initClientOption(logger log.Logger, settings *Settings) *mqtt.ClientOptions {
 
 
 	fmt.Println(input.Password)
