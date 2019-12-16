@@ -166,9 +166,9 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 
-	fmt.Println(input.Password)
-	connString = input.Password
-	deviceID = input.DeviceId
+	//fmt.Println(input.Password)
+	//connString = input.Password
+	//deviceID = input.DeviceId
 	topic := a.settings.Topic
 	if params := input.TopicParams; len(params) > 0 {
 		topic = a.topic.String(params)
