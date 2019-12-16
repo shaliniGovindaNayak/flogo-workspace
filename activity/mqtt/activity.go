@@ -174,6 +174,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 func initClientOption(logger log.Logger, settings *Settings) *mqtt.ClientOptions {
 
 	input := &Input{}
+	fmt.Println(input.Password)
 	opts := mqtt.NewClientOptions()
 	opts.AddBroker(settings.Broker)
 	opts.SetClientID(settings.Id)
