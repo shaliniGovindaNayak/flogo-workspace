@@ -181,7 +181,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	return true, nil
 }
 
-func initClientOption(logger log.Logger, settings *Settings) *mqtt.ClientOptions {
+func initClientOption(logger log.Logger, settings *Settings, input *Input) *mqtt.ClientOptions {
 
 
 	fmt.Println(input.Password)
