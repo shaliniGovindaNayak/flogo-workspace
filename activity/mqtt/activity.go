@@ -4,6 +4,19 @@ import (
 	"strconv"
 	"strings"
 	"fmt"
+	"bytes"
+	"crypto/hmac"
+	"crypto/sha256"
+	"encoding/base64"
+	"fmt"
+	"html/template"
+	"io"
+	"io/ioutil"
+	"net/http"
+	"net/url"
+	"strconv"
+	"strings"
+	"time"
 
 	mqtt "github.com/eclipse/paho.mqtt.golang"
 	"github.com/project-flogo/core/activity"
@@ -14,6 +27,7 @@ import (
 
 var activityMd = activity.ToMetadata(&Settings{}, &Input{}, &Output{})
 
+
 func init() {
 	_ = activity.Register(&Activity{}, New)
 }
@@ -21,6 +35,7 @@ func init() {
 // TokenType is a type of token
 type TokenType int
 
+const connString 
 const (
 	// Literal is a literal token type
 	Literal TokenType = iota
@@ -92,14 +107,6 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 		return nil, err
 	}
 
-	input := &Input{}
-
-	err = ctx.GetInputObject(input)
-
-	if err != nil {
-		return true, err
-	}
-
 	options := initClientOption(ctx.Logger(), settings, input)
 
 	if strings.HasPrefix(settings.Broker, "ssl") {
@@ -167,6 +174,8 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		return true, err
 	}
 
+	fmt.input.Password
+	connString = input.Password
 	topic := a.settings.Topic
 	if params := input.TopicParams; len(params) > 0 {
 		topic = a.topic.String(params)
@@ -181,6 +190,37 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	return true, nil
 }
 
+func fetchpassword() string{
+
+	url, err := url.ParseQuery(connString)
+	if err != nil {
+		return "", "", "", "", err
+	}
+
+	h := tryGetKeyByName(url, "HostName")
+	kn := tryGetKeyByName(url, "SharedAccessKeyName")
+	k := tryGetKeyByName(url, "SharedAccessKey")
+	d := tryGetKeyByName(url, "DeviceId")
+
+
+	timestamp := time.Now().Unix() + int64(3600)
+	encodedURI := template.URLQueryEscaper(uri)
+
+	toSign := encodedURI + "\n" + strconv.FormatInt(timestamp, 10)
+
+	binKey, _ := base64.StdEncoding.DecodeString(k)
+	mac := hmac.New(sha256.New, []byte(binKey))
+	mac.Write([]byte(toSign))
+
+	encodedSignature := template.URLQueryEscaper(base64.StdEncoding.EncodeToString(mac.Sum(nil)))
+
+	if c.sharedAccessKeyName != "" {
+		return fmt.Sprintf("SharedAccessSignature sig=%s&se=%d&skn=%s&sr=%s", encodedSignature, timestamp, kn, encodedURI)
+	}
+
+	return fmt.Sprintf("SharedAccessSignature sig=%s&se=%d&sr=%s", encodedSignature, timestamp, encodedURI)
+}
+
 func initClientOption(logger log.Logger, settings *Settings, input *Input) *mqtt.ClientOptions {
 
 
@@ -189,7 +229,7 @@ func initClientOption(logger log.Logger, settings *Settings, input *Input) *mqtt
 	opts.AddBroker(settings.Broker)
 	opts.SetClientID(settings.Id)
 	opts.SetUsername(settings.Username)
-	opts.SetPassword(input.Password)
+	opts.SetPassword(fetchpassword())
 	opts.SetCleanSession(settings.CleanSession)
 
 	if settings.Store != "" && settings.Store != ":memory:" {
