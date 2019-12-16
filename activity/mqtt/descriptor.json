@@ -7,7 +7,7 @@
   "homepage": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/mqtt",
   "settings": [
     {
-      "name":"ConnectionString",
+      "name":"Connstring",
       "type":"string"
     },
     {
