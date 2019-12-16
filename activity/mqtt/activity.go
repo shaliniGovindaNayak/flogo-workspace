@@ -227,11 +227,13 @@ func fetchpassword() string{
 
 func initClientOption(logger log.Logger, settings *Settings) *mqtt.ClientOptions {
 
+	fmt.Println(fetchpassword())
 	opts := mqtt.NewClientOptions()
 	opts.AddBroker(settings.Broker)
 	opts.SetClientID(settings.Id)
 	opts.SetUsername(settings.Username)
 	opts.SetPassword(fetchpassword())
+	
 	opts.SetCleanSession(settings.CleanSession)
 
 	if settings.Store != "" && settings.Store != ":memory:" {
