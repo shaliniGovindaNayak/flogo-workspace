@@ -28,8 +28,6 @@ func init() {
 // TokenType is a type of token
 type TokenType int
 
-var connString string
-var deviceID string
 const (
 	// Literal is a literal token type
 	Literal TokenType = iota
@@ -193,12 +191,14 @@ func tryGetKeyByName(v url.Values, key string) string {
 	return strings.Replace(v[key][0], " ", "+", -1)
 }
 
-func fetchpassword() string{
+func fetchpassword(connString string) string{
 
 	url, err := url.ParseQuery(connString)
 	if err != nil {
 		fmt.Println(err)
 	}
+
+	deviceID := "00:15:5d:01:6d:00"
 
 	h := tryGetKeyByName(url, "HostName")
 	kn := tryGetKeyByName(url, "SharedAccessKeyName")
@@ -231,12 +231,12 @@ func fetchpassword() string{
 
 func initClientOption(logger log.Logger, settings *Settings) *mqtt.ClientOptions {
 
-	fmt.Println(fetchpassword())
+	fmt.Println(settings.Connstring)
 	opts := mqtt.NewClientOptions()
 	opts.AddBroker(settings.Broker)
 	opts.SetClientID(settings.Id)
 	opts.SetUsername(settings.Username)
-	opts.SetPassword(fetchpassword())
+	opts.SetPassword(fetchpassword(settings.Connstring))
 	
 	opts.SetCleanSession(settings.CleanSession)
 

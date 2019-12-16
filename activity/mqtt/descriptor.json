@@ -7,6 +7,10 @@
   "homepage": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/mqtt",
   "settings": [
     {
+      "name":"ConnectionString",
+      "type":"string"
+    },
+    {
       "name": "broker",
       "type": "string",
       "required": true,
@@ -88,11 +92,6 @@
     {
       "name": "DeviceId",
       "type": "string"
-    },
-    {
-      "name": "password",
-      "type": "string",
-      "description": "The user's password"
     },
     {
       "name": "message",

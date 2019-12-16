@@ -6,6 +6,7 @@ import (
 
 type Settings struct {
 	Broker       string                 `md:"broker,required"` // The broker URL
+	Connstring   string                 `md:"connstring,required`
 	Id           string                 `md:"id,required"`     // The id of client
 	Username     string                 `md:"username"`        // The user's name
 	
@@ -21,7 +22,6 @@ type Settings struct {
 type Input struct {
 	Message     interface{}       `md:"message"`     // The message to send
 	TopicParams map[string]string `md:"topicParams"` // The topic parameters
-	Password     string                 `md:"password"`        // The user's password
 	DeviceId     string             `md:deviceid`
 }
 
@@ -31,7 +31,6 @@ type Output struct {
 
 func (i *Input) ToMap() map[string]interface{} {
 	return map[string]interface{}{
-		"password": i.Password,
 		"message":     i.Message,
 		"topicParams": i.TopicParams,
 		"deviceid" : i.DeviceId,
@@ -40,7 +39,6 @@ func (i *Input) ToMap() map[string]interface{} {
 
 func (i *Input) FromMap(values map[string]interface{}) error {
 	var err error
-	i.Password, _ = coerce.ToString(values["password"])
 	i.Message, _ = values["message"]
 	i.DeviceId, _ = coerce.ToString(values["deviceid"])
 	i.TopicParams, err = coerce.ToParams(values["topicParams"])
