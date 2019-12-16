@@ -204,10 +204,10 @@ func fetchpassword(connString string) string{
 	kn := tryGetKeyByName(url, "SharedAccessKeyName")
 	k := tryGetKeyByName(url, "SharedAccessKey")
 	//d := tryGetKeyByName(url, "DeviceId")
-	fmt.Println(h)
-	fmt.Println(kn)
-	fmt.Println(k)
-	fmt.Println(deviceID)
+	//fmt.Println(h)
+	//fmt.Println(kn)
+	//fmt.Println(k)
+	//fmt.Println(deviceID)
 
 	uri := fmt.Sprintf("%s/twins/%s?api-version=2018-06-30", h, deviceID)
 	timestamp := time.Now().Unix() + int64(3600)
@@ -232,12 +232,12 @@ func fetchpassword(connString string) string{
 func initClientOption(logger log.Logger, settings *Settings) *mqtt.ClientOptions {
 
 	fmt.Println(settings.Connstring)
-	fmt.Println(fetchpassword(settings.Connstring))
+	password := fetchpassword(settings.Connstring))
 	opts := mqtt.NewClientOptions()
 	opts.AddBroker(settings.Broker)
 	opts.SetClientID(settings.Id)
 	opts.SetUsername(settings.Username)
-	opts.SetPassword(fetchpassword(settings.Connstring))
+	opts.SetPassword(password)
 	
 	opts.SetCleanSession(settings.CleanSession)
 
