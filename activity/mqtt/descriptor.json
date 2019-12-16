@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "title": "MQTT Activity",
   "description": "Send MQTT message",
-  "homepage": "https://github.com/shaliniGovindaNayak/activity/mqtt",
+  "homepage": "https://github.com/shaliniGovindaNayak/flogo-workspace/activity/mqtt",
   "settings": [
     {
       "name": "broker",
