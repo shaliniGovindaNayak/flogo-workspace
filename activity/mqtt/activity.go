@@ -136,6 +136,7 @@ func New(ctx activity.InitContext) (activity.Activity, error) {
 
 	fmt.Println("connecting")
 	if token := mqttClient.Connect(); token.Wait() && token.Error() != nil {
+		fmt.Println(token)
 		return nil, token.Error()
 	}
 
