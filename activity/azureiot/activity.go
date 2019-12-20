@@ -119,6 +119,8 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		raw["count"] = 1
 		out, _ := json.Marshal(&raw)
 		fmt.Println(string(out))
+		output := string(out)
+		fmt.Println(output.etag)
 
 		context.SetOutput(ovResult, resp)
 		context.SetOutput(ovStatus, status)
