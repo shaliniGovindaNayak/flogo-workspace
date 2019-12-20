@@ -228,9 +228,9 @@ func (c *IotHubHTTPClient) sastoken(method string, uri string, data string) (str
 	//return c.performRequest("PUT",url,Content)
 //}
 func (c *IotHubHTTPClient) Getdevices(deviceID string) (string,string){
-	url := fmt.Sprintf("%s/devices/query?api-version=2018-06-30",c.hostName)
-	query := fmt.Sprintf(`{"query":"select * from devices"}`)
-	return c.performRequest("POST",url,query)
+	url := fmt.Sprintf("%s/devices/%s?api-version=2018-06-30",c.hostName,deviceID)
+	//data := fmt.Sprintf(`{"deviceId":"%s"}`,deviceID)
+	return c.performRequest("GET",url,"")
 }
 
 // // TODO: SendMessageToDevice as soon as that endpoint is exposed via HTTP
