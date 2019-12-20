@@ -118,7 +118,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		log.Debugf("the raw string")
 		raw["count"] = 1
 		out, _ := json.Marshal(&raw)
-		fmt.Println(out)
+		fmt.Println(string(out))
 
 		context.SetOutput(ovResult, resp)
 		context.SetOutput(ovStatus, status)
