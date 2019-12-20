@@ -72,6 +72,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	methodType := context.GetInput(ivTypeofOp).(string)
 	deviceID := context.GetInput("Deviceid").(string)
 	Content := context.GetInput("Content").(string)
+	fmt.Println(Content)
 
 	log.Debug("The connection string to device is [%s]", connectionString)
 	log.Debug("The Method type selected is [%s]", methodType)
