@@ -20,6 +20,10 @@
     {
       "name": "Deviceid",
       "type": "any"
+    },
+    {
+      "name":"Content",
+      "type":"string",
     }
   ],
   "outputs": [

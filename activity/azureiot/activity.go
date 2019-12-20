@@ -71,6 +71,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	connectionString := context.GetInput(ivconnectionString).(string)
 	methodType := context.GetInput(ivTypeofOp).(string)
 	deviceID := context.GetInput("Deviceid").(string)
+	Content := context.GetInput("Content").(string)
 
 	log.Debug("The connection string to device is [%s]", connectionString)
 	log.Debug("The Method type selected is [%s]", methodType)
@@ -100,6 +101,10 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		context.SetOutput(ovStatus, status)
 	case "Get sas token":
 		resp, status := client.Getsastoken(deviceID)
+		context.SetOutput(ovResult, resp)
+		context.SetOutput(ovStatus, status)
+	case "Update Device":
+		resp, status := client.Updatedevice(deviceID, Content)
 		context.SetOutput(ovResult, resp)
 		context.SetOutput(ovStatus, status)
 	}
@@ -207,6 +212,11 @@ func (c *IotHubHTTPClient) Getsastoken(deviceID string) (string, string) {
 func (c *IotHubHTTPClient) sastoken(method string, uri string, data string) (string, string) {
 	token := c.buildSasToken(uri)
 	return string(token), string("true")
+}
+
+func (c *IotHubHTTPClient) Updatedevice(deviceID string, Content string) (string, string){
+	url := fmt.Sprintf("%s/devices/%s?api-version=2018-06-30",c.hostName,deviceID)
+	return c.performRequest("POST",url,Content)
 }
 
 // // TODO: SendMessageToDevice as soon as that endpoint is exposed via HTTP
