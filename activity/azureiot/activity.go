@@ -213,17 +213,19 @@ func (c *IotHubHTTPClient) sastoken(method string, uri string, data string) (str
 	token := c.buildSasToken(uri)
 	return string(token), string("true")
 }
-func (c *IotHubHTTPClient) Getdevices(deviceID string){
-	url := fmt.Sprintf("%s/devices/query?api-version=2018-06-30",c.hostName)
-	query := fmt.Sprintf(`{"query":"select * from devices where deviceId = %s"}`,deviceID)
-	return c.performRequest("POST",url,query)
-}
+
 
 func (c *IotHubHTTPClient) Updatedevice(deviceID string, Content string) (string, string){
+	
 	return Getdevices(deviceID)
 	
 	//url := fmt.Sprintf("%s/devices/%s?api-version=2018-06-30",c.hostName,deviceID)
 	//return c.performRequest("PUT",url,Content)
+}
+func (c *IotHubHTTPClient) Getdevices(deviceID string){
+	url := fmt.Sprintf("%s/devices/query?api-version=2018-06-30",c.hostName)
+	query := fmt.Sprintf(`{"query":"select * from devices where deviceId = %s"}`,deviceID)
+	return c.performRequest("POST",url,query)
 }
 
 // // TODO: SendMessageToDevice as soon as that endpoint is exposed via HTTP
@@ -271,7 +273,7 @@ func (c *IotHubHTTPClient) performRequest(method string, uri string, data string
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("User-Agent", "golang-iot-client")
 	req.Header.Set("Authorization", token)
-	re.Header.Set("If-Match",etag)
+	//re.Header.Set("If-Match",etag)
 
 	//log.Println("Authorization:", token)
 
