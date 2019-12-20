@@ -110,6 +110,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	//	context.SetOutput(ovStatus, status)
 	case "Get devices":
 		resp, status := client.Getdevices(deviceID)
+		fmt.Println(resp.capabilities.iotEdge)
 		context.SetOutput(ovResult, resp)
 		context.SetOutput(ovStatus, status)
 	}
