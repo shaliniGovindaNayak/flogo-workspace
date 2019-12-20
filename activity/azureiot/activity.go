@@ -107,6 +107,10 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		resp, status := client.Updatedevice(deviceID, Content)
 		context.SetOutput(ovResult, resp)
 		context.SetOutput(ovStatus, status)
+	case "Get Devices":
+		resp, status := client.Getdevices(deviceID)
+		context.SetOutput(ovResult, resp)
+		context.SetOutput(ovStatus, status)
 	}
 
 	return true, nil
@@ -215,13 +219,13 @@ func (c *IotHubHTTPClient) sastoken(method string, uri string, data string) (str
 }
 
 
-func (c *IotHubHTTPClient) Updatedevice(deviceID string, Content string) (string, string){
+//func (c *IotHubHTTPClient) Updatedevice(deviceID string, Content string) (string, string){
 	
-	return Getdevices(deviceID)
+//	return Getdevices(deviceID)
 	
 	//url := fmt.Sprintf("%s/devices/%s?api-version=2018-06-30",c.hostName,deviceID)
 	//return c.performRequest("PUT",url,Content)
-}
+//}
 func (c *IotHubHTTPClient) Getdevices(deviceID string){
 	url := fmt.Sprintf("%s/devices/query?api-version=2018-06-30",c.hostName)
 	query := fmt.Sprintf(`{"query":"select * from devices where deviceId = %s"}`,deviceID)
