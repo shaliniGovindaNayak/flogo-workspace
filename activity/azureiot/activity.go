@@ -110,7 +110,15 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	//	context.SetOutput(ovStatus, status)
 	case "Get devices":
 		resp, status := client.Getdevices(deviceID)
-		fmt.Println(resp.capabilities.iotEdge)
+		in := []byte(resp)
+		//println(in)
+		raw := make(map[string]interface{})
+		json.Unmarshal(in, &raw)
+		log.Debugf("the raw string")
+		raw["count"] = 1
+		out, _ := json.Marshal(&raw)
+		fmt.println(out)
+
 		context.SetOutput(ovResult, resp)
 		context.SetOutput(ovStatus, status)
 	}
