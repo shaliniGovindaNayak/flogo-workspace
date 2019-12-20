@@ -119,6 +119,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 		raw["count"] = 1
 		//out, _ := json.Marshal(&raw)
 		fmt.Println(raw)
+		fmt.Println(raw["etag"])
 		//output := string(out)
 		//fmt.Println(output.etag)
 
