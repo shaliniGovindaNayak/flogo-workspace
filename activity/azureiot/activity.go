@@ -216,7 +216,7 @@ func (c *IotHubHTTPClient) sastoken(method string, uri string, data string) (str
 
 func (c *IotHubHTTPClient) Updatedevice(deviceID string, Content string) (string, string){
 	url := fmt.Sprintf("%s/devices/%s?api-version=2018-06-30",c.hostName,deviceID)
-	return c.performRequest("POST",url,Content)
+	return c.performRequest("PUT",url,Content)
 }
 
 // // TODO: SendMessageToDevice as soon as that endpoint is exposed via HTTP
