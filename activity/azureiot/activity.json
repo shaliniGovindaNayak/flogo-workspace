@@ -23,7 +23,7 @@
     },
     {
       "name":"Content",
-      "type":"string",
+      "type":"string"
     }
   ],
   "outputs": [
