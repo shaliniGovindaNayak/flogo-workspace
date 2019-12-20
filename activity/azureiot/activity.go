@@ -108,7 +108,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	//	resp, status := client.Updatedevice(deviceID, Content)
 	//	context.SetOutput(ovResult, resp)
 	//	context.SetOutput(ovStatus, status)
-	case "Get Devices":
+	case "Get devices":
 		resp, status := client.Getdevices(deviceID)
 		context.SetOutput(ovResult, resp)
 		context.SetOutput(ovStatus, status)
