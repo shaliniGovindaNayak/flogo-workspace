@@ -226,10 +226,20 @@ func (c *IotHubHTTPClient) Updatedevice(deviceID string, Content string) (string
 	return c.performRequest("PUT",url,Content)
 }
 
-func (c *IotHubHTTPClient) Getdevices(deviceID string) (string,string){
+func (c *IotHubHTTPClient) Getdevices(deviceID string) (string){
 	url := fmt.Sprintf("%s/devices/%s?api-version=2018-06-30",c.hostName,deviceID)
 	//data := fmt.Sprintf(`{"deviceId":"%s"}`,deviceID)
-	return c.performRequest("GET",url,"")
+	res, status := c.performRequest("GET",url,"")
+		in := []byte(res)
+		//println(in)
+		raw := make(map[string]interface{})
+		json.Unmarshal(in, &raw)
+		log.Debugf("the raw string")
+		raw["count"] = 1
+		etag := raw["etag"]
+		fmt.Println(etag)
+		return etag
+	
 }
 
 // // TODO: SendMessageToDevice as soon as that endpoint is exposed via HTTP
@@ -274,19 +284,8 @@ func (c *IotHubHTTPClient) performRequest(method string, uri string, data string
 	//log.Printf(data)
 	req, _ := http.NewRequest(method, "https://"+uri, bytes.NewBufferString(data))
 
-	client, err := NewIotHubHTTPClientFromConnectionString(connectionString)
-	if err != nil {
-		log.Error("Error creating http client from connection string", err)
-	}
-	res, status := client.Getdevices(deviceID)
-		in := []byte(res)
-		//println(in)
-		raw := make(map[string]interface{})
-		json.Unmarshal(in, &raw)
-		log.Debugf("the raw string")
-		raw["count"] = 1
-		etag := raw["etag"]
-
+	etag := c.Getdevices(deviceID)
+	
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("User-Agent", "golang-iot-client")
 	req.Header.Set("Authorization", token)
