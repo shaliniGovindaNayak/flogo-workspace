@@ -274,6 +274,10 @@ func (c *IotHubHTTPClient) performRequest(method string, uri string, data string
 	//log.Printf(data)
 	req, _ := http.NewRequest(method, "https://"+uri, bytes.NewBufferString(data))
 
+	client, err := NewIotHubHTTPClientFromConnectionString(connectionString)
+	if err != nil {
+		log.Error("Error creating http client from connection string", err)
+	}
 	res, status := client.Getdevices(deviceID)
 		in := []byte(res)
 		//println(in)
