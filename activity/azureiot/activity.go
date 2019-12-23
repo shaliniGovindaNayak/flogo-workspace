@@ -274,7 +274,7 @@ func (c *IotHubHTTPClient) performRequest(method string, uri string, data string
 	//log.Printf(data)
 	req, _ := http.NewRequest(method, "https://"+uri, bytes.NewBufferString(data))
 
-	res, status := Getdevices(deviceID)
+	res, status := client.Getdevices(deviceID)
 		in := []byte(res)
 		//println(in)
 		raw := make(map[string]interface{})
