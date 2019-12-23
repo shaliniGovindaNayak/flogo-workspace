@@ -109,20 +109,8 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	//	resp, status := client.Updatedevice(deviceID, Content)
 	//	context.SetOutput(ovResult, resp)
 	//	context.SetOutput(ovStatus, status)
-	case "Get devices":
-		resp, status := client.Getdevices(deviceID)
-		in := []byte(resp)
-		//println(in)
-		raw := make(map[string]interface{})
-		json.Unmarshal(in, &raw)
-		log.Debugf("the raw string")
-		raw["count"] = 1
-		//out, _ := json.Marshal(&raw)
-		fmt.Println(raw)
-		fmt.Println(raw["etag"])
-		//output := string(out)
-		//fmt.Println(output.etag)
-
+	case "Update Devices":
+		resp , status := client.Updatedevice()
 		context.SetOutput(ovResult, resp)
 		context.SetOutput(ovStatus, status)
 	}
@@ -232,14 +220,12 @@ func (c *IotHubHTTPClient) sastoken(method string, uri string, data string) (str
 	return string(token), string("true")
 }
 
+func (c *IotHubHTTPClient) Updatedevice(deviceID string, Content string) (string, string){
+	
+	url := fmt.Sprintf("%s/devices/%s?api-version=2018-06-30",c.hostName,deviceID)
+	return c.performRequest("PUT",url,Content)
+}
 
-//func (c *IotHubHTTPClient) Updatedevice(deviceID string, Content string) (string, string){
-	
-//	return Getdevices(deviceID)
-	
-	//url := fmt.Sprintf("%s/devices/%s?api-version=2018-06-30",c.hostName,deviceID)
-	//return c.performRequest("PUT",url,Content)
-//}
 func (c *IotHubHTTPClient) Getdevices(deviceID string) (string,string){
 	url := fmt.Sprintf("%s/devices/%s?api-version=2018-06-30",c.hostName,deviceID)
 	//data := fmt.Sprintf(`{"deviceId":"%s"}`,deviceID)
@@ -288,10 +274,19 @@ func (c *IotHubHTTPClient) performRequest(method string, uri string, data string
 	//log.Printf(data)
 	req, _ := http.NewRequest(method, "https://"+uri, bytes.NewBufferString(data))
 
+	res, status := Getdevices(deviceID)
+		in := []byte(res)
+		//println(in)
+		raw := make(map[string]interface{})
+		json.Unmarshal(in, &raw)
+		log.Debugf("the raw string")
+		raw["count"] = 1
+		etag := raw["etag"]
+
 	req.Header.Set("Content-Type", "application/json")
 	req.Header.Set("User-Agent", "golang-iot-client")
 	req.Header.Set("Authorization", token)
-	//re.Header.Set("If-Match",etag)
+	req.Header.Set("If-Match",etag)
 
 	//log.Println("Authorization:", token)
 
