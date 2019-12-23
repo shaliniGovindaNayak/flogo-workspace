@@ -14,7 +14,7 @@ import (
 	"strconv"
 	"strings"
 	"time"
-	"encoding/json"
+	//"encoding/json"
 
 	"github.com/TIBCOSoftware/flogo-lib/core/activity"
 	"github.com/TIBCOSoftware/flogo-lib/logger"
@@ -109,10 +109,10 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	//	resp, status := client.Updatedevice(deviceID, Content)
 	//	context.SetOutput(ovResult, resp)
 	//	context.SetOutput(ovStatus, status)
-	case "Update Devices":
-		resp , status := client.Updatedevice()
-		context.SetOutput(ovResult, resp)
-		context.SetOutput(ovStatus, status)
+	//case "Update Devices":
+	//	resp , status := client.Updatedevice()
+	//	context.SetOutput(ovResult, resp)
+	//	context.SetOutput(ovStatus, status)
 	}
 
 	return true, nil
