@@ -15,15 +15,11 @@
       "name": "Type of Operation",
       "type": "string",
       "required": true,
-      "allowed": ["Add Device", "Delete Device", "Purge Device", "Get Twin Details","Get sas token","Update Device","Get devices"]
+      "allowed": ["Add Device", "Delete Device", "Purge Device", "Get Twin Details","Get sas token","Update Device","Get Devices"]
     },
     {
       "name": "Deviceid",
       "type": "any"
-    },
-    {
-      "name":"Content",
-      "type":"string"
     }
   ],
   "outputs": [

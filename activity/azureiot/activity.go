@@ -72,7 +72,6 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	connectionString := context.GetInput(ivconnectionString).(string)
 	methodType := context.GetInput(ivTypeofOp).(string)
 	deviceID := context.GetInput("Deviceid").(string)
-	Content := context.GetInput("Content").(string)
 	fmt.Println(Content)
 
 	log.Debug("The connection string to device is [%s]", connectionString)
@@ -109,14 +108,11 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	//	resp, status := client.Updatedevice(deviceID, Content)
 	//	context.SetOutput(ovResult, resp)
 	//	context.SetOutput(ovStatus, status)
-	//case "Update Devices":
-	//	resp , status := client.Updatedevice()
-	//	context.SetOutput(ovResult, resp)
-	//	context.SetOutput(ovStatus, status)
 	}
 
 	return true, nil
 }
+
 func parseConnectionString(connString string) (hostName, sharedAccessKey, sharedAccessKeyName, deviceID, error) {
 	url, err := url.ParseQuery(connString)
 	if err != nil {
@@ -220,16 +216,19 @@ func (c *IotHubHTTPClient) sastoken(method string, uri string, data string) (str
 	return string(token), string("true")
 }
 
-func (c *IotHubHTTPClient) Updatedevice(deviceID string, Content string) (string, string){
+/*func (c *IotHubHTTPClient) Updatedevice(deviceID string, Content string) (string, string){
 	
 	url := fmt.Sprintf("%s/devices/%s?api-version=2018-06-30",c.hostName,deviceID)
 	return c.performRequest("PUT",url,Content)
 }
 
 /*func (c *IotHubHTTPClient) Getdevices(deviceID string) (string){
-	url := fmt.Sprintf("%s/devices/%s?api-version=2018-06-30",c.hostName,deviceID)
-	//data := fmt.Sprintf(`{"deviceId":"%s"}`,deviceID)
-	res, status := c.performRequest("GET",url,"")
+
+	url := fmt.Sprintf("%s/devices/query?api-version=2018-06-30",c.hostName)
+	data := fmt.Sprintf(`{"query":"select * from devices"}`)
+
+	res, status := c.performRequest("GET",url,data)
+	fmt.Println(res)
 		in := []byte(res)
 		//println(in)
 		raw := make(map[string]interface{})
@@ -261,7 +260,7 @@ func (c *IotHubHTTPClient) Updatedevice(deviceID string, Content string) (string
 func (c *IotHubHTTPClient) buildSasToken(uri string) string {
 	timestamp := time.Now().Unix() + int64(3600)
 	encodedURI := template.URLQueryEscaper(uri)
-
+	 
 	toSign := encodedURI + "\n" + strconv.FormatInt(timestamp, 10)
 
 	binKey, _ := base64.StdEncoding.DecodeString(c.sharedAccessKey)
