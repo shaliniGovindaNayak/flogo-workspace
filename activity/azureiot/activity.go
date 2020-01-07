@@ -72,7 +72,7 @@ func (a *MyActivity) Eval(context activity.Context) (done bool, err error) {
 	connectionString := context.GetInput(ivconnectionString).(string)
 	methodType := context.GetInput(ivTypeofOp).(string)
 	deviceID := context.GetInput("Deviceid").(string)
-	fmt.Println(Content)
+
 
 	log.Debug("The connection string to device is [%s]", connectionString)
 	log.Debug("The Method type selected is [%s]", methodType)
@@ -260,7 +260,7 @@ func (c *IotHubHTTPClient) sastoken(method string, uri string, data string) (str
 func (c *IotHubHTTPClient) buildSasToken(uri string) string {
 	timestamp := time.Now().Unix() + int64(3600)
 	encodedURI := template.URLQueryEscaper(uri)
-	 
+	
 	toSign := encodedURI + "\n" + strconv.FormatInt(timestamp, 10)
 
 	binKey, _ := base64.StdEncoding.DecodeString(c.sharedAccessKey)
