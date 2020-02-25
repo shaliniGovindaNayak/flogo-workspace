@@ -55,7 +55,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		log.Fatal(err)
 	}
 	//for _, a := range as {
-	out := as[4]
+	out := as[3]
 	out = strings.ToUpper(out)
 	fmt.Println(out)
 	//log.Println("setting:", settings.ASetting)
