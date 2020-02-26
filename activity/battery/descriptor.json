@@ -2,7 +2,7 @@
     "name": "Battery",
     "type": "flogo:activity",
     "version": "0.0.1",
-    "title": "Battery_Helath",
+    "title": "Battery_Health",
     "description": "Fetches the MAC Address",
     "homepage": "https://github.com/shaliniGovindaNayaka/activity/battery",
     "input": [
