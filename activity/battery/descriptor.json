@@ -1,8 +1,8 @@
 {
-    "name": "Hardware Details",
+    "name": "Battery",
     "type": "flogo:activity",
     "version": "0.0.1",
-    "title": "MacAdrr",
+    "title": "Battery_Helath",
     "description": "Fetches the MAC Address",
     "homepage": "https://github.com/shaliniGovindaNayaka/activity/battery",
     "input": [
