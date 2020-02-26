@@ -76,7 +76,7 @@ func batteryDetails() string {
 // Eval implements api.Activity.Eval - Logs the Message
 func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
-	data = batteryDetails()
+	data := batteryDetails()
 	if err != nil {
 		fmt.Println("error:", err)
 	}
