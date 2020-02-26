@@ -1,6 +1,7 @@
 package battery
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 
@@ -41,12 +42,18 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		fmt.Println("Could not get battery info!")
 		return
 	}
+	b, err := json.Marshal(battery)
+	if err != nil {
+		fmt.Println("error:", err)
+	}
+	//os.Stdout.Write(b)
 
 	if err != nil {
 		log.Fatal(err)
 	}
 	//for _, a := range as {
-	out := batteries[0]
+	out := string(b)
+
 	fmt.Println(out)
 	//log.Println("setting:", settings.ASetting)
 	//ctx.Logger().Debug("Output: %s", settings.ASetting)
