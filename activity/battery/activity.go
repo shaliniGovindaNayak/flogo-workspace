@@ -42,6 +42,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 		fmt.Println("Could not get battery info!")
 		return
 	}
+	battery := batteries[0]
 	b, err := json.Marshal(battery)
 	if err != nil {
 		fmt.Println("error:", err)
