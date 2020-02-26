@@ -1,5 +1,5 @@
 {
-    "name": "Battery",
+    "name": "Battery Health",
     "type": "flogo:activity",
     "version": "0.0.1",
     "title": "Battery_Health",
