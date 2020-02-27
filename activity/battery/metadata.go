@@ -3,7 +3,7 @@ package battery
 import "github.com/project-flogo/core/data/coerce"
 
 type Output struct {
-	Output string `md:"Output"`
+	Output map[string]interface{} `md:"Output"`
 }
 
 func (o *Output) FromMap(values map[string]interface{}) error {
