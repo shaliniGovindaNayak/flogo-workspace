@@ -1,7 +1,6 @@
 package battery
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
 	"net"
@@ -50,7 +49,7 @@ func getMacAddr() ([]string, error) {
 	return as, nil
 }
 
-func batteryDetails() string {
+func batteryDetails() map[string]interface{} {
 	batteries, err := battery.GetAll()
 	//fmt.Println(batteries[0])
 	if err != nil {
@@ -64,13 +63,13 @@ func batteryDetails() string {
 		"Time_stamp":  time.Now().UTC().Format("2006-01-02 15:04:05"),
 		"Mac_address": as[3],
 	}
-	b, err := json.Marshal(jsondata)
-	if err != nil {
-		fmt.Println("error:", err)
-	}
+	//b, err := json.Marshal(jsondata)
+	//if err != nil {
+	//	fmt.Println("error:", err)
+	//}
 	//os.Stdout.Write(b)
-	out := string(b)
-	return out
+	//out := string(b)
+	return jsondata
 }
 
 // Eval implements api.Activity.Eval - Logs the Message
