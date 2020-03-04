@@ -59,9 +59,9 @@ func batteryDetails() map[string]interface{} {
 
 	as, err := getMacAddr()
 	jsondata := map[string]interface{}{
-		"Battery":     batteries,
-		"Time_stamp":  time.Now().UTC().Format("2006-01-02 15:04:05"),
-		"Mac_address": as[3],
+		"Battery":    batteries,
+		"TimeStamp":  time.Now().UTC().Format("2006-01-02 15:04:05"),
+		"MacAddress": as[3],
 	}
 	//b, err := json.Marshal(jsondata)
 	//if err != nil {

@@ -41,7 +41,7 @@ func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 	if err != nil {
 		return true, err
 	}
-	fmt.Println(input.Value)
+	//fmt.Println(input.Value)
 
 	c, err := client.NewHTTPClient(client.HTTPConfig{
 		Addr: input.Host,
