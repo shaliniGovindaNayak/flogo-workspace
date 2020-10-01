@@ -3,18 +3,19 @@ package hardware
 import (
 	"fmt"
 
+	"encoding/json"
+	"net"
+	"os/user"
+	"runtime"
+	"strconv"
+	"time"
+
 	"github.com/project-flogo/core/activity"
 	"github.com/shirou/gopsutil/cpu"
 	"github.com/shirou/gopsutil/disk"
 	"github.com/shirou/gopsutil/host"
 	"github.com/shirou/gopsutil/mem"
-	"net"
 	nett "github.com/shirou/gopsutil/net"
-	"runtime"
-	"strconv"
-	"encoding/json"
-	"time"
-	"os/user"
 )
 
 func init() {
@@ -42,107 +43,106 @@ func (a *Activity) Metadata() *activity.Metadata {
 
 func dealwithErr(err error) {
 	if err != nil {
-			fmt.Println(err)
-			//os.Exit(-1)
+		fmt.Println(err)
+		//os.Exit(-1)
 	}
 }
 
 type Details struct {
-	Total_memory string
-	Free_memory string
-	Percentage_used_memory string
-	Total_disk_space string
-	Used_disk_space string
-	Free_disk_space string
+	Total_memory                string
+	Free_memory                 string
+	Percentage_used_memory      string
+	Total_disk_space            string
+	Used_disk_space             string
+	Free_disk_space             string
 	Percentage_disk_space_usage string
-	CPU_index_number string
-	VendorID string
-	Family string
-	Speed string
-	Uptime string
+	CPU_index_number            string
+	VendorID                    string
+	Family                      string
+	Speed                       string
+	Uptime                      string
 	Number_of_processes_running string
-	Host_ID string
- }	
+	Host_ID                     string
+}
 
-func GetHardwareData() string{
-		runtimeOS := runtime.GOOS
-		 
-		 //fmt.Println("operation system:",runtimeOS)
-         // memory
-		 vmStat, err := mem.VirtualMemory()
-		 //fmt.Println(strconv.FormatUint(vmStat.Total, 10))
+func GetHardwareData() string {
+	runtimeOS := runtime.GOOS
 
-		//fmt.Println(vmStat)
-        // dealwithErr(err)
+	//fmt.Println("operation system:",runtimeOS)
+	// memory
+	vmStat, err := mem.VirtualMemory()
+	//fmt.Println(strconv.FormatUint(vmStat.Total, 10))
 
-         // disk - start from "/" mount point for Linux
-         // might have to change for Windows!!
-         // don't have a Window to test this out, if detect OS == windows
-         // then use "\" instead of "/"
+	//fmt.Println(vmStat)
+	// dealwithErr(err)
 
-		 diskStat, err := disk.Usage("/")
-	
-		 dealwithErr(err)
-		 //fmt.Println(diskStat)
+	// disk - start from "/" mount point for Linux
+	// might have to change for Windows!!
+	// don't have a Window to test this out, if detect OS == windows
+	// then use "\" instead of "/"
 
-         // cpu - get CPU number of cores and speed
-         cpuStat, err := cpu.Info()
-		 dealwithErr(err)
-		 //fmt.Println(cpuStat)
-		 percentage, err := cpu.Percent(0, true)
-		 //fmt.Println(percentage)
-		 //dealwithErr(err)
+	diskStat, err := disk.Usage("/")
 
-         // host or machine kernel, uptime, platform Info
-		 hostStat, err := host.Info()
-		 //fmt.Println(hostStat)
-         dealwithErr(err)
+	dealwithErr(err)
+	//fmt.Println(diskStat)
 
-         // get interfaces MAC/hardware address
-		// interfStat, err := nett.Interfaces()
-		 //fmt.Println(interfStat)
-		// dealwithErr(err)
-		 
-		 //serial := disk.GetDiskSerialNumber("/dev/sda")
+	// cpu - get CPU number of cores and speed
+	cpuStat, err := cpu.Info()
+	dealwithErr(err)
+	//fmt.Println(cpuStat)
+	percentage, err := cpu.Percent(0, true)
+	//fmt.Println(percentage)
+	//dealwithErr(err)
 
+	// host or machine kernel, uptime, platform Info
+	hostStat, err := host.Info()
+	//fmt.Println(hostStat)
+	dealwithErr(err)
 
-		/* fmt.Println( "Total memory:",strconv.FormatUint(diskStat.Total, 10))
-		 fmt.Println("Free memory:",strconv.FormatUint(vmStat.Free, 10))
-		 fmt.Println("Percentage used memory: " ,strconv.FormatFloat(vmStat.UsedPercent, 'f', 2, 64))
-		 //fmt.Println( "Disk serial number: ", serial)
-		 fmt.Println( "Total disk space: " , strconv.FormatUint(diskStat.Total, 10))
-		 fmt.Println( "Used disk space: " , strconv.FormatUint(diskStat.Used, 10))
-		 fmt.Println( "Free disk space: " , strconv.FormatUint(diskStat.Free, 10))
-		 fmt.Println( "Percentage disk space usage: " , strconv.FormatFloat(diskStat.UsedPercent, 'f', 2, 64))
-		 fmt.Println( "CPU index number: " , strconv.FormatInt(int64(cpuStat[0].CPU), 10))
-		 fmt.Println( "VendorID: " , cpuStat[0].VendorID)
-		 fmt.Println( "Family: " , cpuStat[0].Family)
-		 fmt.Println( "Speed: " , strconv.FormatFloat(cpuStat[0].Mhz, 'f', 2, 64))
-		 fmt.Println( "Uptime: " + strconv.FormatUint(hostStat.Uptime, 10))
-		 fmt.Println( "Number of processes running: " + strconv.FormatUint(hostStat.Procs, 10))
-		 fmt.Println( "Host ID(uuid): " + hostStat.HostID)
-		*/
-		
-		//fmt.Println(cpuarray)
-		length := len(percentage)
-		cpuarray := make([]string, length)
+	// get interfaces MAC/hardware address
+	// interfStat, err := nett.Interfaces()
+	//fmt.Println(interfStat)
+	// dealwithErr(err)
 
-	   //var [length] string
-	   //fmt.Println()
-		for idx, cpupercent := range percentage {
-		   //fmt.Println("Current CPU utilization: [" + strconv.Itoa(idx) + "] " + strconv.FormatFloat(cpupercent, 'f', 2, 64) )
-		   temp := strconv.FormatFloat(cpupercent, 'f', 2, 64)
-		   cpuarray[idx] = temp
-	   }
-	   
-	   fmt.Println(cpuarray)
-	   
-	   urlsJson, _ := json.Marshal(cpuarray)
-	   fmt.Println(string(urlsJson))
-	   cpudetails := string(urlsJson)
-		
-		/*for _, interf := range interfStat {
-		 	fmt.Println("Interface Name: " + interf.Name) 
+	//serial := disk.GetDiskSerialNumber("/dev/sda")
+
+	/* fmt.Println( "Total memory:",strconv.FormatUint(diskStat.Total, 10))
+	fmt.Println("Free memory:",strconv.FormatUint(vmStat.Free, 10))
+	fmt.Println("Percentage used memory: " ,strconv.FormatFloat(vmStat.UsedPercent, 'f', 2, 64))
+	//fmt.Println( "Disk serial number: ", serial)
+	fmt.Println( "Total disk space: " , strconv.FormatUint(diskStat.Total, 10))
+	fmt.Println( "Used disk space: " , strconv.FormatUint(diskStat.Used, 10))
+	fmt.Println( "Free disk space: " , strconv.FormatUint(diskStat.Free, 10))
+	fmt.Println( "Percentage disk space usage: " , strconv.FormatFloat(diskStat.UsedPercent, 'f', 2, 64))
+	fmt.Println( "CPU index number: " , strconv.FormatInt(int64(cpuStat[0].CPU), 10))
+	fmt.Println( "VendorID: " , cpuStat[0].VendorID)
+	fmt.Println( "Family: " , cpuStat[0].Family)
+	fmt.Println( "Speed: " , strconv.FormatFloat(cpuStat[0].Mhz, 'f', 2, 64))
+	fmt.Println( "Uptime: " + strconv.FormatUint(hostStat.Uptime, 10))
+	fmt.Println( "Number of processes running: " + strconv.FormatUint(hostStat.Procs, 10))
+	fmt.Println( "Host ID(uuid): " + hostStat.HostID)
+	*/
+
+	//fmt.Println(cpuarray)
+	length := len(percentage)
+	cpuarray := make([]string, length)
+
+	//var [length] string
+	//fmt.Println()
+	for idx, cpupercent := range percentage {
+		//fmt.Println("Current CPU utilization: [" + strconv.Itoa(idx) + "] " + strconv.FormatFloat(cpupercent, 'f', 2, 64) )
+		temp := strconv.FormatFloat(cpupercent, 'f', 2, 64)
+		cpuarray[idx] = temp
+	}
+
+	fmt.Println(cpuarray)
+
+	urlsJson, _ := json.Marshal(cpuarray)
+	fmt.Println(string(urlsJson))
+	cpudetails := string(urlsJson)
+
+	/*for _, interf := range interfStat {
+		 	fmt.Println("Interface Name: " + interf.Name)
 
 			if interf.HardwareAddr != "" {
 					fmt.Println("Hardware(MAC) Address: " + interf.HardwareAddr)
@@ -160,89 +160,88 @@ func GetHardwareData() string{
 	}*/
 
 	ifas, err := net.Interfaces()
-    if err != nil {
-        //return nil, err
-    }
-    var as []string
-    for _, ifa := range ifas {
-        a := ifa.HardwareAddr.String()
-        if a != "" {
-            as = append(as, a)
-        }
+	if err != nil {
+		//return nil, err
 	}
-	
+	var as []string
+	for _, ifa := range ifas {
+		a := ifa.HardwareAddr.String()
+		if a != "" {
+			as = append(as, a)
+		}
+	}
+
 	interfStat, _ := nett.Interfaces()
 	//index = interfStat[0].index
 
 	var addr string
 	for i, interf := range interfStat {
 		name := interf.Name
-		if name == "wlp3s0" || name == "Wi-Fi"{
-			
+		if name == "wlp3s0" || name == "Wi-Fi" {
+
 			temp := interfStat[i]
 			//fmt.Println(temp)
-			if runtimeOS == "linux" {
-			temp1 := temp.Addrs[0]
-			//fmt.Println(temp1)
-			addr = temp1.Addr
-			fmt.Println(addr)
-		    }else {
-			temp1 := temp.Addrs[1]
-			//fmt.Println(temp1)
-			addr = temp1.Addr
-			fmt.Println(addr)
+			if runtimeOS == "windows" {
+				temp1 := temp.Addrs[0]
+				//fmt.Println(temp1)
+				addr = temp1.Addr
+				fmt.Println(addr)
+			} else {
+				temp1 := temp.Addrs[1]
+				//fmt.Println(temp1)
+				addr = temp1.Addr
+				fmt.Println(addr)
+			}
 		}
 	}
-}
 
-user, err := user.Current()
-if err != nil {
-	panic(err)
-}
+	user, err := user.Current()
+	if err != nil {
+		panic(err)
+	}
 
-//rand.Seed(time.Now().Unix()) 
+	//rand.Seed(time.Now().Unix())
 	//fmt.Println(addr)
 
 	jsondata := map[string]interface{}{
-		"Username": user.Name,
-		"Time_Stamp":time.Now().Format("2006-01-02 15:04:05"),
-		"Ip_address":addr,
-		"mac_address":as[1],
-		"Operating_system":runtimeOS,
-		"current_cpu_utilization":cpudetails,
-		"Total_memory": strconv.FormatUint(diskStat.Total, 10),
-		"Free_memory ": strconv.FormatUint(vmStat.Free, 10),
-		"Percentage_used_memory":strconv.FormatFloat(vmStat.UsedPercent, 'f', 2, 64),
-		"Total_disk_space":strconv.FormatUint(diskStat.Total, 10),
-		"Used_disk_space":strconv.FormatUint(diskStat.Used, 10),
-		"Free_disk_space":strconv.FormatUint(diskStat.Free, 10),
-		"Percentage_disk_space_usage":strconv.FormatFloat(diskStat.UsedPercent, 'f', 2, 64),
-		"CPU_index_number":strconv.FormatInt(int64(cpuStat[0].CPU), 10),
-		"Cpu_VendorID":cpuStat[0].VendorID,
-		"Cpu_Family":cpuStat[0].Family,
-		"Cpu_Speed":strconv.FormatFloat(cpuStat[0].Mhz, 'f', 2, 64),
-		"System_Uptime":strconv.FormatUint(hostStat.Uptime, 10),
-		"Number_of_processes_running":strconv.FormatUint(hostStat.Procs, 10),
-		"Host_ID":hostStat.HostID,
+		"Username":                    user.Name,
+		"Time_Stamp":                  time.Now().Format("2006-01-02 15:04:05"),
+		"Ip_address":                  addr,
+		"mac_address":                 as[1],
+		"Operating_system":            runtimeOS,
+		"current_cpu_utilization":     cpudetails,
+		"Total_memory":                strconv.FormatUint(diskStat.Total, 10),
+		"Free_memory ":                strconv.FormatUint(vmStat.Free, 10),
+		"Percentage_used_memory":      strconv.FormatFloat(vmStat.UsedPercent, 'f', 2, 64),
+		"Total_disk_space":            strconv.FormatUint(diskStat.Total, 10),
+		"Used_disk_space":             strconv.FormatUint(diskStat.Used, 10),
+		"Free_disk_space":             strconv.FormatUint(diskStat.Free, 10),
+		"Percentage_disk_space_usage": strconv.FormatFloat(diskStat.UsedPercent, 'f', 2, 64),
+		"CPU_index_number":            strconv.FormatInt(int64(cpuStat[0].CPU), 10),
+		"Cpu_VendorID":                cpuStat[0].VendorID,
+		"Cpu_Family":                  cpuStat[0].Family,
+		"Cpu_Speed":                   strconv.FormatFloat(cpuStat[0].Mhz, 'f', 2, 64),
+		"System_Uptime":               strconv.FormatUint(hostStat.Uptime, 10),
+		"Number_of_processes_running": strconv.FormatUint(hostStat.Procs, 10),
+		"Host_ID":                     hostStat.HostID,
 	}
 
 	b, err := json.Marshal(jsondata)
 	if err != nil {
-    fmt.Println("error:", err)
+		fmt.Println("error:", err)
 	}
 	//os.Stdout.Write(b)
 	out := string(b)
-	return(out)
+	return (out)
 
 }
 
 // Eval implements api.Activity.Eval - Logs the Message
 func (a *Activity) Eval(ctx activity.Context) (done bool, err error) {
 
-
 	out := GetHardwareData()
 
-    //for _, a := range as {	//log.Println("setting:", settings.ASetting)
+	//for _, a := range as {	//log.Println("setting:", settings.ASetting)
 	//ctx.Logger().Debug("Output: %s", settings.ASetting)
 	//ctx.Logger().Debugf("Input: %s", input.AnInput)
 
